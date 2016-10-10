@@ -7,8 +7,8 @@
     <ProjectGuid>{DA7F312C-6132-4084-A38F-B053029226DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sfa.Das.ApprenticeshipInfoService.Client</RootNamespace>
-    <AssemblyName>Sfa.Das.ApprenticeshipInfoService.Client</AssemblyName>
+    <RootNamespace>SFA.DAS.Apprenticeships.Api.Client</RootNamespace>
+    <AssemblyName>SFA.DAS.Apprenticeships.Api.Client</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,8 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClientBase.cs" />
-    <Compile Include="IProviderApiClient.cs" />
-    <Compile Include="ProviderApiClient.cs" />
     <Compile Include="FrameworkApiClient.cs" />
     <Compile Include="IFrameworkApiClient.cs" />
     <Compile Include="IStandardApiClient.cs" />
@@ -59,12 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sfa.Das.ApprenticeshipInfoService.Core\Sfa.Das.ApprenticeshipInfoService.Core.csproj">
-      <Project>{00CEBB2D-C8DC-45E3-8AE0-A38E8BEB8509}</Project>
-      <Name>Sfa.Das.ApprenticeshipInfoService.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
