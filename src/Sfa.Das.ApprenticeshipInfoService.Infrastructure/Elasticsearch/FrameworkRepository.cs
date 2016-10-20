@@ -76,9 +76,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                         .Type(Types.Parse("frameworkdocument"))
                         .From(0)
                         .Size(1)
-                        .Query(q => q
-                            .Term(t => t
-                            .Field(fi => fi.FrameworkId).Value(id))));
+                        .Query(q => q.QueryString(qs => qs.Fields(fs => fs.Field(e => e.FrameworkId)).Query(id))));
 
             var document = results.Documents.Any() ? results.Documents.First() : null;
 
