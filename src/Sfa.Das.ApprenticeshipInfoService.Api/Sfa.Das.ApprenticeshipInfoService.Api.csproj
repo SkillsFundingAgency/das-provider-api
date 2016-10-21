@@ -212,7 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sfa.Das.ApprenticeshipInfoService.Api.ruleset" />
-    <Content Include="SFA.DAS.Apprenticeships.Api.nuspec" />
     <None Include="Transform.ServiceConfiguration.Cloud.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
