@@ -7,4 +7,4 @@
 
 [![](https://img.shields.io/nuget/v/SFA.DAS.Apprenticeships.Api.Client.svg)](https://www.nuget.org/packages/SFA.DAS.Apprenticeships.Api.Client/)
 
-*In progress*
+*In progress*.
