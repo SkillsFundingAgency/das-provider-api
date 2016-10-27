@@ -1,15 +1,12 @@
-﻿using System.Linq;
-using SFA.DAS.Apprenticeships.Api.Types;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Web.Http;
-
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
+    using SFA.DAS.Apprenticeships.Api.Types;
     using Swashbuckle.Swagger.Annotations;
 
     public class FrameworksController : ApiController
@@ -43,7 +40,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Get a framework by composite id
         /// </summary>
-        /// <param name="id">{FrameworkId}{ProgType}{PathwayId} ie: 40338</param>
+        /// <param name="id">{FrameworkId}-{ProgType}-{PathwayId} ie: 403-3-8</param>
+        /// <returns>the requested Framework</returns>
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Framework))]
         [SwaggerResponse(HttpStatusCode.NotFound)]

@@ -3,7 +3,7 @@
     public sealed class FrameworkSummary
     {
         /// <summary>
-        /// A composite framework Id {framework-code}{program-type}{pathway-code}
+        /// A composite framework Id {framework-code}-{program-type}-{pathway-code}
         /// </summary>
         public string Id { get; set; }
 
