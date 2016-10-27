@@ -46,6 +46,10 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public IEnumerable<string> KnowledgeQualification { get; set; }
 
         public IEnumerable<string> CombinedQualification { get; set; }
-        public int ProgTye { get; set; }
+
+        [Obsolete("a typo of ProgType")]
+        public int ProgTye => ProgType;
+
+        public int ProgType { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 FrameworkName = document.FrameworkName,
                 PathwayCode = document.PathwayCode,
                 PathwayName = document.PathwayName,
-                ProgTye = document.ProgType,
+                ProgType = document.ProgType,
                 TypicalLength = document.TypicalLength,
                 ExpiryDate = document.ExpiryDate,
                 JobRoleItems = document.JobRoleItems,
