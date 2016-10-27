@@ -14,7 +14,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             }
 
             var details = MapFromInterface(item, locationId);
-            details.Product.Apprenticeship.Code = item.StandardCode;
+            details.Product.Apprenticeship.Code = item.StandardCode.ToString();
 
             return details;
         }
@@ -23,7 +23,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
         {
             var details = MapFromInterface(item, locationId);
 
-            details.Product.Apprenticeship.Code = int.Parse(item.FrameworkId);
+            details.Product.Apprenticeship.Code = item.FrameworkId;
 
             return details;
         }
