@@ -3,9 +3,9 @@
     using System;
     using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
@@ -101,6 +101,7 @@
         [SwaggerOperation("GetByStandardIdAndLocation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(List<StandardProviderSearchResultsItem>))]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("standards/{id}/providers")]
         public List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
         {
@@ -129,6 +130,7 @@
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(List<FrameworkProviderSearchResultsItem>))]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [Route("frameworks/{id}/providers")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
         public List<FrameworkProviderSearchResultsItemResponse> GetByFrameworkIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
         {
