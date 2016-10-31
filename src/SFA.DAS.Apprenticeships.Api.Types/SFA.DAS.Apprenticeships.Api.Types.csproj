@@ -49,7 +49,9 @@
     <Compile Include="Standard.cs" />
     <Compile Include="StandardSummary.cs" />
     <Compile Include="TypicalLength.cs" />
+    <Compile Include="Stats\VersionInformation.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
