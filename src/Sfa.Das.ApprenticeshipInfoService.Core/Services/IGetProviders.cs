@@ -8,7 +8,7 @@
     {
         IEnumerable<Provider> GetAllProviders();
 
-        IEnumerable<Provider> GetProvidersByUkprn(int ukprn);
+        Provider GetProviderByUkprn(int ukprn);
 
         List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double lat, double lon, int page);
 

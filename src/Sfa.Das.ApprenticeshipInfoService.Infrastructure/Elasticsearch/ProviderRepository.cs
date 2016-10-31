@@ -56,7 +56,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return results.Documents;
         }
 
-        public IEnumerable<Provider> GetProvidersByUkprn(int ukprn)
+        public Provider GetProviderByUkprn(int ukprn)
         {
             var results =
                 _elasticsearchCustomClient.Search<Provider>(
@@ -73,10 +73,13 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query all standards");
+                throw new ApplicationException($"Failed query all providers");
             }
-
-            return results.Documents;
+            if (results.Documents.Count() > 1)
+            {
+                _applicationLogger.Warn($"found {results.Documents.Count()} providers for the ukprn {ukprn}");
+            }
+            return results.Documents.FirstOrDefault();
         }
 
         public List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double lat, double lon, int page)

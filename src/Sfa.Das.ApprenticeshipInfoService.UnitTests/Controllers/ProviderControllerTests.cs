@@ -24,7 +24,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         [Test]
         public void ShouldReturnProvider()
         {
-            var expected = new List<Provider> { new Provider() };
+            var expected = new Provider();
 
             var mockGetProviders = new Mock<IGetProviders>();
             var mockControllerHelper = new Mock<IControllerHelper>();
@@ -33,7 +33,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 
             mockGetProviders.Setup(
                 x =>
-                    x.GetProvidersByUkprn(1)).Returns(expected);
+                    x.GetProviderByUkprn(1)).Returns(expected);
 
             var _sut = new ProvidersController(
                 mockGetProviders.Object, 
@@ -42,13 +42,13 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 mockLogger.Object);
             var actual = _sut.Get(1);
 
-            actual.Should().BeEquivalentTo(expected);
+            actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
         public void ShouldReturnProvidersNotFound()
         {
-            var expected = new List<Provider> { new Provider() };
+            var expected = new Provider();
 
             var mockGetProviders = new Mock<IGetProviders>();
             var mockControllerHelper = new Mock<IControllerHelper>();
@@ -57,7 +57,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 
             mockGetProviders.Setup(
                 x =>
-                    x.GetProvidersByUkprn(1)).Returns(expected);
+                    x.GetProviderByUkprn(1)).Returns(expected);
 
             var _sut = new ProvidersController(
                 mockGetProviders.Object,

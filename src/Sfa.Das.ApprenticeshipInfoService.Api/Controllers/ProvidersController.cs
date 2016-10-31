@@ -1,9 +1,7 @@
-﻿using System;
-using System.Web;
-using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
+    using System;
+    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -56,21 +54,22 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
-        // GET /providers
+        // GET /providers/10005318
         [SwaggerOperation("GetByUkprn")]
         [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
-        public IEnumerable<Provider> Get(int ukprn)
+        public Provider Get(int ukprn)
         {
             try
             {
-                var response = _getProviders.GetProvidersByUkprn(ukprn);
+                var response = _getProviders.GetProviderByUkprn(ukprn);
 
-                if (!response.Any())
+                if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        string.Format("No provider with Ukprn {0} found", ukprn));
+                        $"No provider with Ukprn {ukprn} found");
                 }
 
                 return response;
@@ -80,6 +79,22 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                 _logger.Error(e, $"providers/{ukprn}");
                 throw;
             }
+        }
+
+        // HEAD /providers/10005318
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("providers/{ukprn}")]
+        [ExceptionHandling]
+        public void Head(int ukprn)
+        {
+            if (_getProviders.GetProviderByUkprn(ukprn) != null)
+            {
+                return;
+            }
+
+            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                $"No provider with Ukprn {ukprn} found");
         }
 
         // GET standards/5/providers?lat=<latitude>&long=<longitude>&page=#
