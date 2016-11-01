@@ -36,7 +36,7 @@
 
         // GET /providers
         [SwaggerOperation("GetAll")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Provider>))]
         [Route("providers")]
         [ExceptionHandling]
         public IEnumerable<Provider> Get()
@@ -56,7 +56,7 @@
 
         // GET /providers/10005318
         [SwaggerOperation("GetByUkprn")]
-        [SwaggerResponse(HttpStatusCode.OK)]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Provider))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
