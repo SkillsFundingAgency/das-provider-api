@@ -7,4 +7,6 @@
 
 [![](https://img.shields.io/nuget/v/SFA.DAS.Apprenticeships.Api.Client.svg)](https://www.nuget.org/packages/SFA.DAS.Apprenticeships.Api.Client/)
 
+[![](https://scan.coverity.com/projects/10689/badge.svg)](https://scan.coverity.com/projects/skillsfundingagency-das-apprenticeship-programs-api)
+
 *In progress*.
