@@ -7,6 +7,8 @@
         // TODO Add URI
         public int Ukprn { get; set; }
 
+        public bool Hei { get; set; }
+
         public string ProviderName { get; set; }
 
         public int StandardCode { get; set; }

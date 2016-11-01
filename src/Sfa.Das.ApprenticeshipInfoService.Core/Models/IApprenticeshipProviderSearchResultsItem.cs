@@ -34,6 +34,8 @@
 
         int Ukprn { get; set; }
 
+        bool Hei { get; set; }
+
         string Website { get; set; }
 
         IEnumerable<TrainingLocation> TrainingLocations { get; set; }
