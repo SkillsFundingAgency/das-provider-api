@@ -27,7 +27,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             if (failedResponse.StatusCode == HttpStatusCode.NotFound)
             {
-                throw new EntityNotFound(message, CreateRequestException(failedRequest, failedResponse));
+                throw new EntityNotFoundException(message, CreateRequestException(failedRequest, failedResponse));
             }
 
             throw CreateRequestException(failedRequest, failedResponse);

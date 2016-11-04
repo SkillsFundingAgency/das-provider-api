@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\EntityNotFound.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Framework.cs" />
     <Compile Include="FrameworkSummary.cs" />
     <Compile Include="JobRoleItem.cs" />
