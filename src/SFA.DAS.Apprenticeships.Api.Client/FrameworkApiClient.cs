@@ -26,6 +26,10 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                 {
                     return JsonConvert.DeserializeObject<Framework>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
                 }
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    RaiseResponseError($"Could not find the framework {frameworkId}", request, result);
+                }
 
                 RaiseResponseError(request, result);
             }

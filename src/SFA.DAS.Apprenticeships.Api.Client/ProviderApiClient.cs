@@ -1,4 +1,5 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types;
+﻿using System;
+using SFA.DAS.Apprenticeships.Api.Types;
 
 namespace SFA.DAS.Apprenticeships.Api.Client
 {
@@ -32,6 +33,10 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
                     return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                }
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    RaiseResponseError($"The provider {providerUkprn} could not be found", request, result);
                 }
 
                 RaiseResponseError(request, result);
@@ -69,7 +74,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     return false;
                 }
 
-                RaiseResponseError(request, result);
+                RaiseResponseError("Unexpected exception", request, result);
             }
             finally
             {
