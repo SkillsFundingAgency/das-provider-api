@@ -24,7 +24,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         protected static void RaiseResponseError(HttpRequestMessage failedRequest, HttpResponseMessage failedResponse)
         {
             throw new HttpRequestException(
-                String.Format($"The {typeof(FrameworkApiClient).Name.Replace("Client", string.Empty)} request for {0} {1} failed. Response Status: {2}, Response Body: {3}",
+                String.Format($"The {typeof(FrameworkApiClient).Name.Replace("Client", string.Empty)} request for {{0}} {{1}} failed. Response Status: {{2}}, Response Body: {{3}}",
                     failedRequest.Method.ToString().ToUpperInvariant(),
                     failedRequest.RequestUri,
                     (int)failedResponse.StatusCode,
