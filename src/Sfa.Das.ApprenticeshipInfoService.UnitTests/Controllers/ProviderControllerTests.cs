@@ -40,7 +40,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 mockControllerHelper.Object, 
                 mockApprenticeshipProviderRepository.Object,
                 mockLogger.Object);
-            var actual = _sut.Get(1);
+            var actual = _sut.Get(1).FirstOrDefault();
 
             actual.ShouldBeEquivalentTo(expected);
         }
