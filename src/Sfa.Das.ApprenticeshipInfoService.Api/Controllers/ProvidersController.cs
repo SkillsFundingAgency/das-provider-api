@@ -56,11 +56,11 @@
 
         // GET /providers/10005318
         [SwaggerOperation("GetByUkprn")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Provider))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Provider>))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
-        public Provider Get(int ukprn)
+        public IEnumerable<Provider> Get(int ukprn)
         {
             try
             {
@@ -72,7 +72,7 @@
                         $"No provider with Ukprn {ukprn} found");
                 }
 
-                return response;
+                return new List<Provider> { response };
             }
             catch (Exception e)
             {

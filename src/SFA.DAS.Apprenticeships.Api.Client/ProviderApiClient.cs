@@ -20,7 +20,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>a provider details based on ukprn</returns>
-        public Provider Get(int providerUkprn)
+        public IEnumerable<Provider> Get(int providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}");
             request.Headers.Add("Accept", "application/json");
@@ -32,7 +32,15 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                 var result = response.Result;
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
-                    return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    try
+                    {
+                        var single = JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                        return new List<Provider> { single };
+                    }
+                    catch
+                    {
+                        return JsonConvert.DeserializeObject<IEnumerable<Provider>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
                 }
                 if (result.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -55,7 +63,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>a bool whether the provider exists</returns>
-        public bool Exists(string providerUkprn)
+        public bool Exists(int providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}");
             request.Headers.Add("Accept", "application/json");

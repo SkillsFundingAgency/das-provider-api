@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using SFA.DAS.Apprenticeships.Api.Types;
 
 namespace SFA.DAS.Apprenticeships.Api.Client
 {
     public interface IProviderApiClient : IDisposable
     {
-        Provider Get(int providerUkprn);
+        IEnumerable<Provider> Get(int providerUkprn);
+        bool Exists(int providerUkprn);
     }
 }
