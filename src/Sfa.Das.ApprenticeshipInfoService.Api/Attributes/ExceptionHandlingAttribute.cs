@@ -11,7 +11,7 @@
         {
             var logger = DependencyResolver.Current.GetService<ILog>();
 
-            logger.Error(context.Exception, "App_Error");
+            logger.Error(context.Exception, $"App_Error {context.Request?.RequestUri}");
         }
     }
 }
