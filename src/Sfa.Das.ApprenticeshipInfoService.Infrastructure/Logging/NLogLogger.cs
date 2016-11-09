@@ -1,4 +1,7 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Logging
+﻿using System.Diagnostics;
+using System.Reflection;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Logging
 {
     using System;
     using System.Collections.Generic;
@@ -16,6 +19,7 @@
 
         private readonly string _loggerType;
         private readonly IRequestContext _context;
+        private string _version;
 #pragma warning disable S1144, 0169// Unused private types or members should be removed
         private ElasticSearchTarget dummy; // Reference so assembly is copied to Primary output.
 
@@ -30,6 +34,7 @@
             _settings = settings;
             _loggerType = loggerType?.ToString() ?? "DefaultWebLogger";
             _context = context;
+            _version = GetVersion();
         }
 
         public LoggingConfiguration LoggingConfiguration { get; set; }
@@ -109,6 +114,13 @@
             SendLog(message, level, new Dictionary<string, object>(), exception);
         }
 
+        private string GetVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.ProductVersion;
+        }
+
         private void SendLog(object msg, LogLevel level, Dictionary<string, object> properties, Exception exception = null)
         {
             var propertiesLocal = new Dictionary<string, object>();
@@ -121,6 +133,7 @@
             propertiesLocal.Add("Environment", _settings.EnvironmentName);
             propertiesLocal.Add("LoggerType", _loggerType);
             propertiesLocal.Add("RequestCtx", _context);
+            propertiesLocal.Add("Version", _version);
 
             var logEvent = new LogEventInfo(level, _loggerType, msg.ToString());
 
