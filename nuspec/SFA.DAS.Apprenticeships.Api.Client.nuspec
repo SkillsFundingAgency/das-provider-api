@@ -16,6 +16,6 @@
         </dependencies>
     </metadata>
      <files>
-        <file src="\..\src\SFA.DAS.Apprenticeships.Api.Client\bin\Release\SFA.DAS.Apprenticeships.Api.Client.dll" target="lib" />
+        <file src="\..\src\SFA.DAS.Apprenticeships.Api.Client\bin\Release\SFA.DAS.Apprenticeships.Api.Client.dll" target="lib\net45" />
      </files>
 </package>
