@@ -7,6 +7,8 @@
         /// </summary>
         public int Ukprn { get; set; }
 
+        public bool IsHigherEducationInstitute { get; set; }
+
         public string ProviderName { get; set; }
 
         /// <summary>

@@ -51,6 +51,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ProviderMarketingInfo = item.ProviderMarketingInfo,
                 TrainingLocations = item.TrainingLocations,
                 Ukprn = item.Ukprn,
+                IsHigherEducationInstitute = item.IsHigherEducationInstitute,
                 Website = item.Website
             };
         }
@@ -78,6 +79,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ProviderMarketingInfo = item.ProviderMarketingInfo,
                 TrainingLocations = item.TrainingLocations,
                 Ukprn = item.Ukprn,
+                IsHigherEducationInstitute = item.IsHigherEducationInstitute,
                 Website = item.Website,
                 FrameworkCode = item.FrameworkCode,
                 Level = item.Level,
@@ -117,6 +119,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 {
                     Name = item.ProviderName,
                     UkPrn = item.Ukprn,
+                    IsHigherEducationInstitute = item.IsHigherEducationInstitute,
                     NationalProvider = item.NationalProvider,
                     ContactInformation = new ContactInformation
                     {

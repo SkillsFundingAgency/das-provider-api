@@ -34,10 +34,11 @@
 
         int Ukprn { get; set; }
 
+        bool IsHigherEducationInstitute { get; set; }
+
         string Website { get; set; }
 
         IEnumerable<TrainingLocation> TrainingLocations { get; set; }
-
 
         double? NationalOverallAchievementRate { get; set; }
 
