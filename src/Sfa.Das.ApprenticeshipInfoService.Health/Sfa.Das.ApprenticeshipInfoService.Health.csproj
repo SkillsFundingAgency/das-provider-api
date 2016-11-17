@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Elasticsearch.Net, Version=2.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\Elasticsearch.Net.2.4.5\lib\net45\Elasticsearch.Net.dll</HintPath>
       <Private>True</Private>
@@ -57,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AngleSharpService.cs" />
     <Compile Include="Elasticsearch\Models\ElasticsearchResponse.cs" />
     <Compile Include="Elasticsearch\Models\ElasticsearchLogHit.cs" />
     <Compile Include="HealthService.cs" />
@@ -64,6 +69,7 @@
     <Compile Include="DependencyResolution\HealthRegistry.cs" />
     <Compile Include="Elasticsearch\ElasticsearchService.cs" />
     <Compile Include="Elasticsearch\IElasticsearchService.cs" />
+    <Compile Include="IAngleSharpService.cs" />
     <Compile Include="IHealthSettings.cs" />
     <Compile Include="IHttpServer.cs" />
     <Compile Include="Models\ElasticsearchAlias.cs" />

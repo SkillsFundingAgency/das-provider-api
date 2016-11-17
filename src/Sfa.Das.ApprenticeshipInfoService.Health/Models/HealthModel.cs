@@ -14,8 +14,11 @@
 
         public Status LarsZipFileStatus { get; set; }
 
+        public Status LarsFilePageStatus { get; set; }
+
         public Status CourseDirectoryStatus { get; set; }
 
         public long Took { get; set; }
+        
     }
 }

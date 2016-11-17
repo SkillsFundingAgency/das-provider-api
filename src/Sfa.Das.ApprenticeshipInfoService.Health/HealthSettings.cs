@@ -11,7 +11,8 @@
 
         public IEnumerable<Uri> ElasticsearchUrls => GetElasticSearchIps("ElasticServerUrls");
 
-        public string LarsZipFileUrl => ConfigurationManager.AppSettings["LarsZipFileUrl"];
+        public string LarsSiteRootUrl => ConfigurationManager.AppSettings["LarsSiteRootUrl"];
+        public string LarsSiteDownloadsPageUrl => ConfigurationManager.AppSettings["LarsSiteDownloadsPageUrl"];
 
         public string CourseDirectoryUrl => ConfigurationManager.AppSettings["CourseDirectoryUrl"];
 
