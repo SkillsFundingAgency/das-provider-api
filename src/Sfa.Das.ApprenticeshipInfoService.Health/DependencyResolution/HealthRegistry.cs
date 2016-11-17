@@ -11,6 +11,7 @@
         {
             For<IHealthSettings>().Use<HealthSettings>();
             For<IElasticsearchHealthService>().Use<ElasticsearchHealthHealthService>();
+            For<IAngleSharpService>().Use<AngleSharpService>();
             For<IHttpServer>().Use<HttpService>();
             For<IHealthService>().Use<HealthService>();
         }

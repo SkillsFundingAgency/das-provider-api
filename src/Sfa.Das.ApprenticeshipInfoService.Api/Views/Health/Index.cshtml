@@ -1,19 +1,16 @@
 ﻿@model Sfa.Das.ApprenticeshipInfoService.Health.Models.HealthModel
 
-@{
-    ViewBag.Title = "Health";
-}
-
 <html>
 <head>
-    <style>  
+    <title>Health</title>
+    <style>
         body {
             background-color: whitesmoke;
-            font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+            font-family: Georgia, Cambria, "Times New Roman", Times, serif;
             color: rgb(0, 0, 0);
             color: rgba(0, 0, 0, .8);
         }
-        .container  {
+        .container {
             width: 1000px;
             margin: 50px auto;
             padding: 5px 10px;
@@ -21,8 +18,8 @@
         }
 
         .container h2 {
-            color: rgb(0,0,0);
-            color: rgba(0,0,0,.8);
+            color: rgb(0, 0, 0);
+            color: rgba(0, 0, 0, .8);
             padding: 10px;
         }
 
@@ -41,44 +38,44 @@
             min-height: 10px;
         }
 
-    dl.table-display {
-        background-color: white;
-        display: table;
-        width: 60%;
-        margin-bottom: 30px;
-    }
+        dl.table-display {
+            background-color: white;
+            display: table;
+            width: 60%;
+            margin-bottom: 30px;
+        }
 
-    dl.table-display dt {
-	    clear: left;
-	    float: left;
-	    width: 220px;
-	    margin: 0;
-	    padding: 5px;
-	    font-weight: bold;
-    }
+        dl.table-display dt {
+            clear: left;
+            float: left;
+            width: 220px;
+            margin: 0;
+            padding: 5px;
+            font-weight: bold;
+        }
 
-    dl.table-display dd {
-	    margin-left: 230px;
-	    padding: 5px;
-    }
+        dl.table-display dd {
+            margin-left: 230px;
+            padding: 5px;
+        }
 
-    dl.table-display dd.first { border-top: 1px solid #999; }
+        dl.table-display dd.first { border-top: 1px solid #999; }
 
-    .services {
-        padding: 20px;
-    }
+        .services {
+            padding: 20px;
+        }
 
-    .services > div {
-        padding: 1px;
-    }
+        .services > div {
+            padding: 1px;
+        }
 
-    .status-lbl.red {
-        border-bottom: 5px solid red;
-    }
+        .status-lbl.red {
+            border-bottom: 5px solid red;
+        }
 
-    .status-lbl.green {
-        border-bottom: 5px solid green;
-    }
+        .status-lbl.green {
+            border-bottom: 5px solid green;
+        }
 
     </style>
 </head>
@@ -137,13 +134,19 @@
         </div>
         <div class="services">
             <dl class="table-display">
-                <dt>LarsZipFileStatus: </dt>
+                <dt>Lars Download Page Status: </dt>
+                <dd>
+                    <span class="status-lbl @Model.LarsFilePageStatus.ToString().ToLower()">
+                        @Model.LarsFilePageStatus
+                    </span>
+                </dd>
+                <dt>Lars Zip File Status: </dt>
                 <dd >
                     <span class="status-lbl @Model.LarsZipFileStatus.ToString().ToLower()">
                         @Model.LarsZipFileStatus
                     </span>
                 </dd>
-                <dt>CourseDirectoryStatus: </dt>
+                <dt>Course Directory Status: </dt>
                 <dd>
                     <span class="status-lbl @Model.CourseDirectoryStatus.ToString().ToLower()">
                         @Model.CourseDirectoryStatus
