@@ -6,7 +6,6 @@ using System.Web.Http.Routing;
 using FluentAssertions;
 using NUnit.Framework.Constraints;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
-using Sfa.Das.ApprenticeshipInfoService.Core.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
 using SFA.DAS.Apprenticeships.Api.Types;
 
@@ -21,28 +20,53 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 
     public class ProviderControllerTests
     {
+        private ProvidersController _sut;
+        private Mock<IGetProviders> _mockGetProviders;
+        private Mock<IControllerHelper> _mockControllerHelper;
+        private Mock<IApprenticeshipProviderRepository> _mockApprenticeshipProviderRepository;
+        private Mock<ILog> _mockLogger;
+
+        [SetUp]
+        public void Init()
+        {
+            _mockGetProviders = new Mock<IGetProviders>();
+            _mockControllerHelper = new Mock<IControllerHelper>();
+            _mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
+            _mockLogger = new Mock<ILog>();
+
+            _sut = new ProvidersController(
+                _mockGetProviders.Object,
+                _mockControllerHelper.Object,
+                _mockApprenticeshipProviderRepository.Object,
+                _mockLogger.Object);
+        }
+        
         [Test]
         public void ShouldReturnProvider()
         {
-            var expected = new Provider();
+            var expected = new Provider() {Ukprn = 1};
 
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
+            _sut.Request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("http://localhost/providers")
+            };
+            _sut.Configuration = new HttpConfiguration();
+            _sut.Configuration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+            _sut.RequestContext.RouteData = new HttpRouteData(
+                route: new HttpRoute(),
+                values: new HttpRouteValueDictionary { { "controller", "providers" } });
 
-            mockGetProviders.Setup(
+            _mockGetProviders.Setup(
                 x =>
                     x.GetProviderByUkprn(1)).Returns(expected);
-
-            var _sut = new ProvidersController(
-                mockGetProviders.Object, 
-                mockControllerHelper.Object, 
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
+            
             var actual = _sut.Get(1).FirstOrDefault();
 
             actual.ShouldBeEquivalentTo(expected);
+            actual.Uri.Should().Be("http://localhost/providers?ukprn=1");
         }
 
         [Test]
@@ -50,21 +74,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         {
             var expected = new Provider();
 
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
-
-            mockGetProviders.Setup(
+            _mockGetProviders.Setup(
                 x =>
                     x.GetProviderByUkprn(1)).Returns(expected);
-
-            var _sut = new ProvidersController(
-                mockGetProviders.Object,
-                mockControllerHelper.Object,
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
-
+            
             ActualValueDelegate<object> test = () => _sut.Get(-2);
 
             Assert.That(test, Throws.TypeOf<HttpResponseException>());
@@ -79,23 +92,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 ApprenticeshipInfoUrl = "http://www.abba.co.uk"
             };
             var expected = new List<StandardProviderSearchResultsItemResponse> { element };
-
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
             
-            mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
-            mockGetProviders.Setup(
+            _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
+            _mockGetProviders.Setup(
                 x =>
                     x.GetByStandardIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(),
                         It.IsAny<int>())).Returns(expected);
-
-            var _sut = new ProvidersController(
-                mockGetProviders.Object,
-                mockControllerHelper.Object,
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
 
             var response = _sut.GetByStandardIdAndLocation(1, 2, 3, 1);
 
@@ -118,23 +120,14 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 ApprenticeshipInfoUrl = "http://www.abba.co.uk"
             };
             var expected = new List<FrameworkProviderSearchResultsItemResponse> { element };
-
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
             
-            mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
-            mockGetProviders.Setup(
+            _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
+            _mockGetProviders.Setup(
                 x =>
                     x.GetByFrameworkIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(),
                         It.IsAny<int>())).Returns(expected);
 
-            var _sut = new ProvidersController(
-                mockGetProviders.Object,
-                mockControllerHelper.Object,
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
+            
 
             var response = _sut.GetByFrameworkIdAndLocation(1, 2, 3, 1);
 
@@ -151,18 +144,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         [Test]
         public void ShouldThrowExceptionIfLatLonIsNullSearchingByStandardId()
         {
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
-
-            mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
-
-            var _sut = new ProvidersController(
-                mockGetProviders.Object,
-                mockControllerHelper.Object,
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
+            _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
 
             ActualValueDelegate<object> test = () => _sut.GetByStandardIdAndLocation(1, null, null, 1);
 
@@ -172,19 +154,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         [Test]
         public void ShouldThrowExceptionIfLatLonIsNullSearchingByFrameworkId()
         {
-            var mockGetProviders = new Mock<IGetProviders>();
-            var mockControllerHelper = new Mock<IControllerHelper>();
-            var mockApprenticeshipProviderRepository = new Mock<IApprenticeshipProviderRepository>();
-            var mockLogger = new Mock<ILog>();
+            _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
             
-            mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
-
-            var _sut = new ProvidersController(
-                mockGetProviders.Object,
-                mockControllerHelper.Object,
-                mockApprenticeshipProviderRepository.Object,
-                mockLogger.Object);
-
             ActualValueDelegate<object> test = () => _sut.GetByFrameworkIdAndLocation(1, null, null, 1);
 
             Assert.That(test, Throws.TypeOf<HttpResponseException>());

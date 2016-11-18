@@ -45,6 +45,11 @@
             {
                 var response = _getProviders.GetAllProviders();
 
+                foreach (var provider in response)
+                {
+                    provider.Uri = Resolve(provider.Ukprn);
+                }
+
                 return response;
             }
             catch (Exception e)
@@ -65,12 +70,14 @@
             try
             {
                 var response = _getProviders.GetProviderByUkprn(ukprn);
-
+                
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
                         $"No provider with Ukprn {ukprn} found");
                 }
+
+                response.Uri = Resolve(response.Ukprn);
 
                 return new List<Provider> { response };
             }
@@ -166,7 +173,7 @@
                 ukprn,
                 location,
                 standardCode);
-
+            
             if (model != null)
             {
                 return model;
@@ -194,6 +201,11 @@
             }
 
             throw new HttpResponseException(HttpStatusCode.NotFound);
+        }
+
+        private string Resolve(int ukprn)
+        {
+            return Url.Link("DefaultApi", new { controller = "providers", ukprn });
         }
     }
 }

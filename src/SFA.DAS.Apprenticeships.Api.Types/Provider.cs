@@ -15,10 +15,7 @@
         /// Is this provider also an employer
         /// </summary>
         public bool IsEmployerProvider { get; set; }
-
-        /// <summary>
-        /// TODO Uri to the full provider information
-        /// </summary>
+        
         public string Uri { get; set; }
 
         public string Phone { get; set; }
