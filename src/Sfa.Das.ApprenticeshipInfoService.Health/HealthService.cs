@@ -42,7 +42,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
                 _healthSettings.LarsSiteDownloadsPageUrl);
 
             var larsDownloadPageStatus = _httpServer.ResponseCode(larsDownloadPageUrl);
-            var courseDirectoryResponse = _httpServer.ResponseCode(_healthSettings.CourseDirectoryUrl);
+            var courseDirectoryStatus = _httpServer.ResponseCode(_healthSettings.CourseDirectoryUrl);
+
+            var ukrlpStatus = _httpServer.ResponseCode(_healthSettings.UkrlpUrl);
+
 
             var model = new HealthModel
             {
@@ -51,7 +54,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
                 ElasticSearchAliases = elasticsearchModel.ElasticsearchAliases,
                 ElasticsearchLog = elasticErrorLogs,
                 LarsFilePageStatus = larsDownloadPageStatus,
-                CourseDirectoryStatus = courseDirectoryResponse 
+                CourseDirectoryStatus = courseDirectoryStatus,
+                UkrlpStatus = ukrlpStatus
             };
 
             if (elasticsearchModel.Exception != null)
