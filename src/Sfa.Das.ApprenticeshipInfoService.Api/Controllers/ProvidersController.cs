@@ -205,7 +205,7 @@
 
         private string Resolve(int ukprn)
         {
-            return Url.Link("DefaultApi", new { controller = "providers", ukprn });
+            return Url.Link("DefaultApi", new { controller = "providers" }) + "/" + ukprn;
         }
     }
 }

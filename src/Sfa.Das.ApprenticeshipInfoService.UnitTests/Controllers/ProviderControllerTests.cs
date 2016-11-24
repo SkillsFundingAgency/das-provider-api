@@ -66,7 +66,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             var actual = _sut.Get(1).FirstOrDefault();
 
             actual.ShouldBeEquivalentTo(expected);
-            actual.Uri.Should().Be("http://localhost/providers?ukprn=1");
+            actual.Uri.Should().Be("http://localhost/providers/1");
         }
 
         [Test]
