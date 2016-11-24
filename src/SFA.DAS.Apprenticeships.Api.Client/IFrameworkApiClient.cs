@@ -16,13 +16,13 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         /// <summary>
         /// Get a single framework details
-        /// GET /frameworks/{frameworkCode}{pathwayCode}{progamType}
+        /// GET /frameworks/{frameworkCode}{pathwayCode}{programmeType}
         /// </summary>
         /// <param name="frameworkCode">an integer for the framework code</param>
         /// <param name="pathwayCode">an integer for the pathway code</param>
-        /// <param name="progamType">an integer for the program type</param>
+        /// <param name="programmeType">an integer for the program type</param>
         /// <returns>a framework details based on pathway and level</returns>
-        Framework Get(int frameworkCode, int pathwayCode, int progamType);
+        Framework Get(int frameworkCode, int pathwayCode, int programmeType);
 
         /// <summary>
         /// Get a collection of frameworks
@@ -41,7 +41,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         /// <summary>
         /// Check if a framework exists
-        /// HEAD /frameworks/{frameworkCode}{pathwayCode}{progamType}
+        /// HEAD /frameworks/{frameworkCode}{pathwayCode}{programmeType}
         /// </summary>
         /// <param name="frameworkCode">an integer for the framework code</param>
         /// <param name="pathwayCode">an integer for the pathway code</param>

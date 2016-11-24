@@ -41,9 +41,9 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return null;
         }
 
-        public Framework Get(int frameworkCode, int pathwayCode, int progamType)
+        public Framework Get(int frameworkCode, int pathwayCode, int programmeType)
         {
-            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, progamType));
+            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType)) ?? Get(ConvertToCompositeId2(frameworkCode, pathwayCode, programmeType));
         }
 
         public IEnumerable<FrameworkSummary> FindAll()
@@ -107,7 +107,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         private static string ConvertToCompositeId(int frameworkCode, int pathwayCode, int progamType)
         {
-            return $"{frameworkCode}{pathwayCode}{progamType}";
+            return $"{frameworkCode}{progamType}{pathwayCode}";
+        }
+        private static string ConvertToCompositeId2(int frameworkCode, int pathwayCode, int progamType)
+        {
+            return $"{frameworkCode}-{progamType}-{pathwayCode}";
         }
     }
 }
