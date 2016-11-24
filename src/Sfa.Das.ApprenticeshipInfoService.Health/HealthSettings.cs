@@ -16,7 +16,7 @@
 
         public string CourseDirectoryUrl => ConfigurationManager.AppSettings["CourseDirectoryUrl"];
 
-        public string UkrlpUrl => ConfigurationManager.AppSettings["UkrlpUrl"];
+        public string UkrlpUrl => ConfigurationManager.AppSettings["UKRLP_EndpointUri"];
 
         private IEnumerable<Uri> GetElasticSearchIps(string configString)
         {
