@@ -1,4 +1,6 @@
-﻿namespace SFA.DAS.Apprenticeships.Api.Types
+﻿using System;
+
+namespace SFA.DAS.Apprenticeships.Api.Types
 {
     public class Provider
     {
@@ -8,6 +10,9 @@
         public int Ukprn { get; set; }
 
         public bool IsHigherEducationInstitute { get; set; }
+
+        [Obsolete("renamed to IsHigherEducationInstitute")]
+        public bool Hei => IsHigherEducationInstitute;
 
         public string ProviderName { get; set; }
 
