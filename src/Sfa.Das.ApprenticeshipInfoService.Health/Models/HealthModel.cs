@@ -19,6 +19,6 @@
         public Status CourseDirectoryStatus { get; set; }
 
         public long Took { get; set; }
-        
+        public Status UkrlpStatus { get; set; }
     }
 }

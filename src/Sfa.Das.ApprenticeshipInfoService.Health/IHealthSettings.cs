@@ -14,5 +14,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
         string LarsSiteDownloadsPageUrl { get; }
 
         string CourseDirectoryUrl { get; }
+
+        string UkrlpUrl { get; }
     }
 }

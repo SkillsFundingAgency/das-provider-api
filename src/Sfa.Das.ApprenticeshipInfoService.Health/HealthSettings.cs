@@ -16,6 +16,8 @@
 
         public string CourseDirectoryUrl => ConfigurationManager.AppSettings["CourseDirectoryUrl"];
 
+        public string UkrlpUrl => ConfigurationManager.AppSettings["UkrlpUrl"];
+
         private IEnumerable<Uri> GetElasticSearchIps(string configString)
         {
             var urlStrings = ConfigurationManager.AppSettings[configString].Split(',');
