@@ -1,7 +1,6 @@
 ﻿namespace Sfa.Das.ApprenticeshipInfoService.Health.DependencyResolution
 {
     using Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch;
-    using Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch.Models;
 
     using StructureMap;
 
@@ -14,6 +13,7 @@
             For<IAngleSharpService>().Use<AngleSharpService>();
             For<IHttpServer>().Use<HttpService>();
             For<IHealthService>().Use<HealthService>();
+            For<ISqlService>().Use<SqlService>();
         }
     }
 }

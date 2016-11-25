@@ -10,12 +10,20 @@
     {
         public Status ResponseCode(string url)
         {
-            using (var client = new HttpClient())
+            try
             {
-                var response = client.GetAsync(url);
-                Task.WaitAll(response);
-                return response.Result.StatusCode.ToString().ToLower() == "ok"
-                    ? Status.Green : Status.Red;
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url);
+                    Task.WaitAll(response);
+                    return response.Result.StatusCode.ToString().ToLower() == "ok"
+                        ? Status.Green
+                        : Status.Red;
+                }
+            }
+            catch
+            {
+                return Status.Red;
             }
         }
 
