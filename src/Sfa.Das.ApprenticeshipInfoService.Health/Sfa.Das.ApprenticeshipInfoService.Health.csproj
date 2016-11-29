@@ -72,6 +72,7 @@
     <Compile Include="IAngleSharpService.cs" />
     <Compile Include="IHealthSettings.cs" />
     <Compile Include="IHttpServer.cs" />
+    <Compile Include="ISqlService.cs" />
     <Compile Include="Models\ElasticsearchAlias.cs" />
     <Compile Include="Models\ElasticsearchLog.cs" />
     <Compile Include="Models\HealthModel.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="IHealthService.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

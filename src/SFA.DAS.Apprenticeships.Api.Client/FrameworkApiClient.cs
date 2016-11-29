@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SFA.DAS.Apprenticeships.Api.Types;
 
@@ -10,6 +11,38 @@ namespace SFA.DAS.Apprenticeships.Api.Client
     {
         public FrameworkApiClient(string baseUri = null) : base(baseUri)
         {
+        }
+
+        public async Task<Framework> GetAsync(string frameworkId)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}");
+            request.Headers.Add("Accept", "application/json");
+
+            var response = _httpClient.SendAsync(request);
+
+            try
+            {
+                var result = response;
+                if (result.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    Task.Factory.StartNew(
+                        () =>
+                            JsonConvert.DeserializeObject<Framework>(result.Result.Content.ReadAsStringAsync().Result,
+                                _jsonSettings));
+                }
+                if (result.Result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    RaiseResponseError($"Could not find the framework {frameworkId}", request, result.Result);
+                }
+
+                RaiseResponseError(request, result.Result);
+            }
+            finally
+            {
+                Dispose(request, response);
+            }
+
+            return null;
         }
 
         public Framework Get(string frameworkId)
@@ -41,9 +74,9 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return null;
         }
 
-        public Framework Get(int frameworkCode, int pathwayCode, int progamType)
+        public Framework Get(int frameworkCode, int pathwayCode, int programmeType)
         {
-            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, progamType));
+            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType)) ?? Get(ConvertToCompositeId2(frameworkCode, pathwayCode, programmeType));
         }
 
         public IEnumerable<FrameworkSummary> FindAll()
@@ -107,7 +140,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         private static string ConvertToCompositeId(int frameworkCode, int pathwayCode, int progamType)
         {
-            return $"{frameworkCode}{pathwayCode}{progamType}";
+            return $"{frameworkCode}{progamType}{pathwayCode}";
+        }
+        private static string ConvertToCompositeId2(int frameworkCode, int pathwayCode, int progamType)
+        {
+            return $"{frameworkCode}-{progamType}-{pathwayCode}";
         }
     }
 }

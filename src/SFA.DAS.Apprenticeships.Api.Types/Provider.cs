@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace SFA.DAS.Apprenticeships.Api.Types
 {
@@ -10,6 +11,9 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public int Ukprn { get; set; }
 
         public bool IsHigherEducationInstitute { get; set; }
+
+        [Obsolete("renamed to IsHigherEducationInstitute")]
+        public bool Hei => IsHigherEducationInstitute;
 
         public string ProviderName { get; set; }
 

@@ -4,6 +4,7 @@
 
     public class HealthModel
     {
+        public Status FEChoices { get; set; }
         public Status Status { get; set; }
 
         public List<string> Errors { get; set; }

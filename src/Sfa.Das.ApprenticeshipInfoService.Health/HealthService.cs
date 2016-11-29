@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Health
 {
@@ -17,17 +18,20 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
         private readonly IHealthSettings _healthSettings;
 
         private readonly IHttpServer _httpServer;
+        private readonly ISqlService _sqlService;
 
         public HealthService(
             IElasticsearchHealthService elasticsearchHealthService,
             IAngleSharpService angleSharpService,
             IHealthSettings healthSettings,
-            IHttpServer httpServer)
+            IHttpServer httpServer,
+            ISqlService sqlService)
         {
             _elasticsearchHealthService = elasticsearchHealthService;
             _angleSharpService = angleSharpService;
             _healthSettings = healthSettings;
             _httpServer = httpServer;
+            _sqlService = sqlService;
         }
 
         public HealthModel CreateModel()
@@ -45,6 +49,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
             var courseDirectoryStatus = _httpServer.ResponseCode(_healthSettings.CourseDirectoryUrl);
 
             var ukrlpStatus = _httpServer.ResponseCode(_healthSettings.UkrlpUrl);
+            var fechoicesStatus = _sqlService.TestConnection(ConfigurationManager.AppSettings["AchievementRateDataBaseConnectionString"]);
 
 
             var model = new HealthModel
@@ -55,6 +60,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
                 ElasticsearchLog = elasticErrorLogs,
                 LarsFilePageStatus = larsDownloadPageStatus,
                 CourseDirectoryStatus = courseDirectoryStatus,
+                FEChoices = fechoicesStatus,
                 UkrlpStatus = ukrlpStatus
             };
 
@@ -86,6 +92,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
             {
                 model.Status = Status.Red;
                 model.Errors.Add("Cant access Course Directory");
+            }
+
+            if (model.FEChoices != Status.Green)
+            {
+                model.Status = Status.Red;
+                model.Errors.Add("Can't access FEChoices");
             }
 
             timer.Stop();
