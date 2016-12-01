@@ -25,7 +25,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                 var result = response;
                 if (result.Result.StatusCode == HttpStatusCode.OK)
                 {
-                    Task.Factory.StartNew(
+                    await Task.Factory.StartNew(
                         () =>
                             JsonConvert.DeserializeObject<Framework>(result.Result.Content.ReadAsStringAsync().Result,
                                 _jsonSettings));
