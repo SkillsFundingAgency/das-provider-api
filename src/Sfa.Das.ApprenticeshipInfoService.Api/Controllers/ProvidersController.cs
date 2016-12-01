@@ -65,7 +65,7 @@
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
-        public IEnumerable<Provider> Get(int ukprn)
+        public IEnumerable<Provider> Get(long ukprn)
         {
             try
             {
@@ -93,7 +93,7 @@
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
-        public void Head(int ukprn)
+        public void Head(long ukprn)
         {
             if (_getProviders.GetProviderByUkprn(ukprn) != null)
             {
@@ -203,7 +203,7 @@
             throw new HttpResponseException(HttpStatusCode.NotFound);
         }
 
-        private string Resolve(int ukprn)
+        private string Resolve(long ukprn)
         {
             return Url.Link("DefaultApi", new { controller = "providers", ukprn });
         }

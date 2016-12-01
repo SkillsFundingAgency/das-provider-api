@@ -56,7 +56,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return results.Documents;
         }
 
-        public Provider GetProviderByUkprn(int ukprn)
+        public Provider GetProviderByUkprn(long ukprn)
         {
             var results =
                 _elasticsearchCustomClient.Search<Provider>(

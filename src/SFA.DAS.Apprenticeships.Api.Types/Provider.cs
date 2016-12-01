@@ -5,7 +5,7 @@
         /// <summary>
         /// UK provider reference number which is not unique
         /// </summary>
-        public int Ukprn { get; set; }
+        public long Ukprn { get; set; }
 
         public bool IsHigherEducationInstitute { get; set; }
 
