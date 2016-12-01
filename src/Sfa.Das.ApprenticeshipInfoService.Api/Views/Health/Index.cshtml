@@ -134,7 +134,7 @@
         </div>
         <div class="services">
             <dl class="table-display">
-                <dt>Lars Download Page Status: </dt>
+                <dt>Lars Download Page: </dt>
                 <dd>
                     <span class="status-lbl @Model.LarsFilePageStatus.ToString().ToLower()">
                         @Model.LarsFilePageStatus
@@ -150,6 +150,18 @@
                 <dd>
                     <span class="status-lbl @Model.CourseDirectoryStatus.ToString().ToLower()">
                         @Model.CourseDirectoryStatus
+                    </span>
+                </dd>
+                <dt>Ukrlp Status: </dt>
+                <dd>
+                    <span class="status-lbl @Model.UkrlpStatus.ToString().ToLower()">
+                        @Model.UkrlpStatus
+                    </span>
+                </dd>
+                <dt>Fechoices Status: </dt>
+                <dd>
+                    <span class="status-lbl @Model.FEChoices.ToString().ToLower()">
+                        @Model.FEChoices
                     </span>
                 </dd>
             </dl>

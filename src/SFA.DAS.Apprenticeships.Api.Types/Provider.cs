@@ -1,4 +1,7 @@
-﻿namespace SFA.DAS.Apprenticeships.Api.Types
+using System;
+using System.Collections.Generic;
+
+namespace SFA.DAS.Apprenticeships.Api.Types
 {
     public class Provider
     {
@@ -9,7 +12,12 @@
 
         public bool IsHigherEducationInstitute { get; set; }
 
+        [Obsolete("renamed to IsHigherEducationInstitute")]
+        public bool Hei => IsHigherEducationInstitute;
+
         public string ProviderName { get; set; }
+
+        public string LegalName { get; set; }
 
         /// <summary>
         /// Is this provider also an employer
@@ -29,5 +37,7 @@
         public double EmployerSatisfaction { get; set; }
 
         public double LearnerSatisfaction { get; set; }
+
+        public IEnumerable<ContactAddress> Addresses { get; set; }
     }
 }
