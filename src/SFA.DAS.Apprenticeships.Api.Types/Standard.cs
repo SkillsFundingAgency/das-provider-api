@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SFA.DAS.Apprenticeships.Api.Types
 {
@@ -26,7 +27,12 @@ namespace SFA.DAS.Apprenticeships.Api.Types
 
         public IEnumerable<string> Keywords { get; set; }
 
+        [Obsolete("Use 'Duration' Instead.")]
         public TypicalLength TypicalLength { get; set; }
+
+        public int Duration { get; set; }
+
+        public int MaxFunding { get; set; }
 
         public string IntroductoryText { get; set; }
 

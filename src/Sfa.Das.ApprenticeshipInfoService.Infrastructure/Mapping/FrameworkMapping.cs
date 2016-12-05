@@ -19,7 +19,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 PathwayCode = document.PathwayCode,
                 PathwayName = document.PathwayName,
                 ProgType = document.ProgType,
-                TypicalLength = document.TypicalLength,
+                Duration = document.Duration,
+                MaxFunding = document.MaxFunding,
+                TypicalLength = new TypicalLength {From = document.Duration, To = document.Duration, Unit = "m"},
                 ExpiryDate = document.ExpiryDate,
                 JobRoleItems = document.JobRoleItems,
                 CompletionQualifications = document.CompletionQualifications,
@@ -46,7 +48,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 PathwayCode = document.PathwayCode,
                 PathwayName = document.PathwayName,
                 ProgType = document.ProgType,
-                TypicalLength = document.TypicalLength,
+                Duration = document.Duration,
+                MaxFunding = document.MaxFunding,
+                TypicalLength = new TypicalLength { From = document.Duration, To = document.Duration, Unit = "m" }
             };
 
             return framework;

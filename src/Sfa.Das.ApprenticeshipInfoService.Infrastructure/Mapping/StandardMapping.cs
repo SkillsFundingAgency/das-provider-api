@@ -17,7 +17,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Level = document.Level,
                 JobRoles = document.JobRoles,
                 Keywords = document.Keywords,
-                TypicalLength = document.TypicalLength,
+                Duration = document.Duration,
+                MaxFunding = document.MaxFunding,
+                TypicalLength = new TypicalLength { From = document.Duration, To = document.Duration, Unit = "m" },
                 IntroductoryText = document.IntroductoryText,
                 EntryRequirements = document.EntryRequirements,
                 WhatApprenticesWillLearn = document.WhatApprenticesWillLearn,
@@ -34,7 +36,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Id = document.StandardId,
                 Title = document.Title,
                 Level = document.Level,
-                TypicalLength = document.TypicalLength,
+                Duration = document.Duration,
+                MaxFunding = document.MaxFunding,
+                TypicalLength = new TypicalLength { From = document.Duration, To = document.Duration, Unit = "m" },
             };
         }
     }

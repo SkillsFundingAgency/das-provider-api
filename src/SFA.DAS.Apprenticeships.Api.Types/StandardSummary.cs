@@ -1,4 +1,6 @@
-﻿namespace SFA.DAS.Apprenticeships.Api.Types
+﻿using System;
+
+namespace SFA.DAS.Apprenticeships.Api.Types
 {
     public class StandardSummary
     {
@@ -17,7 +19,12 @@
         /// </summary>
         public string Title { get; set; }
 
+        [Obsolete("Use 'Duration' Instead.")]
         public TypicalLength TypicalLength { get; set; }
+
+        public int Duration { get; set; }
+
+        public int MaxFunding { get; set; }
 
         public int Level { get; set; }
     }

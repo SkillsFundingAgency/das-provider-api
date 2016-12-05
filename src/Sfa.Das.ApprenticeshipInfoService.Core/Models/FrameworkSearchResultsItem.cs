@@ -30,8 +30,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
         public string EntryRequirements { get; set; }
 
         public string ProfessionalRegistration { get; set; }
+        
+        public int Duration { get; set; }
 
-        public TypicalLength TypicalLength { get; set; }
+        public int MaxFunding { get; set; }
 
         public DateTime? ExpiryDate { get; set; }
 

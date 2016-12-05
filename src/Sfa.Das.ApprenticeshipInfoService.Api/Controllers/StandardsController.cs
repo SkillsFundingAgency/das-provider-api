@@ -55,7 +55,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             standard.Uri = Resolve(standard.StandardId);
             return standard;
         }
-
+        
         // HEAD /standards/5
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
