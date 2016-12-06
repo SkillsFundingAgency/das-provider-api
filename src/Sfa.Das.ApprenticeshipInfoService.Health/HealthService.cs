@@ -79,6 +79,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
             if (model.LarsFilePageStatus != Status.Green)
             {
                 model.Status = Status.Red;
+                model.LarsZipFileStatus = Status.Red;
                 model.Errors.Add("Cant access hub.imservices.org.uk (LARS)");
             }
             else
