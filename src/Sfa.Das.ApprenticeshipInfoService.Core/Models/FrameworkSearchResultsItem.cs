@@ -33,7 +33,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
         
         public int Duration { get; set; }
 
-        public int MaxFunding { get; set; }
+        public int FundingCap { get; set; }
 
         public DateTime? ExpiryDate { get; set; }
 

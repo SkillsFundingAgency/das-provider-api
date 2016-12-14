@@ -18,7 +18,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 JobRoles = document.JobRoles,
                 Keywords = document.Keywords,
                 Duration = document.Duration,
-                MaxFunding = document.MaxFunding,
+                MaxFunding = document.FundingCap,
                 TypicalLength = new TypicalLength { From = document.Duration, To = document.Duration, Unit = "m" },
                 IntroductoryText = document.IntroductoryText,
                 EntryRequirements = document.EntryRequirements,
@@ -37,7 +37,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Title = document.Title,
                 Level = document.Level,
                 Duration = document.Duration,
-                MaxFunding = document.MaxFunding,
+                MaxFunding = document.FundingCap,
                 TypicalLength = new TypicalLength { From = document.Duration, To = document.Duration, Unit = "m" },
             };
         }

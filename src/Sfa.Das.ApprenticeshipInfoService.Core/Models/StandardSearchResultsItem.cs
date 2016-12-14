@@ -21,7 +21,7 @@
 
         public int Duration { get; set; }
 
-        public int MaxFunding { get; set; }
+        public int FundingCap { get; set; }
 
         public string IntroductoryText { get; set; }
 
