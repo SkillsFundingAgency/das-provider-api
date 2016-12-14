@@ -1,3 +1,5 @@
+using System;
+
 namespace Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch.Models
 {
     internal class ElasticsearchLogHit
@@ -7,5 +9,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch.Models
         public string Environment { get; set; }
 
         public string Message { get; set; }
+
+        public DateTime Timestamp { get; set; }
     }
 }

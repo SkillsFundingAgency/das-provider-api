@@ -27,6 +27,10 @@
             using (var connectionSettings = new ConnectionSettings(new StaticConnectionPool(uriStrings)))
             {
                 connectionSettings.DisableDirectStreaming();
+                connectionSettings.InferMappingFor<ElasticsearchLogHit>(i => i
+                    .Rename(p => p.Timestamp, "@timestamp")
+                    );
+
                 var elasticClient = new ElasticClient(connectionSettings);
 
                 var oneDayAgo = DateMath.Now.Subtract(new Time(new TimeSpan(1, 0, 0, 0)));
@@ -55,7 +59,7 @@
                     );
                 return new ElasticsearchLog
                 {
-                    LogErrors = result.Hits.Select(m => m.Source.Message),
+                    LogErrors = result.Hits.Select(m => $"{m.Source.Timestamp} - {m.Source.Message}"),
                     ErrorCount = result.Total
                 };
             }
