@@ -11,6 +11,8 @@
 
         public int Level { get; set; }
 
+        public bool Published { get; set; }
+
         public string StandardPdf { get; set; }
 
         public string AssessmentPlanPdf { get; set; }
