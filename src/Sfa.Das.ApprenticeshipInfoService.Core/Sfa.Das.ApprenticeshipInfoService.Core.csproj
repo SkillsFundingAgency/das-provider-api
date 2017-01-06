@@ -77,6 +77,7 @@
     <Compile Include="Models\FrameworkSearchResultsItem.cs" />
     <Compile Include="Models\IApprenticeshipProduct.cs" />
     <Compile Include="Services\IApprenticeshipProviderRepository.cs" />
+    <Compile Include="Services\IGetAssessmentOrgs.cs" />
     <Compile Include="Services\IGetProviders.cs" />
     <Compile Include="Services\IGetStandards.cs" />
     <Compile Include="Services\IGetFrameworks.cs" />

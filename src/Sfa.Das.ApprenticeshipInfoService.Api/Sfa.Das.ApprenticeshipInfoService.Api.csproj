@@ -189,6 +189,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Attributes\ExceptionHandlingAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AssessmentOrgsController.cs" />
     <Compile Include="Controllers\StatsController.cs" />
     <Compile Include="Helpers\HttpResponseFactory.cs" />
     <Compile Include="Controllers\ProvidersController.cs" />
