@@ -66,7 +66,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         {
             try
             {
-                var response = _getAssessmentOrgs.GetOrganizationsById(organizationId);
+                var response = _getAssessmentOrgs.GetOrganizationById(organizationId);
 
                 if (response == null)
                 {
@@ -81,6 +81,37 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             catch (Exception e)
             {
                 _logger.Error(e, $"/assessment-organizations/{organizationId}");
+                throw;
+            }
+        }
+
+        // GET /assessmentsorgs/{organizationId}
+        [SwaggerOperation("GetOrganization")]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organization>))]
+        [Route("assessmentorgs/standards/{standardId}")]
+        [ExceptionHandling]
+        public IEnumerable<OrganizationDetailsDTO> GetByStandardId(string standardId)
+        {
+            try
+            {
+                var response = _getAssessmentOrgs.GetOrganizationsByStandardId(standardId);
+
+                if (response == null)
+                {
+                    throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                        $"No organization with EpaOrganisationIdentifier {standardId} found");
+                }
+
+                foreach (var organization in response)
+                {
+                    organization.Uri = Resolve(organization.EpaOrganisationIdentifier);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, $"/assessment-organizations/standards/{standardId}");
                 throw;
             }
         }

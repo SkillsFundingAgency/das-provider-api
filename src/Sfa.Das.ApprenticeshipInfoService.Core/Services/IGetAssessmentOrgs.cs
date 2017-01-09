@@ -8,6 +8,8 @@
     {
         IEnumerable<OrganizationDTO> GetAllOrganizations();
 
-        OrganizationDetailsDTO GetOrganizationsById(string organizationId);
+        OrganizationDetailsDTO GetOrganizationById(string organizationId);
+
+        IEnumerable<OrganizationDetailsDTO> GetOrganizationsByStandardId(string standardId);
     }
 }
