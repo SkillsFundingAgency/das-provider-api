@@ -85,6 +85,22 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
+        // HEAD /assessmentsorgs/10005318
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("assessmentorgs/{organizationId}")]
+        [ExceptionHandling]
+        public void Head(string organizationId)
+        {
+            if (_getAssessmentOrgs.GetOrganizationById(organizationId) != null)
+            {
+                return;
+            }
+
+            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                $"No organization with EpaOrganisationIdentifier {organizationId} found");
+        }
+
         // GET /assessmentsorgs/{organizationId}
         [SwaggerOperation("GetOrganization")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organization>))]
