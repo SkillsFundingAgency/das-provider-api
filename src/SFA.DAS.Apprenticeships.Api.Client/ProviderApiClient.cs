@@ -20,7 +20,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>a provider details based on ukprn</returns>
-        public IEnumerable<Provider> Get(int providerUkprn)
+        public IEnumerable<Provider> Get(long providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}");
             request.Headers.Add("Accept", "application/json");
@@ -63,7 +63,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>bool</returns>
-        public bool Exists(int providerUkprn)
+        public bool Exists(long providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}");
             request.Headers.Add("Accept", "application/json");
