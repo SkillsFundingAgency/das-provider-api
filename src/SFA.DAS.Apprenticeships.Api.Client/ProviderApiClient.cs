@@ -58,11 +58,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         }
 
         /// <summary>
-        /// Get a provider details
-        /// GET /providers/{provider-ukprn}
+        /// Check if a provider exists
+        /// HEAD /frameworks/{provider-ukprn}
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
-        /// <returns>a bool whether the provider exists</returns>
+        /// <returns>bool</returns>
         public bool Exists(int providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}");
@@ -73,7 +73,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             try
             {
                 var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                if (result.StatusCode == HttpStatusCode.NoContent)
                 {
                     return true;
                 }
