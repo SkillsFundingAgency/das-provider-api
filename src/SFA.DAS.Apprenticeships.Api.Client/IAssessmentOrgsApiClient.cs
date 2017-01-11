@@ -8,26 +8,26 @@ namespace SFA.DAS.Apprenticeships.Api.Client
     public interface IAssessmentOrgsApiClient : IDisposable
     {
         /// <summary>
-        /// Get a single organization details
-        /// GET /assessmentorgs/{organizationId}
+        /// Get a single organisation details
+        /// GET /assessmentorgs/{organisationId}
         /// </summary>
-        /// <param name="organizationId">an integer for the organization id</param>
-        /// <returns>a organization details based on id</returns>
-        OrganizationDetailsDTO Get(string organizationId);
+        /// <param name="organisationId">an integer for the organisation id</param>
+        /// <returns>a organisation details based on id</returns>
+        OrganisationDetailsDTO Get(string organisationId);
 
         /// <summary>
-        /// Get a collection of organizations
+        /// Get a collection of organisations
         /// GET /frameworks
         /// </summary>
-        /// <returns>a collection of organization summaries</returns>
-        IEnumerable<OrganizationDTO> FindAll();
+        /// <returns>a collection of organisation summaries</returns>
+        IEnumerable<OrganisationDTO> FindAll();
 
         /// <summary>
-        /// Check if a assessment organization exists
-        /// HEAD /assessmentorgs/{organizationId}
+        /// Check if a assessment organisation exists
+        /// HEAD /assessmentorgs/{organisationId}
         /// </summary>
-        /// <param name="organizationId">an integer for the organization id</param>
+        /// <param name="organisationId">an integer for the organisation id</param>
         /// <returns>bool</returns>
-        bool Exists(string organizationId);
+        bool Exists(string organisationId);
     }
 }

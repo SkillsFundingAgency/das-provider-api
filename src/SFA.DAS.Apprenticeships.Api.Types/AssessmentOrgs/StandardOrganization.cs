@@ -2,7 +2,7 @@
 
 namespace SFA.DAS.Apprenticeships.Api.Types
 {
-    public class StandardOrganization
+    public class StandardOrganisation
     {
         public string EpaOrganisationIdentifier { get; set; }
 

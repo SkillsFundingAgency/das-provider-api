@@ -6,10 +6,10 @@
 
     public interface IGetAssessmentOrgs
     {
-        IEnumerable<OrganizationDTO> GetAllOrganizations();
+        IEnumerable<OrganisationDTO> GetAllOrganisations();
 
-        OrganizationDetailsDTO GetOrganizationById(string organizationId);
+        OrganisationDetailsDTO GetOrganisationById(string organisationId);
 
-        IEnumerable<OrganizationDetailsDTO> GetOrganizationsByStandardId(string standardId);
+        IEnumerable<OrganisationDetailsDTO> GetOrganisationsByStandardId(string standardId);
     }
 }

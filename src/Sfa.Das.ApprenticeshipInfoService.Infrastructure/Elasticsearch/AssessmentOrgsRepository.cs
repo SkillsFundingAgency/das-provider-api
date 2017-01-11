@@ -36,11 +36,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             _assessmentOrgsMapping = assessmentOrgsMapping;
         }
 
-        public IEnumerable<OrganizationDTO> GetAllOrganizations()
+        public IEnumerable<OrganisationDTO> GetAllOrganisations()
         {
-            var take = GetOrganizationsTotalAmount();
+            var take = GetOrganisationsTotalAmount();
             var results =
-                _elasticsearchCustomClient.Search<Organization>(
+                _elasticsearchCustomClient.Search<Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -51,16 +51,16 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query all organizations");
+                throw new ApplicationException($"Failed query all organisations");
             }
 
-            return results.Documents.Select(organization => _assessmentOrgsMapping.MapToOrganizationDto(organization)).ToList();
+            return results.Documents.Select(organisation => _assessmentOrgsMapping.MapToOrganisationDto(organisation)).ToList();
         }
 
-        public OrganizationDetailsDTO GetOrganizationById(string organizationId)
+        public OrganisationDetailsDTO GetOrganisationById(string organisationId)
         {
             var results =
-                _elasticsearchCustomClient.Search<Organization>(
+                _elasticsearchCustomClient.Search<Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -69,29 +69,29 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                         .Query(q => q
                             .Match(m => m
                                 .Field(f => f.EpaOrganisationIdentifier)
-                                .Query(organizationId))));
+                                .Query(organisationId))));
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query organization by id");
+                throw new ApplicationException($"Failed query organisation by id");
             }
 
-            return _assessmentOrgsMapping.MapToOrganizationDetailsDto(results.Documents.FirstOrDefault());
+            return _assessmentOrgsMapping.MapToOrganisationDetailsDto(results.Documents.FirstOrDefault());
         }
 
-        public IEnumerable<OrganizationDetailsDTO> GetOrganizationsByStandardId(string standardId)
+        public IEnumerable<OrganisationDetailsDTO> GetOrganisationsByStandardId(string standardId)
         {
-            var ids = GetOrganizationIdsByStandardId(standardId);
+            var ids = GetOrganisationIdsByStandardId(standardId);
 
-            return ids.Select(GetOrganizationById).ToList();
+            return ids.Select(GetOrganisationById).ToList();
         }
 
-        private IEnumerable<string> GetOrganizationIdsByStandardId(string standardId)
+        private IEnumerable<string> GetOrganisationIdsByStandardId(string standardId)
         {
-            var take = GetOrganizationsAmountByStandardId(standardId);
+            var take = GetOrganisationsAmountByStandardId(standardId);
 
             var results =
-                _elasticsearchCustomClient.Search<StandardOrganization>(
+                _elasticsearchCustomClient.Search<StandardOrganisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("standardorganisationdocument"))
@@ -105,10 +105,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return results.Documents.Select(result => result.EpaOrganisationIdentifier).ToList();
         }
 
-        private int GetOrganizationsAmountByStandardId(string standardId)
+        private int GetOrganisationsAmountByStandardId(string standardId)
         {
             var results =
-                _elasticsearchCustomClient.Search<StandardOrganization>(
+                _elasticsearchCustomClient.Search<StandardOrganisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("standardorganisationdocument"))
@@ -120,10 +120,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return (int)results.HitsMetaData.Total;
         }
 
-        private int GetOrganizationsTotalAmount()
+        private int GetOrganisationsTotalAmount()
         {
             var results =
-                _elasticsearchCustomClient.Search<Organization>(
+                _elasticsearchCustomClient.Search<Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))

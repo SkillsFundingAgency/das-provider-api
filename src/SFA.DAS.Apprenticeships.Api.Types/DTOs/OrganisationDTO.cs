@@ -1,6 +1,6 @@
 ﻿namespace SFA.DAS.Apprenticeships.Api.Types.DTOs
 {
-    public class OrganizationDTO
+    public class OrganisationDTO
     {
         public string Id { get; set; }
 

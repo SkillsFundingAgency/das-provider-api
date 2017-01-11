@@ -1,23 +1,16 @@
-﻿using System.Linq;
-using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping;
-using SFA.DAS.Apprenticeships.Api.Types.DTOs;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Web.Http;
-    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Models;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.Apprenticeships.Api.Types.DTOs;
     using Swashbuckle.Swagger.Annotations;
-    using IControllerHelper = Sfa.Das.ApprenticeshipInfoService.Core.Helpers.IControllerHelper;
 
     public class AssessmentOrgsController : ApiController
     {
@@ -34,44 +27,44 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
         // GET /assessmentsorgs
         [SwaggerOperation("GetAll")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organization>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationDTO>))]
         [Route("assessmentorgs")]
         [ExceptionHandling]
-        public IEnumerable<OrganizationDTO> Get()
+        public IEnumerable<OrganisationDTO> Get()
         {
             try
             {
-                var response = _getAssessmentOrgs.GetAllOrganizations();
+                var response = _getAssessmentOrgs.GetAllOrganisations();
 
-                foreach (var organization in response)
+                foreach (var organisation in response)
                 {
-                    organization.Uri = Resolve(organization.Id);
+                    organisation.Uri = Resolve(organisation.Id);
                 }
 
                 return response;
             }
             catch (Exception e)
             {
-                _logger.Error(e, "/assessment-organizations");
+                _logger.Error(e, "/assessment-organisations");
                 throw;
             }
         }
 
-        // GET /assessmentsorgs/{organizationId}
-        [SwaggerOperation("GetOrganization")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organization>))]
-        [Route("assessmentorgs/{organizationId}")]
+        // GET /assessmentsorgs/{organisationId}
+        [SwaggerOperation("GetOrganisation")]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(OrganisationDetailsDTO))]
+        [Route("assessmentorgs/{organisationId}")]
         [ExceptionHandling]
-        public OrganizationDetailsDTO Get(string organizationId)
+        public OrganisationDetailsDTO Get(string organisationId)
         {
             try
             {
-                var response = _getAssessmentOrgs.GetOrganizationById(organizationId);
+                var response = _getAssessmentOrgs.GetOrganisationById(organisationId);
 
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No organization with EpaOrganisationIdentifier {organizationId} found");
+                        $"No organisation with EpaOrganisationIdentifier {organisationId} found");
                 }
 
                 response.Uri = Resolve(response.EpaOrganisationIdentifier);
@@ -80,7 +73,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"/assessment-organizations/{organizationId}");
+                _logger.Error(e, $"/assessment-organisations/{organisationId}");
                 throw;
             }
         }
@@ -88,53 +81,53 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         // HEAD /assessmentsorgs/10005318
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        [Route("assessmentorgs/{organizationId}")]
+        [Route("assessmentorgs/{organisationId}")]
         [ExceptionHandling]
-        public void Head(string organizationId)
+        public void Head(string organisationId)
         {
-            if (_getAssessmentOrgs.GetOrganizationById(organizationId) != null)
+            if (_getAssessmentOrgs.GetOrganisationById(organisationId) != null)
             {
                 return;
             }
 
             throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No organization with EpaOrganisationIdentifier {organizationId} found");
+                $"No organisation with EpaOrganisationIdentifier {organisationId} found");
         }
 
-        // GET /assessmentsorgs/{organizationId}
-        [SwaggerOperation("GetOrganization")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organization>))]
+        // GET /assessmentsorgs/{organisationId}
+        [SwaggerOperation("GetOrganisation")]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
         [Route("assessmentorgs/standards/{standardId}")]
         [ExceptionHandling]
-        public IEnumerable<OrganizationDetailsDTO> GetByStandardId(string standardId)
+        public IEnumerable<OrganisationDetailsDTO> GetByStandardId(string standardId)
         {
             try
             {
-                var response = _getAssessmentOrgs.GetOrganizationsByStandardId(standardId);
+                var response = _getAssessmentOrgs.GetOrganisationsByStandardId(standardId);
 
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No organization with EpaOrganisationIdentifier {standardId} found");
+                        $"No organisation with EpaOrganisationIdentifier {standardId} found");
                 }
 
-                foreach (var organization in response)
+                foreach (var organisation in response)
                 {
-                    organization.Uri = Resolve(organization.EpaOrganisationIdentifier);
+                    organisation.Uri = Resolve(organisation.EpaOrganisationIdentifier);
                 }
 
                 return response;
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"/assessment-organizations/standards/{standardId}");
+                _logger.Error(e, $"/assessment-organisations/standards/{standardId}");
                 throw;
             }
         }
 
-        private string Resolve(string organizationId)
+        private string Resolve(string organisationId)
         {
-            return Url.Link("DefaultApi", new { controller = "assessmentorgs", id = organizationId });
+            return Url.Link("DefaultApi", new { controller = "assessmentorgs", id = organisationId });
         }
     }
 }

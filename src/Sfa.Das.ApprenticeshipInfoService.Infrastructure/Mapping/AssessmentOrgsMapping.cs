@@ -1,37 +1,41 @@
 ﻿using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 using SFA.DAS.Apprenticeships.Api.Types.DTOs;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public class AssessmentOrgsMapping : IAssessmentOrgsMapping
     {
-        public OrganizationDTO MapToOrganizationDto(Organization organization)
+        public OrganisationDTO MapToOrganisationDto(Organisation organisation)
         {
-            return new OrganizationDTO
+            return new OrganisationDTO
             {
-                Id = organization.EpaOrganisationIdentifier,
-                Name = organization.EpaOrganisation
+                Id = organisation.EpaOrganisationIdentifier,
+                Name = organisation.EpaOrganisation
             };
         }
 
-        public OrganizationDetailsDTO MapToOrganizationDetailsDto(Organization organization)
+        public OrganisationDetailsDTO MapToOrganisationDetailsDto(Organisation organisation)
         {
-            if (organization == null)
+            if (organisation == null)
             {
                 return null;
             }
 
-            return new OrganizationDetailsDTO
+            return new OrganisationDetailsDTO
             {
-                EpaOrganisationIdentifier = organization.EpaOrganisationIdentifier,
-                EpaOrganisation = organization.EpaOrganisation,
-                ContactAddress1 = organization.ContactAddress1,
-                ContactAddress2 = organization.ContactAddress2,
-                ContactAddress3 = organization.ContactAddress3,
-                ContactAddress4 = organization.ContactAddress4,
-                ContactPostcode = organization.ContactPostcode,
-                OrganisationType = organization.OrganisationType,
-                WebsiteLink = organization.WebsiteLink
+                EpaOrganisationIdentifier = organisation.EpaOrganisationIdentifier,
+                EpaOrganisation = organisation.EpaOrganisation,
+                Address = new Address
+                {
+                    Primary = organisation.Address.Primary,
+                    Secondary = organisation.Address.Secondary,
+                    Street = organisation.Address.Street,
+                    Town = organisation.Address.Town,
+                    Postcode = organisation.Address.Postcode
+                },
+                OrganisationType = organisation.OrganisationType,
+                WebsiteLink = organisation.WebsiteLink
             };
         }
     }

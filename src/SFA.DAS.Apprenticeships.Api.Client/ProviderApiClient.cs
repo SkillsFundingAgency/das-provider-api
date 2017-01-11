@@ -1,12 +1,10 @@
-﻿using System;
-using SFA.DAS.Apprenticeships.Api.Types;
-
-namespace SFA.DAS.Apprenticeships.Api.Client
+﻿namespace SFA.DAS.Apprenticeships.Api.Client
 {
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using Newtonsoft.Json;
+    using SFA.DAS.Apprenticeships.Api.Types;
 
     public class ProviderApiClient : ApiClientBase, IProviderApiClient
     {

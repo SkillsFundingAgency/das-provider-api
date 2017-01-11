@@ -5,8 +5,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public interface IAssessmentOrgsMapping
     {
-        OrganizationDTO MapToOrganizationDto(Organization organization);
+        OrganisationDTO MapToOrganisationDto(Organisation organisation);
 
-        OrganizationDetailsDTO MapToOrganizationDetailsDto(Organization organization);
+        OrganisationDetailsDTO MapToOrganisationDetailsDto(Organisation organisation);
     }
 }
