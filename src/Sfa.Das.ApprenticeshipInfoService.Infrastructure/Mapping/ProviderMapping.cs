@@ -1,11 +1,31 @@
 ﻿using System.Linq;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
+using SFA.DAS.Apprenticeships.Api.Types;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public class ProviderMapping : IProviderMapping
     {
+        public ProviderDTO MapToProviderDto(Provider provider)
+        {
+            return new ProviderDTO
+            {
+                Email = provider.Email,
+                EmployerSatisfaction = provider.EmployerSatisfaction,
+                IsEmployerProvider = provider.IsEmployerProvider,
+                IsHigherEducationInstitute = provider.IsHigherEducationInstitute,
+                LearnerSatisfaction = provider.LearnerSatisfaction,
+                LegalName = provider.LegalName,
+                NationalProvider = provider.NationalProvider,
+                Phone = provider.Phone,
+                ProviderName = provider.ProviderName,
+                Ukprn = provider.Ukprn,
+                Uri = provider.Uri,
+                Website = provider.Website
+            };
+        }
+
         ApprenticeshipDetails IProviderMapping.MapToProvider(StandardProviderSearchResultsItem item, int locationId)
         {
             if (item == null)

@@ -35,7 +35,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             _providerMapping = providerMapping;
         }
 
-        public IEnumerable<Provider> GetAllProviders()
+        public IEnumerable<ProviderDTO> GetAllProviders()
         {
             var take = GetProvidersTotalAmount();
             var results =
@@ -53,7 +53,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 throw new ApplicationException($"Failed query all providers");
             }
 
-            return results.Documents;
+            return results.Documents.Select(provider => _providerMapping.MapToProviderDto(provider)).ToList();
         }
 
         public Provider GetProviderByUkprn(long ukprn)
