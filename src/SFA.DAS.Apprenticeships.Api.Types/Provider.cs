@@ -17,6 +17,8 @@ namespace SFA.DAS.Apprenticeships.Api.Types
 
         public string ProviderName { get; set; }
 
+        public IEnumerable<string> Aliases { get; set; }
+
         public string LegalName { get; set; }
 
         /// <summary>
