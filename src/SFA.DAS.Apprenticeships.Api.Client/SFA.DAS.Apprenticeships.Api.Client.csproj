@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClientBase.cs" />
+    <Compile Include="AssessmentOrgsApiClient.cs" />
+    <Compile Include="IAssessmentOrgsApiClient.cs" />
     <Compile Include="ProviderApiClient.cs" />
     <Compile Include="IProviderApiClient.cs" />
     <Compile Include="FrameworkApiClient.cs" />

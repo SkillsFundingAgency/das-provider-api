@@ -9,6 +9,8 @@
 
         string ProviderIndexAlias { get; }
 
+        string AssessmentOrgsIndexAlias { get; }
+
         IEnumerable<Uri> ElasticServerUrls { get; }
 
         string EnvironmentName { get; }

@@ -70,7 +70,7 @@
             try
             {
                 var response = _getProviders.GetProviderByUkprn(ukprn);
-                
+
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,

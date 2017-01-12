@@ -50,7 +50,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query all standards");
+                throw new ApplicationException($"Failed query all providers");
             }
 
             return results.Documents;
@@ -73,7 +73,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query all providers");
+                throw new ApplicationException($"Failed query provider by ukprn");
             }
             if (results.Documents.Count() > 1)
             {

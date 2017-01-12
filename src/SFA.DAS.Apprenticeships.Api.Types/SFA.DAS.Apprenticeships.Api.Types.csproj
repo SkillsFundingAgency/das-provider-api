@@ -41,14 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentOrgs\Address.cs" />
     <Compile Include="ContactAddress.cs" />
+    <Compile Include="DTOs\OrganisationDetailsDTO.cs" />
+    <Compile Include="DTOs\OrganisationDTO.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Framework.cs" />
     <Compile Include="FrameworkSummary.cs" />
     <Compile Include="JobRoleItem.cs" />
+    <Compile Include="AssessmentOrgs\Organisation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Standard.cs" />
+    <Compile Include="AssessmentOrgs\StandardOrganization.cs" />
     <Compile Include="StandardSummary.cs" />
     <Compile Include="TypicalLength.cs" />
     <Compile Include="Stats\VersionInformation.cs" />

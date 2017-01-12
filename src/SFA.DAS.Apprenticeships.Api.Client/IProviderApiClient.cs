@@ -6,7 +6,20 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 {
     public interface IProviderApiClient : IDisposable
     {
-        IEnumerable<Provider> Get(int providerUkprn);
-        bool Exists(int providerUkprn);
+        /// <summary>
+        /// Get a provider details
+        /// GET /providers/{provider-ukprn}
+        /// </summary>
+        /// <param name="providerUkprn">an integer for the provider ukprn</param>
+        /// <returns>a bool whether the provider exists</returns>
+        IEnumerable<Provider> Get(long providerUkprn);
+
+        /// <summary>
+        /// Check if a provider exists
+        /// HEAD /frameworks/{provider-ukprn}
+        /// </summary>
+        /// <param name="providerUkprn">an integer for the provider ukprn</param>
+        /// <returns>bool</returns>
+        bool Exists(long providerUkprn);
     }
 }

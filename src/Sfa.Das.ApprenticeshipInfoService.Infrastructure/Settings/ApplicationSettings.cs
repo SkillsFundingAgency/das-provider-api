@@ -13,6 +13,8 @@
 
         public string ProviderIndexAlias => ConfigurationManager.AppSettings["ProviderIndexAlias"];
 
+        public string AssessmentOrgsIndexAlias => ConfigurationManager.AppSettings["AssessmentOrgsIndexAlias"];
+
         public IEnumerable<Uri> ElasticServerUrls => GetElasticSearchIps();
 
         public string EnvironmentName => ConfigurationManager.AppSettings["EnvironmentName"];

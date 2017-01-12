@@ -114,7 +114,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             try
             {
                 var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                if (result.StatusCode == HttpStatusCode.NoContent)
                 {
                     return true;
                 }
