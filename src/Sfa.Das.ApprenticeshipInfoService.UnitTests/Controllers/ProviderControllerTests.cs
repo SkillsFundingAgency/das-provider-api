@@ -63,7 +63,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 x =>
                     x.GetProviderByUkprn(1)).Returns(expected);
             
-            var actual = _sut.Get(1).FirstOrDefault();
+            var actual = _sut.Get(1);
 
             actual.ShouldBeEquivalentTo(expected);
             actual.Uri.Should().Be("http://localhost/providers/1");

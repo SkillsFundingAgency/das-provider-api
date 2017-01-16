@@ -12,7 +12,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>a bool whether the provider exists</returns>
-        IEnumerable<Provider> Get(long providerUkprn);
+        Provider Get(long providerUkprn);
 
         /// <summary>
         /// Check if a provider exists

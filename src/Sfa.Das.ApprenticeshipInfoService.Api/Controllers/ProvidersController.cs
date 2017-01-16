@@ -61,11 +61,11 @@
 
         // GET /providers/10005318
         [SwaggerOperation("GetByUkprn")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Provider>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Provider))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
         [ExceptionHandling]
-        public IEnumerable<Provider> Get(long ukprn)
+        public Provider Get(long ukprn)
         {
             try
             {
@@ -79,7 +79,7 @@
 
                 response.Uri = Resolve(response.Ukprn);
 
-                return new List<Provider> { response };
+                return response;
             }
             catch (Exception e)
             {

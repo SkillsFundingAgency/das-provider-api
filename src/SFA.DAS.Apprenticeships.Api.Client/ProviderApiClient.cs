@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="providerUkprn">an integer for the provider ukprn</param>
         /// <returns>a provider details based on ukprn</returns>
-        public IEnumerable<Provider> Get(long providerUkprn)
+        public Provider Get(long providerUkprn)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}");
             request.Headers.Add("Accept", "application/json");
@@ -30,15 +30,8 @@
                 var result = response.Result;
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
-                    try
-                    {
-                        var single = JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                        return new List<Provider> { single };
-                    }
-                    catch
-                    {
-                        return JsonConvert.DeserializeObject<IEnumerable<Provider>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
+                    return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result,
+                        _jsonSettings);
                 }
                 if (result.StatusCode == HttpStatusCode.NotFound)
                 {
