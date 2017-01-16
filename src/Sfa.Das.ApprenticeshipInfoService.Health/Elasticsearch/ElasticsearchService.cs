@@ -65,7 +65,7 @@
             }
         }
 
-        public ElasticsearchResponse GetElasticHealth(IEnumerable<Uri> uris, string environment)
+        public ElasticsearchResponse GetElasticHealth(IEnumerable<Uri> uris, IEnumerable<string> requiredAliases, string environment)
         {
             try
             {
@@ -76,6 +76,9 @@
                         .CatAliases()
                         .Records
                         .Where(m => m.Alias.StartsWith(environment));
+
+                    var rawAliases = catAliases.Select(al => al.Alias.Replace(environment, string.Empty));
+
                     var aliases = new List<ElasticsearchAlias>();
 
                     foreach (var catAlias in catAliases)
@@ -91,7 +94,11 @@
                             Health = index.Records.FirstOrDefault()?.Health
                         });
                     }
-                    return new ElasticsearchResponse {ElasticsearchAliases = aliases};
+                    return new ElasticsearchResponse
+                    {
+                        RequiredAliasesExist = requiredAliases.All(al => rawAliases.Contains(al)),
+                        ElasticsearchAliases = aliases
+                    };
                 }
             }
             catch (Exception exception)

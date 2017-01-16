@@ -10,6 +10,6 @@
     {
         ElasticsearchLog GetErrorLogs(IEnumerable<Uri> uriStrings, string environment);
 
-        ElasticsearchResponse GetElasticHealth(IEnumerable<Uri> uris, string environment);
+        ElasticsearchResponse GetElasticHealth(IEnumerable<Uri> uris, IEnumerable<string> requiredAliases, string environment);
     }
 }

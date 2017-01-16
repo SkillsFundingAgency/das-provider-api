@@ -11,6 +11,8 @@
 
         public IEnumerable<ElasticsearchAlias> ElasticSearchAliases { get; set; }
 
+        public Status CoreAliasesExistStatus { get; set; }
+
         public ElasticsearchLog ElasticsearchLog { get; set; }
 
         public Status LarsZipFileStatus { get; set; }
@@ -20,6 +22,7 @@
         public Status CourseDirectoryStatus { get; set; }
 
         public long Took { get; set; }
+
         public Status UkrlpStatus { get; set; }
     }
 }
