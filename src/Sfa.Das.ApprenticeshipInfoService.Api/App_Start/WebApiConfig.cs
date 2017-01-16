@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api
+﻿using Newtonsoft.Json;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api
 {
     using System.Web.Http;
 
@@ -10,6 +12,7 @@
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
