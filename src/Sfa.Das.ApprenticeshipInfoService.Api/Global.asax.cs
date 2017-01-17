@@ -12,8 +12,13 @@
     {
         protected void Application_Start()
         {
+            var logger = DependencyResolver.Current.GetService<ILog>();
+            logger.Info("Starting Web Role");
+
             RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            logger.Info("Web Role started");
         }
 
         private static void RegisterRoutes(RouteCollection routes)
@@ -34,6 +39,17 @@
                 name: "DefaultRoute",
                 url: string.Empty,
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+            var logger = DependencyResolver.Current.GetService<ILog>();
+
+            if (ex is HttpException && ((HttpException)ex).GetHttpCode() != 404)
+            {
+                logger.Error(ex, "App_Error");
+            }
         }
     }
 }
