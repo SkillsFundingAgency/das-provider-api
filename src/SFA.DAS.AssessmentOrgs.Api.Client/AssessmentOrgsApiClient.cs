@@ -2,9 +2,10 @@
 using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
+using SFA.DAS.Apprenticeships.Api.Client;
 using SFA.DAS.Apprenticeships.Api.Types.DTOs;
 
-namespace SFA.DAS.Apprenticeships.Api.Client
+namespace SFA.DAS.AssessmentOrgs.Api.Client
 {
     public class AssessmentOrgsApiClient : ApiClientBase, IAssessmentOrgsApiClient
     {

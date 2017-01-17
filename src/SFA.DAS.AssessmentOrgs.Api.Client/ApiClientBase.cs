@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SFA.DAS.Apprenticeships.Api.Types.Exceptions;
 
-namespace SFA.DAS.Apprenticeships.Api.Client
+namespace SFA.DAS.AssessmentOrgs.Api.Client
 {
     public abstract class ApiClientBase
     {

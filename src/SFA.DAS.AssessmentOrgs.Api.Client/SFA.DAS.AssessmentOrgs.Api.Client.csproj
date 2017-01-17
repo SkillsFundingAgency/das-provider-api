@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DA7F312C-6132-4084-A38F-B053029226DE}</ProjectGuid>
+    <ProjectGuid>{C17DD901-87F3-4741-A169-BCF48E67A9FD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.DAS.Apprenticeships.Api.Client</RootNamespace>
-    <AssemblyName>SFA.DAS.Apprenticeships.Api.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>SFA.DAS.AssessmentOrgs.Api.Client</RootNamespace>
+    <AssemblyName>SFA.DAS.AssessmentOrgs.Api.Client</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,13 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClientBase.cs" />
-    <Compile Include="ProviderApiClient.cs" />
-    <Compile Include="IProviderApiClient.cs" />
-    <Compile Include="FrameworkApiClient.cs" />
-    <Compile Include="IFrameworkApiClient.cs" />
-    <Compile Include="IStandardApiClient.cs" />
+    <Compile Include="AssessmentOrgsApiClient.cs" />
+    <Compile Include="IAssessmentOrgsApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StandardApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.DAS.Apprenticeships.Api.Types\SFA.DAS.Apprenticeships.Api.Types.csproj">
