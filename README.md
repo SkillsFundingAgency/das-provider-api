@@ -50,6 +50,11 @@ using(var client = new ProviderApiClient())
 {
    var provider = client.Get(1003141);
 }
+
+using(var client = new AssessmentOrgsApiClient())
+{
+	var org = client.Get("EPA0001");
+}
 ```
 
 ### StructureMap
@@ -57,5 +62,6 @@ using(var client = new ProviderApiClient())
 For<IStandardApiClient>().Use<StandardApiClient>();
 For<IFrameworkApiClient>().Use<FrameworkApiClient>();
 For<IProviderApiClient>().Use<ProviderApiClient>();
+For<IAssessmentOrgsApiClient>().Use<ProviderApiClient>();
 ```
 
