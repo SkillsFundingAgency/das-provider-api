@@ -4,12 +4,11 @@
         <id>SFA.DAS.Apprenticeships.Api.Client</id>
         <version>0.0.1</version>
         <authors>sfanuget scottcowan</authors>
-		<licenseUrlhttps://github.com/SkillsFundingAgency/das-apprenticeship-programs-api/blob/master/LICENSE</licenseUrl>
+		<licenseUrl>https://github.com/SkillsFundingAgency/das-apprenticeship-programs-api/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/SkillsFundingAgency/das-apprenticeship-programs-api</projectUrl>	
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>a client to call the the DAS Apprenticeship Programmes and Providers service</description>
 		<summary>SFA Apprenticeship Programmes and Providers API Client</summary>
-
         <copyright>Copyright 2016</copyright>
         <dependencies>
             <dependency id="Newtonsoft.Json" version="9.0.1" />

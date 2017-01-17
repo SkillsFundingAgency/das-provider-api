@@ -4,7 +4,7 @@
         <id>SFA.DAS.Providers.Api.Client</id>
         <version>0.0.1</version>
         <authors>sfanuget scottcowan</authors>
-		<licenseUrlhttps://github.com/SkillsFundingAgency/das-apprenticeship-programs-api/blob/master/LICENSE</licenseUrl>
+		<licenseUrl>https://github.com/SkillsFundingAgency/das-apprenticeship-programs-api/blob/master/LICENSE</licenseUrl>
 		<projectUrl>https://github.com/SkillsFundingAgency/das-apprenticeship-programs-api</projectUrl>	
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>a client to call the the DAS Providers service</description>
