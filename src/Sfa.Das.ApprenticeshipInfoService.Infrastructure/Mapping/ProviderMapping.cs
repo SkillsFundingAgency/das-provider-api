@@ -16,7 +16,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 IsEmployerProvider = provider.IsEmployerProvider,
                 IsHigherEducationInstitute = provider.IsHigherEducationInstitute,
                 LearnerSatisfaction = provider.LearnerSatisfaction,
-                LegalName = provider.LegalName,
                 NationalProvider = provider.NationalProvider,
                 Phone = provider.Phone,
                 ProviderName = provider.ProviderName,
