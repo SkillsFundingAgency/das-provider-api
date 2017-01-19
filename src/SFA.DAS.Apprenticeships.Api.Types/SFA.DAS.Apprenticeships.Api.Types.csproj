@@ -54,7 +54,7 @@
     <Compile Include="Provider\ProviderSummary.cs" />
     <Compile Include="Provider\Provider.cs" />
     <Compile Include="Standard.cs" />
-    <Compile Include="AssessmentOrgs\StandardOrganization.cs" />
+    <Compile Include="AssessmentOrgs\StandardOrganisation.cs" />
     <Compile Include="StandardSummary.cs" />
     <Compile Include="TypicalLength.cs" />
     <Compile Include="Stats\VersionInformation.cs" />
