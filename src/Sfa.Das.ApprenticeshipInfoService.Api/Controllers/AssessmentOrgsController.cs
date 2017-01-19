@@ -130,7 +130,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
         private string Resolve(string organisationId)
         {
-            return Url.Link("DefaultApi", new { controller = "assessmentorgs", id = organisationId });
+            return Url.Link("DefaultApi", new { controller = "assessmentorgs", id = organisationId }).Replace("assessmentorgs", "assessment-organisations");
         }
     }
 }
