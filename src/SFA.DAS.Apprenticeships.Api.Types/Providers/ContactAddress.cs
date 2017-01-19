@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.Apprenticeships.Api.Types
+﻿namespace SFA.DAS.Apprenticeships.Api.Types.Providers
 {
     public class ContactAddress
     {

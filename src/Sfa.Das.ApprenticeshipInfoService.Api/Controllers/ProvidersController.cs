@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿using SFA.DAS.Apprenticeships.Api.Types.Providers;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using Sfa.Das.ApprenticeshipInfoService.Core.Logging;

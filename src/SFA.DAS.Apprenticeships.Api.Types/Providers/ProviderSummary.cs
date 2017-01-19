@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace SFA.DAS.Apprenticeships.Api.Types
+namespace SFA.DAS.Apprenticeships.Api.Types.Providers
 {
-    public class Provider
+    public class ProviderSummary
     {
         /// <summary>
         /// UK provider reference number which is not unique
@@ -18,6 +18,8 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public string ProviderName { get; set; }
 
         public IEnumerable<string> Aliases { get; set; }
+
+        public string LegalName { get; set; }
 
         /// <summary>
         /// Is this provider also an employer
@@ -37,7 +39,5 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public double EmployerSatisfaction { get; set; }
 
         public double LearnerSatisfaction { get; set; }
-
-        public IEnumerable<ContactAddress> Addresses { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using NUnit.Framework.Constraints;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
 using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
 namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {
