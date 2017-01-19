@@ -127,6 +127,8 @@
     <Compile Include="Mapping\FrameworkMapping.cs" />
     <Compile Include="Mapping\IFrameworkMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AnalyticsService.cs" />
+    <Compile Include="Services\IAnalyticsService.cs" />
     <Compile Include="Settings\ApplicationSettings.cs" />
   </ItemGroup>
   <ItemGroup>
