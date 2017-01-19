@@ -26,8 +26,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 
             return new Organisation
             {
-                EpaOrganisationIdentifier = organisation.EpaOrganisationIdentifier,
-                EpaOrganisation = organisation.EpaOrganisation,
+                Id = organisation.EpaOrganisationIdentifier,
+                Name = organisation.EpaOrganisation,
                 Address = new Address
                 {
                     Primary = organisation.Address.Primary,
@@ -36,8 +36,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                     Town = organisation.Address.Town,
                     Postcode = organisation.Address.Postcode
                 },
-                OrganisationType = organisation.OrganisationType,
-                WebsiteLink = organisation.WebsiteLink
+                //Type = organisation.OrganisationType,
+                Website = organisation.WebsiteLink
             };
         }
     }

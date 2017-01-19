@@ -1,4 +1,5 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+﻿using System.Web.Http.Description;
+using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -29,7 +30,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         // GET /assessmentsorgs
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationSummary>))]
-        [Route("assessmentorgs")]
+        [Route("assessment-organisations")]
         [ExceptionHandling]
         public IEnumerable<OrganisationSummary> Get()
         {
@@ -54,7 +55,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         // GET /assessmentsorgs/{organisationId}
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Organisation))]
-        [Route("assessmentorgs/{organisationId}")]
+        [Route("assessment-organisations/{organisationId}")]
         [ExceptionHandling]
         public Organisation Get(string organisationId)
         {
@@ -68,7 +69,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                         $"No organisation with EpaOrganisationIdentifier {organisationId} found");
                 }
 
-                response.Uri = Resolve(response.EpaOrganisationIdentifier);
+                response.Uri = Resolve(response.Id);
 
                 return response;
             }
@@ -82,7 +83,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         // HEAD /assessmentsorgs/10005318
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        [Route("assessmentorgs/{organisationId}")]
+        [Route("assessment-organisations/{organisationId}")]
         [ExceptionHandling]
         public void Head(string organisationId)
         {
@@ -98,7 +99,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         // GET /assessmentsorgs/{organisationId}
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
-        [Route("assessmentorgs/standards/{standardId}")]
+        [Route("assessment-organisations/standards/{standardId}")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
         public IEnumerable<Organisation> GetByStandardId(string standardId)
         {
@@ -114,7 +116,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
                 foreach (var organisation in response)
                 {
-                    organisation.Uri = Resolve(organisation.EpaOrganisationIdentifier);
+                    organisation.Uri = Resolve(organisation.Id);
                 }
 
                 return response;
