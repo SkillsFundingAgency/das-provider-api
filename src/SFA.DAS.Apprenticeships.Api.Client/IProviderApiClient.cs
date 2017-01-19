@@ -5,22 +5,7 @@ using SFA.DAS.Apprenticeships.Api.Types;
 namespace SFA.DAS.Apprenticeships.Api.Client
 {
     [Obsolete("Moved to SFA.DAS.Providers.Api.Client nuget package")]
-    public interface IProviderApiClient : IDisposable
+    public interface IProviderApiClient
     {
-        /// <summary>
-        /// Get a provider details
-        /// GET /providers/{provider-ukprn}
-        /// </summary>
-        /// <param name="providerUkprn">an integer for the provider ukprn</param>
-        /// <returns>a bool whether the provider exists</returns>
-        Provider Get(long providerUkprn);
-
-        /// <summary>
-        /// Check if a provider exists
-        /// HEAD /frameworks/{provider-ukprn}
-        /// </summary>
-        /// <param name="providerUkprn">an integer for the provider ukprn</param>
-        /// <returns>bool</returns>
-        bool Exists(long providerUkprn);
     }
 }
