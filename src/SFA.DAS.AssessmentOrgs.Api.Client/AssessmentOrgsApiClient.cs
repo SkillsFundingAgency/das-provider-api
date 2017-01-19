@@ -15,7 +15,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
 
         public Organisation Get(string organisationId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/assessmentorgs/{organisationId}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/{organisationId}");
             request.Headers.Add("Accept", "application/json");
 
             var response = _httpClient.SendAsync(request);
@@ -44,7 +44,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
 
         public IEnumerable<OrganisationSummary> FindAll()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/assessmentorgs");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations");
             request.Headers.Add("Accept", "application/json");
 
             var response = _httpClient.SendAsync(request);
@@ -69,7 +69,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
 
         public bool Exists(string organisationId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Head, $"/assessmentorgs/{organisationId}");
+            var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}");
             request.Headers.Add("Accept", "application/json");
 
             var response = _httpClient.SendAsync(request);
