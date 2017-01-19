@@ -144,6 +144,10 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sfa.Das.ApprenticeshipInfoService.Application\Sfa.Das.ApprenticeshipInfoService.Application.csproj">
+      <Project>{9216d34b-0325-47f4-9c57-1795d2fcb75b}</Project>
+      <Name>Sfa.Das.ApprenticeshipInfoService.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sfa.Das.ApprenticeshipInfoService.Core\Sfa.Das.ApprenticeshipInfoService.Core.csproj">
       <Project>{00CEBB2D-C8DC-45E3-8AE0-A38E8BEB8509}</Project>
       <Name>Sfa.Das.ApprenticeshipInfoService.Core</Name>

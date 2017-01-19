@@ -43,13 +43,12 @@
   <ItemGroup>
     <Compile Include="AssessmentOrgs\Address.cs" />
     <Compile Include="ContactAddress.cs" />
-    <Compile Include="DTOs\OrganisationDetailsDTO.cs" />
-    <Compile Include="DTOs\OrganisationDTO.cs" />
+    <Compile Include="AssessmentOrgs\Organisation.cs" />
+    <Compile Include="AssessmentOrgs\OrganisationSummary.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Framework.cs" />
     <Compile Include="FrameworkSummary.cs" />
     <Compile Include="JobRoleItem.cs" />
-    <Compile Include="AssessmentOrgs\Organisation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\ProviderSummary.cs" />
     <Compile Include="Provider\Provider.cs" />

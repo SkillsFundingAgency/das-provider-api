@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFA.DAS.Apprenticeships.Api.Types;
-using SFA.DAS.Apprenticeships.Api.Types.DTOs;
+using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
 namespace SFA.DAS.Apprenticeships.Api.Client
 {
@@ -13,14 +13,14 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// </summary>
         /// <param name="organisationId">an integer for the organisation id</param>
         /// <returns>a organisation details based on id</returns>
-        OrganisationDetailsDTO Get(string organisationId);
+        Organisation Get(string organisationId);
 
         /// <summary>
         /// Get a collection of organisations
         /// GET /frameworks
         /// </summary>
         /// <returns>a collection of organisation summaries</returns>
-        IEnumerable<OrganisationDTO> FindAll();
+        IEnumerable<OrganisationSummary> FindAll();
 
         /// <summary>
         /// Check if a assessment organisation exists

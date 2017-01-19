@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using Sfa.Das.ApprenticeshipInfoService.Application.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
 using SFA.DAS.Apprenticeships.Api.Types;
-using SFA.DAS.Apprenticeships.Api.Types.DTOs;
+using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+using Organisation = SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs.Organisation;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 {
@@ -36,11 +38,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             _assessmentOrgsMapping = assessmentOrgsMapping;
         }
 
-        public IEnumerable<OrganisationDTO> GetAllOrganisations()
+        public IEnumerable<OrganisationSummary> GetAllOrganisations()
         {
             var take = GetOrganisationsTotalAmount();
             var results =
-                _elasticsearchCustomClient.Search<Organisation>(
+                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -57,10 +59,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return results.Documents.Select(organisation => _assessmentOrgsMapping.MapToOrganisationDto(organisation)).ToList();
         }
 
-        public OrganisationDetailsDTO GetOrganisationById(string organisationId)
+        public Organisation GetOrganisationById(string organisationId)
         {
             var results =
-                _elasticsearchCustomClient.Search<Organisation>(
+                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -79,7 +81,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             return _assessmentOrgsMapping.MapToOrganisationDetailsDto(results.Documents.FirstOrDefault());
         }
 
-        public IEnumerable<OrganisationDetailsDTO> GetOrganisationsByStandardId(string standardId)
+        public IEnumerable<Organisation> GetOrganisationsByStandardId(string standardId)
         {
             var ids = GetOrganisationIdsByStandardId(standardId);
 
@@ -123,7 +125,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         private int GetOrganisationsTotalAmount()
         {
             var results =
-                _elasticsearchCustomClient.Search<Organisation>(
+                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))

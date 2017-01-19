@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.DAS.Apprenticeships.Api.Types
+namespace SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs
 {
     public class StandardOrganisation
     {

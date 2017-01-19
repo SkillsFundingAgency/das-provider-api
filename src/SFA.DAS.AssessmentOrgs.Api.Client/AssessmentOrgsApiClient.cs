@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using SFA.DAS.Apprenticeships.Api.Client;
-using SFA.DAS.Apprenticeships.Api.Types.DTOs;
+using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
 namespace SFA.DAS.AssessmentOrgs.Api.Client
 {
@@ -13,7 +13,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         {
         }
 
-        public OrganisationDetailsDTO Get(string organisationId)
+        public Organisation Get(string organisationId)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/assessmentorgs/{organisationId}");
             request.Headers.Add("Accept", "application/json");
@@ -25,7 +25,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
                 var result = response.Result;
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
-                    return JsonConvert.DeserializeObject<OrganisationDetailsDTO>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    return JsonConvert.DeserializeObject<Organisation>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
                 }
                 if (result.StatusCode == HttpStatusCode.NotFound)
                 {
@@ -42,7 +42,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
             return null;
         }
 
-        public IEnumerable<OrganisationDTO> FindAll()
+        public IEnumerable<OrganisationSummary> FindAll()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, $"/assessmentorgs");
             request.Headers.Add("Accept", "application/json");
@@ -54,7 +54,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
                 var result = response.Result;
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
-                    return JsonConvert.DeserializeObject<IEnumerable<OrganisationDTO>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    return JsonConvert.DeserializeObject<IEnumerable<OrganisationSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
                 }
 
                 RaiseResponseError(request, result);

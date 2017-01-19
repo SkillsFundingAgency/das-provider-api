@@ -1,15 +1,16 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Core.Services
+﻿using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Core.Services
 {
     using System.Collections.Generic;
     using SFA.DAS.Apprenticeships.Api.Types;
-    using SFA.DAS.Apprenticeships.Api.Types.DTOs;
 
     public interface IGetAssessmentOrgs
     {
-        IEnumerable<OrganisationDTO> GetAllOrganisations();
+        IEnumerable<OrganisationSummary> GetAllOrganisations();
 
-        OrganisationDetailsDTO GetOrganisationById(string organisationId);
+        Organisation GetOrganisationById(string organisationId);
 
-        IEnumerable<OrganisationDetailsDTO> GetOrganisationsByStandardId(string standardId);
+        IEnumerable<Organisation> GetOrganisationsByStandardId(string standardId);
     }
 }

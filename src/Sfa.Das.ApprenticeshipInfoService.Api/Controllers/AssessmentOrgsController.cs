@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +11,6 @@
     using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types;
-    using SFA.DAS.Apprenticeships.Api.Types.DTOs;
     using Swashbuckle.Swagger.Annotations;
 
     public class AssessmentOrgsController : ApiController
@@ -27,10 +28,10 @@
 
         // GET /assessmentsorgs
         [SwaggerOperation("GetAll")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationDTO>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationSummary>))]
         [Route("assessmentorgs")]
         [ExceptionHandling]
-        public IEnumerable<OrganisationDTO> Get()
+        public IEnumerable<OrganisationSummary> Get()
         {
             try
             {
@@ -52,10 +53,10 @@
 
         // GET /assessmentsorgs/{organisationId}
         [SwaggerOperation("GetOrganisation")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(OrganisationDetailsDTO))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Organisation))]
         [Route("assessmentorgs/{organisationId}")]
         [ExceptionHandling]
-        public OrganisationDetailsDTO Get(string organisationId)
+        public Organisation Get(string organisationId)
         {
             try
             {
@@ -96,10 +97,10 @@
 
         // GET /assessmentsorgs/{organisationId}
         [SwaggerOperation("GetOrganisation")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationDetailsDTO>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
         [Route("assessmentorgs/standards/{standardId}")]
         [ExceptionHandling]
-        public IEnumerable<OrganisationDetailsDTO> GetByStandardId(string standardId)
+        public IEnumerable<Organisation> GetByStandardId(string standardId)
         {
             try
             {
