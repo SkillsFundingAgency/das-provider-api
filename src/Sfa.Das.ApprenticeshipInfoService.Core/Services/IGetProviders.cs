@@ -6,7 +6,7 @@
 
     public interface IGetProviders
     {
-        IEnumerable<ProviderDTO> GetAllProviders();
+        IEnumerable<ProviderSummary> GetAllProviders();
 
         Provider GetProviderByUkprn(long ukprn);
 

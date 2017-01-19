@@ -96,7 +96,7 @@
 
         // GET /assessmentsorgs/{organisationId}
         [SwaggerOperation("GetOrganisation")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationDetailsDTO>))]
         [Route("assessmentorgs/standards/{standardId}")]
         [ExceptionHandling]
         public IEnumerable<OrganisationDetailsDTO> GetByStandardId(string standardId)

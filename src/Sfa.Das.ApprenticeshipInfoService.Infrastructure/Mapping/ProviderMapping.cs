@@ -7,9 +7,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public class ProviderMapping : IProviderMapping
     {
-        public ProviderDTO MapToProviderDto(Provider provider)
+        public ProviderSummary MapToProviderDto(Provider provider)
         {
-            return new ProviderDTO
+            return new ProviderSummary
             {
                 Email = provider.Email,
                 EmployerSatisfaction = provider.EmployerSatisfaction,

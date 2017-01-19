@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SFA.DAS.Apprenticeships.Api.Types
 {
-    public class ProviderDTO
+    public class ProviderSummary
     {
         /// <summary>
         /// UK provider reference number which is not unique

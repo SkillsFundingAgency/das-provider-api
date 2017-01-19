@@ -6,7 +6,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public interface IProviderMapping
     {
-        ProviderDTO MapToProviderDto(Provider provider);
+        ProviderSummary MapToProviderDto(Provider provider);
 
         ApprenticeshipDetails MapToProvider(StandardProviderSearchResultsItem item, int selectedLocationId);
 

@@ -35,7 +35,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             _providerMapping = providerMapping;
         }
 
-        public IEnumerable<ProviderDTO> GetAllProviders()
+        public IEnumerable<ProviderSummary> GetAllProviders()
         {
             var take = GetProvidersTotalAmount();
             var results =

@@ -36,10 +36,10 @@
 
         // GET /providers
         [SwaggerOperation("GetAll")]
-        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<ProviderDTO>))]
+        [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<ProviderSummary>))]
         [Route("providers")]
         [ExceptionHandling]
-        public IEnumerable<ProviderDTO> Get()
+        public IEnumerable<ProviderSummary> Get()
         {
             try
             {
