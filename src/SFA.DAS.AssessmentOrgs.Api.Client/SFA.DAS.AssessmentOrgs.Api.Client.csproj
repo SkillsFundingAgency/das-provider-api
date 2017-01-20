@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiClientBase.cs" />
+    <Compile Include="..\SFA.DAS.Apprenticeships.Api.Client\ApiClientBase.cs" />
     <Compile Include="AssessmentOrgsApiClient.cs" />
     <Compile Include="IAssessmentOrgsApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
