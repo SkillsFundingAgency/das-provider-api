@@ -19,31 +19,33 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         public Standard Get(string standardCode)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/standards/{standardCode}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards/{standardCode}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<Standard>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<Standard>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        RaiseResponseError($"Could not find the standard {standardCode}", request, result);
+                    }
+
+                    RaiseResponseError(request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    RaiseResponseError($"Could not find the standard {standardCode}", request, result);
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
 
         public bool Exists(int standardCode)
@@ -53,31 +55,33 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         public bool Exists(string standardCode)
         {
-            var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.NoContent)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return true;
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return true;
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return false;
+                    }
+
+                    RaiseResponseError(request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    return false;
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return false;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -87,27 +91,29 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// <returns>a collection of standard summaries</returns>
         public IEnumerable<StandardSummary> FindAll()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/standards");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<IEnumerable<StandardSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<IEnumerable<StandardSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+
+                    RaiseResponseError(request, result);
+                }
+                finally
+                {
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
     }
 }

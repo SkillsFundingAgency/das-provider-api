@@ -22,32 +22,34 @@ namespace SFA.DAS.Providers.Api.Client
         /// <returns>a provider details based on ukprn</returns>
         public Provider Get(long providerUkprn)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result,
-                        _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result,
+                            _jsonSettings);
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        RaiseResponseError($"The provider {providerUkprn} could not be found", request, result);
+                    }
+
+                    RaiseResponseError(request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    RaiseResponseError($"The provider {providerUkprn} could not be found", request, result);
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -58,56 +60,60 @@ namespace SFA.DAS.Providers.Api.Client
         /// <returns>bool</returns>
         public bool Exists(long providerUkprn)
         {
-            var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.NoContent)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return true;
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return true;
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return false;
+                    }
+
+                    RaiseResponseError("Unexpected exception", request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    return false;
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError("Unexpected exception", request, result);
+                return false;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return false;
         }
 
         public IEnumerable<ProviderSummary> FindAll()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/standards");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<IEnumerable<ProviderSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<IEnumerable<ProviderSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+
+                    RaiseResponseError(request, result);
+                }
+                finally
+                {
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
     }
 }

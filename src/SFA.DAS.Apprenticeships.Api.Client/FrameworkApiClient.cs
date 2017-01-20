@@ -15,63 +15,67 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         public async Task<Framework> GetAsync(string frameworkId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}"))
             {
-                var result = response;
-                if (result.Result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    await Task.Factory.StartNew(
-                        () =>
-                            JsonConvert.DeserializeObject<Framework>(result.Result.Content.ReadAsStringAsync().Result,
-                                _jsonSettings));
+                    var result = response;
+                    if (result.Result.StatusCode == HttpStatusCode.OK)
+                    {
+                        await Task.Factory.StartNew(
+                            () =>
+                                JsonConvert.DeserializeObject<Framework>(result.Result.Content.ReadAsStringAsync().Result,
+                                    _jsonSettings));
+                    }
+                    if (result.Result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        RaiseResponseError($"Could not find the framework {frameworkId}", request, result.Result);
+                    }
+
+                    RaiseResponseError(request, result.Result);
                 }
-                if (result.Result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    RaiseResponseError($"Could not find the framework {frameworkId}", request, result.Result);
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result.Result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
 
         public Framework Get(string frameworkId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<Framework>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<Framework>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        RaiseResponseError($"Could not find the framework {frameworkId}", request, result);
+                    }
+
+                    RaiseResponseError(request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    RaiseResponseError($"Could not find the framework {frameworkId}", request, result);
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
 
         public Framework Get(int frameworkCode, int pathwayCode, int programmeType)
@@ -81,57 +85,62 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         public IEnumerable<FrameworkSummary> FindAll()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.OK)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return JsonConvert.DeserializeObject<IEnumerable<FrameworkSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return JsonConvert.DeserializeObject<IEnumerable<FrameworkSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+
+                    RaiseResponseError(request, result);
+                }
+                finally
+                {
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return null;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return null;
         }
 
         public bool Exists(string frameworkId)
         {
-            var request = new HttpRequestMessage(HttpMethod.Head, $"/frameworks/{frameworkId}");
-            request.Headers.Add("Accept", "application/json");
-
-            var response = _httpClient.SendAsync(request);
-
-            try
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/frameworks/{frameworkId}"))
             {
-                var result = response.Result;
-                if (result.StatusCode == HttpStatusCode.NoContent)
+                request.Headers.Add("Accept", "application/json");
+
+                var response = _httpClient.SendAsync(request);
+
+                try
                 {
-                    return true;
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return true;
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return false;
+                    }
+
+                    RaiseResponseError(request, result);
                 }
-                if (result.StatusCode == HttpStatusCode.NotFound)
+                finally
                 {
-                    return false;
+                    Dispose(request, response);
                 }
 
-                RaiseResponseError(request, result);
+                return false;
             }
-            finally
-            {
-                Dispose(request, response);
-            }
-
-            return false;
         }
+
 
         public bool Exists(int frameworkCode, int pathwayCode, int progamType)
         {
