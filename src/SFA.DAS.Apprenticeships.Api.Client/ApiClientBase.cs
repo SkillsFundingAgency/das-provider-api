@@ -50,15 +50,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         public void Dispose()
         {
-            Dispose(_httpClient);
-        }
-
-        public void Dispose(params IDisposable[] disposables)
-        {
-            foreach (var disposable in disposables.Where(d => d != null))
-            {
-                disposable.Dispose();
-            }
+            _httpClient?.Dispose();
         }
     }
 }
