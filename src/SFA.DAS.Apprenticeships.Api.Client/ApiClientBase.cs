@@ -8,7 +8,7 @@ using SFA.DAS.Apprenticeships.Api.Types.Exceptions;
 
 namespace SFA.DAS.Apprenticeships.Api.Client
 {
-    public abstract class ApiClientBase
+    public abstract class ApiClientBase : IDisposable
     {
         protected readonly HttpClient _httpClient;
 
