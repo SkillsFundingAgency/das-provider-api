@@ -20,7 +20,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             _getStandards = getStandards;
         }
 
-        // GET /standards
+        /// <summary>
+        /// GET /standards
+        /// </summary>
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<StandardSummary>))]
         [Route("standards")]
@@ -37,7 +39,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             return response;
         }
 
-        // GET /standards/5
+        /// <summary>
+        /// GET /standards/5
+        /// </summary>
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Standard))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -55,8 +59,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             standard.Uri = Resolve(standard.StandardId);
             return standard;
         }
-        
-        // HEAD /standards/5
+
+        /// <summary>
+        /// HEAD /standards/5
+        /// </summary>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("standards/{id}")]
