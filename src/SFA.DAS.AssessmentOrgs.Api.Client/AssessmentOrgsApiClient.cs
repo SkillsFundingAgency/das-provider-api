@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -25,9 +26,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.OK)
@@ -40,10 +39,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
+
                 }
 
                 return null;
@@ -61,21 +57,17 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.OK)
                     {
-                        return JsonConvert.DeserializeObject<IEnumerable<OrganisationSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                        return
+                            JsonConvert.DeserializeObject<IEnumerable<OrganisationSummary>>(
+                                result.Content.ReadAsStringAsync().Result, _jsonSettings);
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
                 }
 
                 return null;
@@ -94,9 +86,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.NoContent)
@@ -109,10 +99,6 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
                 }
 
                 return false;

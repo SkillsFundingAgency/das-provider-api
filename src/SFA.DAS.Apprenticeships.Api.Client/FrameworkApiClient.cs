@@ -19,9 +19,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response;
                     if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -38,10 +36,6 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
                     RaiseResponseError(request, result.Result);
                 }
-                finally
-                {
-                    Dispose(request, response);
-                }
 
                 return null;
             }
@@ -53,9 +47,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.OK)
@@ -68,10 +60,6 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
                 }
 
                 return null;
@@ -89,9 +77,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.OK)
@@ -100,10 +86,6 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
                 }
 
                 return null;
@@ -116,9 +98,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             {
                 request.Headers.Add("Accept", "application/json");
 
-                var response = _httpClient.SendAsync(request);
-
-                try
+                using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
                     if (result.StatusCode == HttpStatusCode.NoContent)
@@ -131,10 +111,6 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     }
 
                     RaiseResponseError(request, result);
-                }
-                finally
-                {
-                    Dispose(request, response);
                 }
 
                 return false;
