@@ -37,7 +37,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
         public HealthModel CreateModel()
         {
             var timer = Stopwatch.StartNew();
-            var elasticsearchModel = _elasticsearchHealthService.GetElasticHealth(_healthSettings.ElasticsearchUrls, _healthSettings.Environment);
+            var elasticsearchModel = _elasticsearchHealthService.GetElasticHealth(_healthSettings.ElasticsearchUrls, _healthSettings.RequiredIndexAliases, _healthSettings.Environment);
             var elasticErrorLogs = _elasticsearchHealthService.GetErrorLogs(
                 _healthSettings.ElasticsearchUrls,
                 _healthSettings.Environment);
@@ -57,6 +57,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
                 Status = Status.Green,
                 Errors = new List<string>(),
                 ElasticSearchAliases = elasticsearchModel.ElasticsearchAliases,
+                CoreAliasesExistStatus = elasticsearchModel.RequiredAliasesExist ? Status.Green : Status.Red,
                 ElasticsearchLog = elasticErrorLogs,
                 LarsFilePageStatus = larsDownloadPageStatus,
                 CourseDirectoryStatus = courseDirectoryStatus,

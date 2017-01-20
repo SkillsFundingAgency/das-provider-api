@@ -106,7 +106,14 @@
             </div>
         </div>
         <div class="elasticsearch">
-
+            <dl class="table-display">
+                <dt>Core Aliases Exist: </dt>
+                <dd>
+                    <span class="status-lbl @Model.CoreAliasesExistStatus.ToString().ToLower()">
+                            @Model.CoreAliasesExistStatus
+                        </span>
+                </dd>
+            </dl>
             @foreach (var alias in Model.ElasticSearchAliases)
             {
                 <dl class="table-display">
@@ -134,7 +141,7 @@
                         {
                             foreach (var messages in Model.ElasticsearchLog.LogErrors)
                             {
-                                <span>@messages</span><br/>
+                                <span>@messages</span><br />
                             }
                         }
                     </dd>

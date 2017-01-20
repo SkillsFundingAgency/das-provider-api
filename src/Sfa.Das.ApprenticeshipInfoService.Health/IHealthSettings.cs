@@ -9,6 +9,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
 
         IEnumerable<Uri> ElasticsearchUrls { get; }
 
+        IEnumerable<string> RequiredIndexAliases { get; }
+
         string LarsSiteRootUrl { get; }
 
         string LarsSiteDownloadsPageUrl { get; }
