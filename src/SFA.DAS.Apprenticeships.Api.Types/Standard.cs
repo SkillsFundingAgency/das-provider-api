@@ -27,6 +27,9 @@ namespace SFA.DAS.Apprenticeships.Api.Types
 
         public IEnumerable<string> Keywords { get; set; }
 
+        [Obsolete("Use 'Duration' Instead.")]
+        public TypicalLength TypicalLength { get; set; }
+
         public int Duration { get; set; }
 
         public int MaxFunding { get; set; }

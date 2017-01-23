@@ -26,6 +26,9 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public int PathwayCode { get; set; }
 
         public int Level { get; set; }
+        
+        [Obsolete("Use 'Duration' Instead.")]
+        public TypicalLength TypicalLength { get; set; }
 
         public int Duration { get; set; }
 
