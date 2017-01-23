@@ -13,6 +13,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             return new ProviderSummary
             {
                 Email = provider.Email,
+                Aliases = provider.Aliases,
                 EmployerSatisfaction = provider.EmployerSatisfaction,
                 IsEmployerProvider = provider.IsEmployerProvider,
                 IsHigherEducationInstitute = provider.IsHigherEducationInstitute,
