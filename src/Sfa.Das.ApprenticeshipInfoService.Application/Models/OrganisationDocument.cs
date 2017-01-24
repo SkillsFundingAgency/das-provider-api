@@ -2,7 +2,7 @@
 {
     using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
-    public class Organisation
+    public class OrganisationDocument
     {
         public string EpaOrganisationIdentifier { get; set; }
 
@@ -11,6 +11,10 @@
         public string OrganisationType { get; set; }
 
         public string WebsiteLink { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
 
         public Address Address { get; set; }
     }

@@ -1,14 +1,13 @@
-﻿using Sfa.Das.ApprenticeshipInfoService.Application.Models;
-using SFA.DAS.Apprenticeships.Api.Types;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Sfa.Das.ApprenticeshipInfoService.Application.Models;
 using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
-using AppOrganisation = Sfa.Das.ApprenticeshipInfoService.Application.Models.Organisation;
-using Organisation = SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs.Organisation;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public class AssessmentOrgsMapping : IAssessmentOrgsMapping
     {
-        public OrganisationSummary MapToOrganisationDto(AppOrganisation organisation)
+        public OrganisationSummary MapToOrganisationDto(OrganisationDocument organisation)
         {
             return new OrganisationSummary
             {
@@ -17,7 +16,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             };
         }
 
-        public Organisation MapToOrganisationDetailsDto(AppOrganisation organisation)
+        public Organisation MapToOrganisationDetailsDto(OrganisationDocument organisation)
         {
             if (organisation == null)
             {
@@ -28,6 +27,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             {
                 Id = organisation.EpaOrganisationIdentifier,
                 Name = organisation.EpaOrganisation,
+                Email = organisation.Email,
+                Phone = organisation.Phone,
                 Address = new Address
                 {
                     Primary = organisation.Address.Primary,
@@ -39,6 +40,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 //Type = organisation.OrganisationType,
                 Website = organisation.WebsiteLink
             };
+        }
+
+        public IEnumerable<Organisation> MapToOrganisationsDetailsDto(IEnumerable<OrganisationDocument> organisations)
+        {
+            return organisations.Select(MapToOrganisationDetailsDto);
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                 $"No organisation with EpaOrganisationIdentifier {organisationId} found");
         }
 
-        // GET /assessmentsorgs/{organisationId}
+        // GET /assessment-organisations/standards/{organisationId}
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
         [Route("assessment-organisations/standards/{standardId}")]

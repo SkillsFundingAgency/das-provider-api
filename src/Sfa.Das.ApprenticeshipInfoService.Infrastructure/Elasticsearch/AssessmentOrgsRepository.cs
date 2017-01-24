@@ -1,40 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Nest;
 using Sfa.Das.ApprenticeshipInfoService.Application.Models;
-using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
-using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
-using SFA.DAS.Apprenticeships.Api.Types;
+using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
+using Sfa.Das.ApprenticeshipInfoService.Core.Services;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping;
 using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
-using Organisation = SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs.Organisation;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 {
-    using System;
-    using System.Linq;
-    using Nest;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Models;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Services;
-    using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping;
-
     public sealed class AssessmentOrgsRepository : IGetAssessmentOrgs
     {
         private readonly IElasticsearchCustomClient _elasticsearchCustomClient;
-        private readonly ILog _applicationLogger;
         private readonly IConfigurationSettings _applicationSettings;
-        private readonly IProviderLocationSearchProvider _providerLocationSearchProvider;
         private readonly IAssessmentOrgsMapping _assessmentOrgsMapping;
 
         public AssessmentOrgsRepository(
             IElasticsearchCustomClient elasticsearchCustomClient,
-            ILog applicationLogger,
-            IConfigurationSettings applicationSettings,
-            IProviderLocationSearchProvider providerLocationSearchProvider, 
+            IConfigurationSettings applicationSettings, 
             IAssessmentOrgsMapping assessmentOrgsMapping)
         {
             _elasticsearchCustomClient = elasticsearchCustomClient;
-            _applicationLogger = applicationLogger;
             _applicationSettings = applicationSettings;
-            _providerLocationSearchProvider = providerLocationSearchProvider;
             _assessmentOrgsMapping = assessmentOrgsMapping;
         }
 
@@ -42,7 +30,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         {
             var take = GetOrganisationsTotalAmount();
             var results =
-                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
+                _elasticsearchCustomClient.Search<OrganisationDocument>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -62,7 +50,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         public Organisation GetOrganisationById(string organisationId)
         {
             var results =
-                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
+                _elasticsearchCustomClient.Search<OrganisationDocument>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
@@ -83,17 +71,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
         public IEnumerable<Organisation> GetOrganisationsByStandardId(string standardId)
         {
-            var ids = GetOrganisationIdsByStandardId(standardId);
-
-            return ids.Select(GetOrganisationById).ToList();
-        }
-
-        private IEnumerable<string> GetOrganisationIdsByStandardId(string standardId)
-        {
             var take = GetOrganisationsAmountByStandardId(standardId);
 
             var results =
-                _elasticsearchCustomClient.Search<StandardOrganisation>(
+                _elasticsearchCustomClient.Search<StandardOrganisationDocument>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("standardorganisationdocument"))
@@ -104,13 +85,20 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                                 .Field(f => f.StandardCode)
                                 .Query(standardId))));
 
-            return results.Documents.Select(result => result.EpaOrganisationIdentifier).ToList();
+            if (results.ApiCall.HttpStatusCode != 200)
+            {
+                throw new ApplicationException($"Failed query organisations by standard id");
+            }
+
+            var organisations = results.Documents.Where(x => x.EffectiveFrom.Date <= DateTime.UtcNow.Date);
+
+            return _assessmentOrgsMapping.MapToOrganisationsDetailsDto(organisations);
         }
 
         private int GetOrganisationsAmountByStandardId(string standardId)
         {
             var results =
-                _elasticsearchCustomClient.Search<StandardOrganisation>(
+                _elasticsearchCustomClient.Search<StandardOrganisationDocument>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("standardorganisationdocument"))
@@ -125,7 +113,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         private int GetOrganisationsTotalAmount()
         {
             var results =
-                _elasticsearchCustomClient.Search<Application.Models.Organisation>(
+                _elasticsearchCustomClient.Search<OrganisationDocument>(
                     s =>
                     s.Index(_applicationSettings.AssessmentOrgsIndexAlias)
                         .Type(Types.Parse("organisationdocument"))
