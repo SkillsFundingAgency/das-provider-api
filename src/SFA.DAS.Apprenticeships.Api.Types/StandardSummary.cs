@@ -27,5 +27,7 @@ namespace SFA.DAS.Apprenticeships.Api.Types
         public int MaxFunding { get; set; }
 
         public int Level { get; set; }
+
+        public bool IsPublished { get; set; }
     }
 }

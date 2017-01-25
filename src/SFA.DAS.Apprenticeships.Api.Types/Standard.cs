@@ -19,6 +19,8 @@ namespace SFA.DAS.Apprenticeships.Api.Types
 
         public int Level { get; set; }
 
+        public bool IsPublished { get; set; }
+
         public string StandardPdf { get; set; }
 
         public string AssessmentPlanPdf { get; set; }
