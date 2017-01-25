@@ -1,14 +1,13 @@
-﻿using Sfa.Das.ApprenticeshipInfoService.Application.Models;
-using SFA.DAS.Apprenticeships.Api.Types;
+﻿using System.Collections.Generic;
+using Sfa.Das.ApprenticeshipInfoService.Application.Models;
 using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
-using Organisation = SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs.Organisation;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public interface IAssessmentOrgsMapping
     {
-        OrganisationSummary MapToOrganisationDto(Application.Models.Organisation organisation);
-
-        Organisation MapToOrganisationDetailsDto(Application.Models.Organisation organisation);
+        OrganisationSummary MapToOrganisationDto(OrganisationDocument organisation);
+        Organisation MapToOrganisationDetailsDto(OrganisationDocument organisation);
+        IEnumerable<Organisation> MapToOrganisationsDetailsDto(IEnumerable<OrganisationDocument> organisation);
     }
 }

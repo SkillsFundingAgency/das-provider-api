@@ -50,7 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Organisation.cs" />
+    <Compile Include="Models\OrganisationDocument.cs" />
+    <Compile Include="Models\StandardOrganisationDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
