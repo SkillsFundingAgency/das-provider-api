@@ -27,7 +27,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             _logger = logger;
         }
 
-        // GET /assessmentsorgs
+        // GET /assessment-organisations
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationSummary>))]
         [Route("assessment-organisations")]
@@ -52,7 +52,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
-        // GET /assessmentsorgs/{organisationId}
+        // GET /assessment-organisations/{organisationId}
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Organisation))]
         [Route("assessment-organisations/{organisationId}")]
@@ -80,7 +80,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
-        // HEAD /assessmentsorgs/10005318
+        // HEAD /assessment-organisations/10005318
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("assessment-organisations/{organisationId}")]
@@ -100,7 +100,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
         [Route("assessment-organisations/standards/{standardId}")]
-        [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
         public IEnumerable<Organisation> GetByStandardId(string standardId)
         {
