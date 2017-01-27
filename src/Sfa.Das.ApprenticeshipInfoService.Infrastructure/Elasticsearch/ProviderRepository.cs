@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Sfa.Das.ApprenticeshipInfoService.Core.FeatureToggles;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
 using SFA.DAS.Apprenticeships.Api.Types;
@@ -9,6 +10,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
     using System;
     using System.Linq;
     using Nest;
+    using FeatureToggle.Core.Fluent;
     using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
@@ -22,6 +24,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         private readonly IProviderLocationSearchProvider _providerLocationSearchProvider;
         private readonly IProviderMapping _providerMapping;
 
+        private string _providerDocumentType = string.Empty;
+
         public ProviderRepository(
             IElasticsearchCustomClient elasticsearchCustomClient,
             ILog applicationLogger,
@@ -34,6 +38,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             _applicationSettings = applicationSettings;
             _providerLocationSearchProvider = providerLocationSearchProvider;
             _providerMapping = providerMapping;
+
+            _providerDocumentType = Is<RoatpProvidersFeature>.Enabled ? "providerapidocument" : "providerdocument";
         }
 
         public IEnumerable<ProviderSummary> GetAllProviders()
@@ -43,7 +49,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 _elasticsearchCustomClient.Search<Provider>(
                     s =>
                     s.Index(_applicationSettings.ProviderIndexAlias)
-                        .Type(Types.Parse("providerdocument"))
+                        .Type(Types.Parse(_providerDocumentType))
                         .From(0)
                         .Sort(sort => sort.Ascending(f => f.Ukprn))
                         .Take(take)
@@ -63,7 +69,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 _elasticsearchCustomClient.Search<Provider>(
                     s =>
                     s.Index(_applicationSettings.ProviderIndexAlias)
-                        .Type(Types.Parse("providerdocument"))
+                        .Type(Types.Parse(_providerDocumentType))
                         .From(0)
                         .Sort(sort => sort.Ascending(f => f.Ukprn))
                         .Take(100)
@@ -115,7 +121,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 _elasticsearchCustomClient.Search<Provider>(
                     s =>
                     s.Index(_applicationSettings.ProviderIndexAlias)
-                        .Type(Types.Parse("providerdocument"))
+                        .Type(Types.Parse(_providerDocumentType))
                         .From(0)
                         .MatchAll());
             return (int)results.HitsMetaData.Total;
