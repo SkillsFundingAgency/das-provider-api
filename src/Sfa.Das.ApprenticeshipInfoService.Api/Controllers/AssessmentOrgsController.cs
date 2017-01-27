@@ -1,17 +1,15 @@
-﻿using System.Web.Http.Description;
-using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Web.Http;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
-    using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
     using Swashbuckle.Swagger.Annotations;
 
     public class AssessmentOrgsController : ApiController
@@ -36,7 +34,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         {
             try
             {
-                var response = _getAssessmentOrgs.GetAllOrganisations();
+                var response = _getAssessmentOrgs.GetAllOrganisations().ToList();
 
                 foreach (var organisation in response)
                 {
@@ -97,7 +95,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         // GET /assessment-organisations/standards/{organisationId}
-        [SwaggerOperation("GetOrganisation")]
+        [SwaggerOperation("GetByStandard")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
         [Route("assessment-organisations/standards/{standardId}")]
         [ExceptionHandling]
@@ -113,6 +111,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                         $"No organisation with EpaOrganisationIdentifier {standardId} found");
                 }
 
+                response = response.ToList();
                 foreach (var organisation in response)
                 {
                     organisation.Uri = Resolve(organisation.Id);
