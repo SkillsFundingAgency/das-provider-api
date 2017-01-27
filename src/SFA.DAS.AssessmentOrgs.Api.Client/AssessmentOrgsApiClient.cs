@@ -75,6 +75,44 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         }
 
         /// <summary>
+        /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
+        public IEnumerable<Organisation> ByStandard(int standardId)
+        {
+            return ByStandard(standardId.ToString());
+        }
+
+        /// <summary>
+        /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
+        public IEnumerable<Organisation> ByStandard(string standardId)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/standards/{standardId}"))
+            {
+                request.Headers.Add("Accept", "application/json");
+
+                using (var response = _httpClient.SendAsync(request))
+                {
+                    var result = response.Result;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        return
+                            JsonConvert.DeserializeObject<IEnumerable<Organisation>>(
+                                result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                    }
+
+                    RaiseResponseError(request, result);
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Check if a assessment organisation exists
         /// HEAD /assessmentorgs/{organisationId}
         /// </summary>

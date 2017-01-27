@@ -17,6 +17,20 @@ namespace SFA.DAS.Apprenticeships.Api.Client
 
         /// <summary>
         /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
+        IEnumerable<Organisation> ByStandard(int standardId);
+
+        /// <summary>
+        /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
+        IEnumerable<Organisation> ByStandard(string standardId);
+
+        /// <summary>
+        /// Get a collection of organisations
         /// GET /frameworks
         /// </summary>
         /// <returns>a collection of organisation summaries</returns>
