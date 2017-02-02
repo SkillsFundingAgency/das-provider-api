@@ -114,7 +114,7 @@
                         </span>
                 </dd>
             </dl>
-            @foreach (var alias in Model.ElasticSearchAliases)
+            @foreach (var alias in Model.ElasticSearchAliases.OrderBy(al => al.AliasName))
             {
                 <dl class="table-display">
                     <dt>Alias name: </dt>
