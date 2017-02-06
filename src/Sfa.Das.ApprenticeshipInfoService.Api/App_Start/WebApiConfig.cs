@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api
 {
@@ -9,6 +10,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Filters.Add(new GaActionFilterAttribute());
 
             // Web API routes
             config.MapHttpAttributeRoutes();
