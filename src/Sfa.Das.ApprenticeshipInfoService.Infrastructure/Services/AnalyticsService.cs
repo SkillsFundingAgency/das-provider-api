@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Helpers;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Models;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
 {
@@ -21,16 +21,20 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
             _gaTrackingCode = settings.GaTrackingCode;
         }
 
-        public async Task TrackApiCall()
+        public async Task TrackApiCall(GaRouteTrackingArg gaRouteArgs)
         {
             try
             {
-                var nvc = CreateQueryStringForGaCollect();
-            
-                var collectUrl = $"{GaCollectPrefixUrl}{ToQueryString(nvc)}";
+                var nvc = CreateQueryStringArgsForGaCollect(gaRouteArgs);
+                var qs = UrlHelper.ToQueryString(nvc);
+
+                var collectUrl = $"{GaCollectPrefixUrl}{qs}";
+
                 _logger.Debug(collectUrl);
-            
+
                 var gaReq = WebRequest.Create(collectUrl);
+                gaReq.Headers = new WebHeaderCollection { gaRouteArgs.OriginalRequestHeaders };
+
                 await gaReq.GetResponseAsync();
             }
             catch (Exception ex)
@@ -39,35 +43,36 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
             }
         }
 
-        private NameValueCollection CreateQueryStringForGaCollect()
+        private NameValueCollection CreateQueryStringArgsForGaCollect(GaRouteTrackingArg gaRouteArgs)
         {
-            var incomingReq = HttpContext.Current.Request;
-
-            return new NameValueCollection
+            var nvc = new NameValueCollection
             {
-                {"v", "1"},
-                {"da", "api"}, // Data Source
-                {"t", "pageview"}, // Type
-                {"tid", _gaTrackingCode},
-                {"cid", "b87aa228-6bdb-44fd-ac5c-9acde7e0ba4c"}, // ClientID    // could be namespace of client sent in origin header
-                {"dh", incomingReq.RawUrl},
-                {"uip", incomingReq.ServerVariables["REMOTE_ADDR"]}, // IP Override
-                {"ua", incomingReq.UserAgent}, // User-Agent Override
-                {"dp", "frameworks"},
-                {"dt", "Frameworks"}
+                {"v", "1"}, // Version
+                {"ds", "api"}, // Data Source
+                {"t", "pageview"}, // Hit Type
+                {"tid", _gaTrackingCode}, // Tracking ID
+                {"cid", gaRouteArgs.ClientId}, // ClientID
+                {"dh", gaRouteArgs.Host}, // Document Host Name
+                {"dl", gaRouteArgs.AbsoluteUrl}, // Document Location
+                {"ua", gaRouteArgs.UserAgent}, // User-Agent Override
+                {"ul", "en-gb"}, // User Language
+                {"an", gaRouteArgs.ApplicationName}, // Application Name
+                {"av", gaRouteArgs.ApiVersion}, // Application Version
+                {"dp", gaRouteArgs.Path}, // Document Path
+                {"dt", $"{gaRouteArgs.CtrlName}-{gaRouteArgs.ActionName}"} // Document Title
             };
-        }
 
-        private string ToQueryString(NameValueCollection nvc)
-        {
-            var array = (
-                            from key in nvc.AllKeys
-                            from value in nvc.GetValues(key)
-                            where value != null
-                            select $"{HttpUtility.UrlEncode(key)}={HttpUtility.UrlEncode(value)}"
-                        ).ToArray();
+            if (gaRouteArgs.RemoteIp != null)
+            {
+                nvc.Add("uip", gaRouteArgs.RemoteIp); // IP Override
+            }
 
-            return $"?{string.Join("&", array)}";
+            if (gaRouteArgs.UrlReferrer != null)
+            {
+                nvc.Add("dr", gaRouteArgs.UrlReferrer); // Document Referrer
+            }
+
+            return nvc;
         }
     }
 }

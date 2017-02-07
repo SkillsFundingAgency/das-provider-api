@@ -21,7 +21,7 @@
 
         public string ApplicationName => ConfigurationManager.AppSettings["ApplicationName"];
 
-        public string GaTrackingCode => ConfigurationManager.AppSettings["GaTrackingCode"];
+        public string GaTrackingCode => ConfigurationManager.AppSettings["ga.trackingid"];
 
         public int ApprenticeshipProviderElements => int.Parse(ConfigurationManager.AppSettings["ApprenticeshipProviderElements"]);
 

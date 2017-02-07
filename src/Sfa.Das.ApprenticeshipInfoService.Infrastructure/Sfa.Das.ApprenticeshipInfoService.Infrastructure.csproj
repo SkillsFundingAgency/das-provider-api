@@ -115,6 +115,7 @@
     <Compile Include="Elasticsearch\IElasticsearchCustomClient.cs" />
     <Compile Include="Elasticsearch\FrameworkRepository.cs" />
     <Compile Include="Helpers\ControllerHelper.cs" />
+    <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Logging\DependencyLogEntry.cs" />
     <Compile Include="Logging\ElasticSearchLogEntry.cs" />
     <Compile Include="Logging\NLogLogger.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Mapping\IStandardMapping.cs" />
     <Compile Include="Mapping\FrameworkMapping.cs" />
     <Compile Include="Mapping\IFrameworkMapping.cs" />
+    <Compile Include="Models\GaRouteTrackingArg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnalyticsService.cs" />
     <Compile Include="Services\IAnalyticsService.cs" />
