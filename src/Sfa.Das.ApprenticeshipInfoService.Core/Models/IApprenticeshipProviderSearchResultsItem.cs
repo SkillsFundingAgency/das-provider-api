@@ -43,5 +43,11 @@
         double? NationalOverallAchievementRate { get; set; }
 
         string OverallCohort { get; set; }
+
+        bool HasNonLevyContract { get; set; }
+
+        bool HasParentCompanyGuarantee { get; set; }
+
+        bool IsNew { get; set; }
     }
 }

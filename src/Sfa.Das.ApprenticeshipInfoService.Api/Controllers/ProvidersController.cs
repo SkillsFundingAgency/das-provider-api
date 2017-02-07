@@ -175,7 +175,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                 ukprn,
                 location,
                 standardCode);
-            
+
             if (model != null)
             {
                 return model;

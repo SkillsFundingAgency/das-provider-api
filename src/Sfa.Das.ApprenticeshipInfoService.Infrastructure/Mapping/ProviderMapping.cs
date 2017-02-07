@@ -73,7 +73,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 TrainingLocations = item.TrainingLocations,
                 Ukprn = item.Ukprn,
                 IsHigherEducationInstitute = item.IsHigherEducationInstitute,
-                Website = item.Website
+                Website = item.Website,
+                HasNonLevyContract = item.HasNonLevyContract,
+                HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
+                IsNew = item.IsNew
             };
         }
 
@@ -104,7 +107,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Website = item.Website,
                 FrameworkCode = item.FrameworkCode,
                 Level = item.Level,
-                PathwayCode = item.PathwayCode
+                PathwayCode = item.PathwayCode,
+                HasNonLevyContract = item.HasNonLevyContract,
+                HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
+                IsNew = item.IsNew
             };
         }
 
@@ -149,6 +155,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                         Website = item.Website,
                         ContactUsUrl = item.ContactUsUrl
                     },
+                    HasNonLevyContract = item.HasNonLevyContract,
+                    HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
+                    IsNew = item.IsNew
                 }
             };
         }
