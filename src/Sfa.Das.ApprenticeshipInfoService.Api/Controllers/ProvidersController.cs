@@ -36,7 +36,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             _logger = logger;
         }
 
-        // GET /providers
+        /// <summary>
+        /// Get all the active providers
+        /// </summary>
+        /// <returns>a collection of providers</returns>
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<ProviderSummary>))]
         [Route("providers")]
@@ -61,7 +64,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
-        // GET /providers/10005318
+        /// <summary>
+        /// Get a provider
+        /// </summary>
+        /// <param name="ukprn">UKPRN</param>
+        /// <returns></returns>
         [SwaggerOperation("GetByUkprn")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Provider))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -90,7 +97,10 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             }
         }
 
-        // HEAD /providers/10005318
+        /// <summary>
+        /// Provider exists?
+        /// </summary>
+        /// <param name="ukprn">UKPRN</param>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers/{ukprn}")]
@@ -168,6 +178,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(ApprenticeshipDetails))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("standards/{standardCode}/providers")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
         public ApprenticeshipDetails GetStandardProviderDetails(string standardCode, int ukprn, int location)
         {
@@ -189,6 +200,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(ApprenticeshipDetails))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("frameworks/{frameworkId}/providers")]
+        [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
         public ApprenticeshipDetails GetFrameworkProviderDetails(string frameworkId, int ukprn, int location)
         {

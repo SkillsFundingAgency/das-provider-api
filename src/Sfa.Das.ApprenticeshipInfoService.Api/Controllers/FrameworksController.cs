@@ -18,7 +18,10 @@
             _getFrameworks = getFrameworks;
         }
 
-        // GET /frameworks
+        /// <summary>
+        /// Get all the active frameworks
+        /// </summary>
+        /// <returns>a collection of frameworks</returns>
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<FrameworkSummary>))]
         [Route("frameworks")]
@@ -35,13 +38,11 @@
             return response;
         }
 
-        // GET /frameworks/40338
-
         /// <summary>
-        /// Get a framework by composite id
+        /// Get a framework
         /// </summary>
-        /// <param name="id">{FrameworkId}-{ProgType}-{PathwayId} ie: 403-3-8</param>
-        /// <returns>the requested Framework</returns>
+        /// <param name="id">{FrameworkId}-{ProgType}-{PathwayId}</param>
+        /// <returns>a framework</returns>
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Framework))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -60,12 +61,10 @@
             return response;
         }
 
-        // HEAD /frameworks/5
-
         /// <summary>
-        /// check if a framework exists by composite id
+        /// framework exists?
         /// </summary>
-        /// <param name="id">{FrameworkId}{ProgType}{PathwayId} ie: 40338</param>
+        /// <param name="id">{FrameworkId}-{ProgType}-{PathwayId}</param>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("frameworks/{id}")]

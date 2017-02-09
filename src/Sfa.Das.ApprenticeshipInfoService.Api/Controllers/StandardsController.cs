@@ -21,7 +21,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
-        /// GET /standards
+        /// Get all the active standards
         /// </summary>
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<StandardSummary>))]
@@ -40,7 +40,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
-        /// GET /standards/5
+        /// Get a standard
         /// </summary>
         [SwaggerOperation("GetById")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Standard))]
@@ -61,7 +61,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
-        /// HEAD /standards/5
+        /// Standard exists?
         /// </summary>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
