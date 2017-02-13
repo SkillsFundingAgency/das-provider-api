@@ -1,4 +1,20 @@
-﻿@model Sfa.Das.ApprenticeshipInfoService.Health.Models.HealthModel
+﻿@using System.Globalization
+@using Sfa.Das.ApprenticeshipInfoService.Health.Models
+@model Sfa.Das.ApprenticeshipInfoService.Health.Models.HealthModel
+
+@functions {
+    private static Status GetCurrentStatus(ElasticsearchAlias alias)
+    {
+        var currDate = DateTime.Today.ToShortDateString();
+        var dateFromAlias = alias.IndexName.Replace($"{alias.AliasName}-", string.Empty);
+        var isCurrentStatus =
+            DateTime.ParseExact(dateFromAlias, "yyyy-MM-dd-hh-mm", CultureInfo.InvariantCulture).ToString("d") == currDate
+                ? Status.Green
+                : Status.Red;
+        return isCurrentStatus;
+    }
+}
+
 <html>
 <head>
     <title>Health</title>
@@ -72,7 +88,9 @@
             .services > div {
                 padding: 1px;
             }
-
+        .status-lbl {
+            text-transform: capitalize;
+        }
         .status-lbl.red {
             border-bottom: 5px solid red;
         }
@@ -110,19 +128,31 @@
                 <dt>Core Aliases Exist: </dt>
                 <dd>
                     <span class="status-lbl @Model.CoreAliasesExistStatus.ToString().ToLower()">
-                            @Model.CoreAliasesExistStatus
-                        </span>
+                        @Model.CoreAliasesExistStatus
+                    </span>
                 </dd>
             </dl>
             @foreach (var alias in Model.ElasticSearchAliases.OrderBy(al => al.AliasName))
             {
+                var isCurrentStatus = GetCurrentStatus(alias);
+
                 <dl class="table-display">
                     <dt>Alias name: </dt>
                     <dd>@alias.AliasName</dd>
                     <dt>Index name: </dt>
                     <dd>@alias.IndexName</dd>
                     <dt>Health: </dt>
-                    <dd>@alias.Health</dd>
+                    <dd>
+                        <span class="status-lbl @alias.Health">
+                            @alias.Health
+                        </span>
+                    </dd>
+                    <dt>Current: </dt>
+                    <dd>
+                        <span class="status-lbl @isCurrentStatus.ToString().ToLower()">
+                            @isCurrentStatus.ToString()
+                        </span>
+                    </dd>
                     <dt>Document count: </dt>
                     <dd>@alias.DocumentCount</dd>
                 </dl>
@@ -182,8 +212,7 @@
                 </dd>
             </dl>
         </div>
-
     </div>
-
 </body>
+
 </html>
