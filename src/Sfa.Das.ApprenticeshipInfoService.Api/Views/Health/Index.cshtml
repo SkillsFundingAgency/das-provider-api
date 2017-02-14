@@ -8,7 +8,7 @@
         var currDate = DateTime.Today.ToShortDateString();
         var dateFromAlias = alias.IndexName.Replace($"{alias.AliasName}-", string.Empty);
         var isCurrentStatus =
-            DateTime.ParseExact(dateFromAlias, "yyyy-MM-dd-hh-mm", CultureInfo.InvariantCulture).ToString("d") == currDate
+            DateTime.ParseExact(dateFromAlias, "yyyy-MM-dd-HH-mm", CultureInfo.CurrentCulture).ToString("d") == currDate
                 ? Status.Green
                 : Status.Red;
         return isCurrentStatus;
