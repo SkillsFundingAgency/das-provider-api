@@ -1,22 +1,21 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Health
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-
     using Elasticsearch;
-
     using Models;
 
     public class HealthService : IHealthService
     {
         private readonly IElasticsearchHealthService _elasticsearchHealthService;
         private readonly IAngleSharpService _angleSharpService;
-
         private readonly IHealthSettings _healthSettings;
-
         private readonly IHttpServer _httpServer;
         private readonly ISqlService _sqlService;
 
@@ -50,7 +49,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
 
             var ukrlpStatus = _httpServer.ResponseCode(_healthSettings.UkrlpUrl);
             var fechoicesStatus = _sqlService.TestConnection(ConfigurationManager.AppSettings["AchievementRateDataBaseConnectionString"]);
-
 
             var model = new HealthModel
             {
@@ -87,7 +85,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
             {
                 var links = _angleSharpService.GetLinks(larsDownloadPageUrl, "li a", "LARS CSV");
                 var linkEndpoint = links?.FirstOrDefault();
+            
                 model.LarsZipFileStatus = _httpServer.ResponseCode(string.Concat(_healthSettings.LarsSiteRootUrl, linkEndpoint));
+
+                var dateStampOfLarsFile = GetDateStampOfLarsFile(linkEndpoint);
+                model.LarsFileDateStamp = dateStampOfLarsFile.ToShortDateString();
             }
 
             if (model.CourseDirectoryStatus != Status.Green)
@@ -106,6 +108,14 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
             model.Took = timer.ElapsedMilliseconds;
 
             return model;
+        }
+
+        private DateTime GetDateStampOfLarsFile(string linkEndpoint)
+        {
+            var matches = Regex.Matches(linkEndpoint, @"(\d+)[_]LARS[_]");
+            var dateMatch = matches[0].Groups[1].Value;
+            var dt = DateTime.ParseExact(dateMatch, "yyyyMMdd", CultureInfo.CurrentCulture);
+            return dt;
         }
     }
 }

@@ -19,6 +19,8 @@
 
         public Status LarsFilePageStatus { get; set; }
 
+        public string LarsFileDateStamp { get; set; }
+
         public Status CourseDirectoryStatus { get; set; }
 
         public long Took { get; set; }
