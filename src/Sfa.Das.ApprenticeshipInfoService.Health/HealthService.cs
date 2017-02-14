@@ -89,7 +89,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Health
                 model.LarsZipFileStatus = _httpServer.ResponseCode(string.Concat(_healthSettings.LarsSiteRootUrl, linkEndpoint));
 
                 var dateStampOfLarsFile = GetDateStampOfLarsFile(linkEndpoint);
-                model.LarsFileDateStamp = dateStampOfLarsFile.ToShortDateString();
+                model.LarsFileDateStamp = dateStampOfLarsFile.ToString("dd-MM-yyyy");
             }
 
             if (model.CourseDirectoryStatus != Status.Green)
