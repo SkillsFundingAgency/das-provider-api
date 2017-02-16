@@ -69,25 +69,17 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Provider Get(long ukprn)
         {
-            try
+            var response = _getProviders.GetProviderByUkprn(ukprn);
+
+            if (response == null)
             {
-                var response = _getProviders.GetProviderByUkprn(ukprn);
-
-                if (response == null)
-                {
-                    throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No provider with Ukprn {ukprn} found");
-                }
-
-                response.Uri = Resolve(response.Ukprn);
-
-                return response;
+                throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                    $"No provider with Ukprn {ukprn} found");
             }
-            catch (Exception e)
-            {
-                _logger.Error(e, $"providers/{ukprn}");
-                throw;
-            }
+
+            response.Uri = Resolve(response.Ukprn);
+
+            return response;
         }
 
         // HEAD /providers/10005318
