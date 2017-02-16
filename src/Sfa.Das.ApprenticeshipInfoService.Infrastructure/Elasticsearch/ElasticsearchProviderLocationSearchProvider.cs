@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Nest;
 using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models;
@@ -14,8 +12,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
     {
         private readonly IConfigurationSettings _applicationSettings;
         private readonly IElasticsearchCustomClient _elasticsearchCustomClient;
-        private const string TrainingTypeAggregateName = "training_type";
-        private const string NationalProviderAggregateName = "national_provider";
 
         public ElasticsearchProviderLocationSearchProvider(
             IConfigurationSettings applicationSettings,
@@ -76,7 +72,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 return new List<FrameworkProviderSearchResultsItem>();
             }
 
-            return results.Hits.Select(MapToFrameworkProviderSearhResultsItem).ToList();
+            return results.Hits.Select(MapToFrameworkProviderSearchResultsItem).ToList();
         }
 
         private SearchDescriptor<T> CreateProviderQuery<T>(Expression<Func<T, object>> selector, string code, Coordinate location)
@@ -154,6 +150,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 OverallAchievementRate = hit.Source.OverallAchievementRate,
                 ApprenticeshipMarketingInfo = hit.Source.ApprenticeshipMarketingInfo,
                 ProviderName = hit.Source.ProviderName,
+                LegalName = hit.Source.LegalName,
                 Phone = hit.Source.Phone,
                 StandardCode = hit.Source.StandardCode,
                 ApprenticeshipInfoUrl = hit.Source.ApprenticeshipInfoUrl,
@@ -164,7 +161,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
             };
         }
 
-        private static FrameworkProviderSearchResultsItem MapToFrameworkProviderSearhResultsItem(IHit<FrameworkProviderSearchResultsItem> hit)
+        private static FrameworkProviderSearchResultsItem MapToFrameworkProviderSearchResultsItem(IHit<FrameworkProviderSearchResultsItem> hit)
         {
             return new FrameworkProviderSearchResultsItem
             {
@@ -177,6 +174,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
                 OverallAchievementRate = hit.Source.OverallAchievementRate,
                 ApprenticeshipMarketingInfo = hit.Source.ApprenticeshipMarketingInfo,
                 ProviderName = hit.Source.ProviderName,
+                LegalName = hit.Source.LegalName,
                 Phone = hit.Source.Phone,
                 FrameworkId = hit.Source.FrameworkId,
                 FrameworkCode = hit.Source.FrameworkCode,
