@@ -1,19 +1,17 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types.Providers;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using System.Collections.Generic;
     using System.Net;
     using System.Web.Http;
     using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
+    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
-    using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.Apprenticeships.Api.Types.Providers;
     using Swashbuckle.Swagger.Annotations;
     using IControllerHelper = Sfa.Das.ApprenticeshipInfoService.Core.Helpers.IControllerHelper;
 

@@ -11,6 +11,8 @@
 
         public string ProviderName { get; set; }
 
+        public string LegalName { get; set; }
+
         public double? OverallAchievementRate { get; set; }
 
         public string MarketingName { get; set; }
