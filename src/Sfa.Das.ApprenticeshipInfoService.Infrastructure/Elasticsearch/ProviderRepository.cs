@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Sfa.Das.ApprenticeshipInfoService.Core.FeatureToggles;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.FeatureToggles;
 using SFA.DAS.Apprenticeships.Api.Types;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 

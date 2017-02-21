@@ -114,6 +114,7 @@
     <Compile Include="Elasticsearch\ElasticsearchCustomClient.cs" />
     <Compile Include="Elasticsearch\IElasticsearchCustomClient.cs" />
     <Compile Include="Elasticsearch\FrameworkRepository.cs" />
+    <Compile Include="FeatureToggles\RoatpProvidersFeature.cs" />
     <Compile Include="Helpers\ControllerHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Logging\DependencyLogEntry.cs" />

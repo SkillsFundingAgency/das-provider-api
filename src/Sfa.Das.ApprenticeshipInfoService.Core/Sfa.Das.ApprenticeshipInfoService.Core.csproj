@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\IConfigurationSettings.cs" />
-    <Compile Include="FeatureToggles\RoatpProvidersFeature.cs" />
     <Compile Include="Helpers\IControllerHelper.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\ApprenticeshipDetails.cs" />
