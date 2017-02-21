@@ -11,6 +11,8 @@
 
         public string ProviderName { get; set; }
 
+        public string LegalName { get; set; }
+        
         public int StandardCode { get; set; }
 
         public double? OverallAchievementRate { get; set; }

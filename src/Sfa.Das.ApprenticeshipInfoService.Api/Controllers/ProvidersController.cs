@@ -1,6 +1,4 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types.Providers;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -13,8 +11,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
-    using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services;
-    using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.Apprenticeships.Api.Types.Providers;
     using Swashbuckle.Swagger.Annotations;
     using IControllerHelper = Sfa.Das.ApprenticeshipInfoService.Core.Helpers.IControllerHelper;
 
@@ -70,25 +67,17 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Provider Get(long ukprn)
         {
-            try
+            var response = _getProviders.GetProviderByUkprn(ukprn);
+
+            if (response == null)
             {
-                var response = _getProviders.GetProviderByUkprn(ukprn);
-
-                if (response == null)
-                {
-                    throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No provider with Ukprn {ukprn} found");
-                }
-
-                response.Uri = Resolve(response.Ukprn);
-
-                return response;
+                throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                    $"No provider with Ukprn {ukprn} found");
             }
-            catch (Exception e)
-            {
-                _logger.Error(e, $"providers/{ukprn}");
-                throw;
-            }
+
+            response.Uri = Resolve(response.Ukprn);
+
+            return response;
         }
 
         // HEAD /providers/10005318
