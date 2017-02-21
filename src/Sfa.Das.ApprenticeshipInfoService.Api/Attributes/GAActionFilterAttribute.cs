@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Attributes
+﻿using System.Diagnostics;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.Attributes
 {
     using System;
     using System.Reflection;
@@ -28,12 +30,16 @@
 
             RemoveRestrictedHeaders(incomingReq);
 
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string assemblyInformationalVersion = fileVersionInfo.ProductVersion;
+
             var gaRouteArgs = new GaRouteTrackingArg
             {
                 ApplicationName = AppDomain.CurrentDomain.FriendlyName,
                 CtrlName = actionContext.ActionDescriptor.ControllerDescriptor.ControllerName,
                 ActionName = actionContext.ActionDescriptor.ActionName,
-                ApiVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(),
+                ApiVersion = assemblyInformationalVersion,
                 ClientId = incomingReq.ServerVariables[OriginHeaderKey] ?? DefaultClientId,
                 Host = incomingReq.Url.Host,
                 RawUrl = incomingReq.RawUrl,
