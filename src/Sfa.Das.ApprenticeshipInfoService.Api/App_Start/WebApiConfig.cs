@@ -1,14 +1,19 @@
-﻿using Newtonsoft.Json;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api
 {
     using System.Web.Http;
+    using Newtonsoft.Json;
+    using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
+    using Sfa.Das.ApprenticeshipInfoService.Infrastructure.FeatureToggles;
 
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            if (new GaApiAnalyticsFeature().FeatureEnabled)
+            {
+                // Web API configuration and services
+                config.Filters.Add(new GaActionFilterAttribute());
+            }
 
             // Web API routes
             config.MapHttpAttributeRoutes();

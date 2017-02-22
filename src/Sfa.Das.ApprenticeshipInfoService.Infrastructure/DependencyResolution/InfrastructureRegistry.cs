@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.DependencyResolution
+﻿using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.DependencyResolution
 {
     using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
     using Sfa.Das.ApprenticeshipInfoService.Core.Helpers;
@@ -30,6 +32,7 @@
             For<IProviderLocationSearchProvider>().Use<ElasticsearchProviderLocationSearchProvider>();
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
             For<IControllerHelper>().Use<ControllerHelper>();
+            For<IAnalyticsService>().Use<AnalyticsService>();
         }
     }
 }
