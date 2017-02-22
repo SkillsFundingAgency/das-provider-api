@@ -80,7 +80,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         /// <returns>a collection of standard summaries</returns>
         public IEnumerable<StandardSummary> FindAll()
         {
-            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards"))
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/standards"))
             {
                 request.Headers.Add("Accept", "application/json");
 

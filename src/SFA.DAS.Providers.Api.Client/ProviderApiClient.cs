@@ -78,7 +78,7 @@ namespace SFA.DAS.Providers.Api.Client
 
         public IEnumerable<ProviderSummary> FindAll()
         {
-            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards"))
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/providers"))
             {
                 request.Headers.Add("Accept", "application/json");
 
