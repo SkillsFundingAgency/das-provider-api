@@ -62,12 +62,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
                 {"dt", $"{gaRouteArgs.CtrlName}-{gaRouteArgs.ActionName}"} // Document Title
             };
 
-            if (gaRouteArgs.RemoteIp != null)
+            if (!string.IsNullOrEmpty(gaRouteArgs.RemoteIp))
             {
                 nvc.Add("uip", gaRouteArgs.RemoteIp); // IP Override
             }
 
-            if (gaRouteArgs.UrlReferrer != null)
+            if (!string.IsNullOrEmpty(gaRouteArgs.UrlReferrer))
             {
                 nvc.Add("dr", gaRouteArgs.UrlReferrer); // Document Referrer
             }

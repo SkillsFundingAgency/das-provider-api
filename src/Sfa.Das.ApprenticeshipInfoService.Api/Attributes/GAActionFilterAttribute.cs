@@ -32,7 +32,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Attributes
 
             var assembly = Assembly.GetExecutingAssembly();
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string assemblyInformationalVersion = fileVersionInfo.ProductVersion;
+            var assemblyInformationalVersion = fileVersionInfo.ProductVersion;
 
             var gaRouteArgs = new GaRouteTrackingArg
             {
@@ -44,8 +44,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Attributes
                 Host = incomingReq.Url.Host,
                 RawUrl = incomingReq.RawUrl,
                 AbsoluteUrl = incomingReq.Url.AbsoluteUri,
-                UrlReferrer = incomingReq.UrlReferrer?.AbsoluteUri,
-                RemoteIp = incomingReq.IsLocal ? null : incomingReq.ServerVariables[RemoteAddressHeaderKey],
+                UrlReferrer = incomingReq.UrlReferrer?.AbsoluteUri ?? string.Empty,
+                RemoteIp = incomingReq.IsLocal ? string.Empty : incomingReq.ServerVariables[RemoteAddressHeaderKey],
                 UserAgent = incomingReq.UserAgent,
                 Path = incomingReq.ApplicationPath,
                 OriginalRequestHeaders = incomingReq.Headers
