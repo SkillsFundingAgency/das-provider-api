@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
@@ -25,8 +27,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
         {
             try
             {
-                var nvc = CreateQueryStringArgsForGaCollect(gaRouteArgs);
-                var qs = UrlHelper.ToQueryString(nvc);
+                var dict = CreateQueryStringArgsForGaCollect(gaRouteArgs);
+                var qs = UrlHelper.ToQueryString(dict);
 
                 var collectUrl = $"{GaCollectPrefixUrl}{qs}";
 
@@ -43,9 +45,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
             }
         }
 
-        private NameValueCollection CreateQueryStringArgsForGaCollect(GaRouteTrackingArg gaRouteArgs)
+        private IDictionary<string,string> CreateQueryStringArgsForGaCollect(GaRouteTrackingArg gaRouteArgs)
         {
-            var nvc = new NameValueCollection
+            var dict = new Dictionary<string, string>
             {
                 {"v", "1"}, // Version
                 {"ds", "api"}, // Data Source
@@ -64,15 +66,15 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
 
             if (!string.IsNullOrEmpty(gaRouteArgs.RemoteIp))
             {
-                nvc.Add("uip", gaRouteArgs.RemoteIp); // IP Override
+                dict.Add("uip", gaRouteArgs.RemoteIp); // IP Override
             }
 
             if (!string.IsNullOrEmpty(gaRouteArgs.UrlReferrer))
             {
-                nvc.Add("dr", gaRouteArgs.UrlReferrer); // Document Referrer
+                dict.Add("dr", gaRouteArgs.UrlReferrer); // Document Referrer
             }
 
-            return nvc;
+            return dict;
         }
     }
 }
