@@ -45,7 +45,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Attributes
                 RawUrl = incomingReq.RawUrl,
                 AbsoluteUrl = incomingReq.Url.AbsoluteUri,
                 UrlReferrer = incomingReq.UrlReferrer?.AbsoluteUri ?? string.Empty,
-                RemoteIp = incomingReq.IsLocal ? string.Empty : incomingReq.ServerVariables[RemoteAddressHeaderKey],
+                RemoteIp = (incomingReq.IsLocal ? string.Empty : incomingReq.ServerVariables[RemoteAddressHeaderKey]) ?? string.Empty,
                 UserAgent = incomingReq.UserAgent,
                 Path = incomingReq.ApplicationPath,
                 OriginalRequestHeaders = incomingReq.Headers
