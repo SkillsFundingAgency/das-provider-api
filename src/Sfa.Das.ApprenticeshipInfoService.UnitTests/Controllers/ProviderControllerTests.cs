@@ -5,9 +5,10 @@ using System.Web.Http;
 using System.Web.Http.Routing;
 using FluentAssertions;
 using NUnit.Framework.Constraints;
-using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {

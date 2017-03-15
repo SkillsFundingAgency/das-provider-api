@@ -76,6 +76,10 @@
       <HintPath>..\packages\NLog.Targets.ElasticSearch.2.1.0\lib\net45\NLog.Targets.ElasticSearch.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SFA.DAS.NLog.Logger, Version=1.0.0.23289, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SFA.DAS.NLog.Logger.1.0.0.23289\lib\net45\SFA.DAS.NLog.Logger.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SFA.DAS.NLog.Targets.AzureEventHub, Version=1.0.0.8390, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFA.DAS.NLog.Targets.AzureEventHub.1.0.0.8390\lib\net45\SFA.DAS.NLog.Targets.AzureEventHub.dll</HintPath>
       <Private>True</Private>
@@ -120,7 +124,6 @@
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Logging\DependencyLogEntry.cs" />
     <Compile Include="Logging\ElasticSearchLogEntry.cs" />
-    <Compile Include="Logging\NLogLogger.cs" />
     <Compile Include="Mapping\AssessmentOrgsMapping.cs" />
     <Compile Include="Mapping\IAssessmentOrgsMapping.cs" />
     <Compile Include="Mapping\IProviderMapping.cs" />

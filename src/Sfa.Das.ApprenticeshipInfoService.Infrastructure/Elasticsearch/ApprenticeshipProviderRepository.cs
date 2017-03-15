@@ -2,10 +2,11 @@
 using System.Linq;
 using Nest;
 using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
-using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+
 using Sfa.Das.ApprenticeshipInfoService.Core.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Services;
 using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 {

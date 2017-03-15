@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch
+﻿using SFA.DAS.NLog.Logger;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Health.Elasticsearch
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +9,7 @@
     using global::Elasticsearch.Net;
 
     using Nest;
-
-    using Core.Logging;
+    
     using Models;
 
     using Health.Models;

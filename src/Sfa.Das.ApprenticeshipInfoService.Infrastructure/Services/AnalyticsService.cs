@@ -5,9 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Sfa.Das.ApprenticeshipInfoService.Core.Configuration;
-using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+
 using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Helpers;
 using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Models;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services
 {

@@ -1,7 +1,8 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Logging
+﻿using SFA.DAS.NLog.Logger;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.Logging
 {
     using System.Web;
-    using Core.Logging;
 
     public sealed class RequestContext : IRequestContext
     {

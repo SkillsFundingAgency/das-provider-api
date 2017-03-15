@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 {
     using System.Linq;
     using Core.Configuration;
-    using Core.Logging;
     using Core.Models;
     using Core.Services;
     using Mapping;
