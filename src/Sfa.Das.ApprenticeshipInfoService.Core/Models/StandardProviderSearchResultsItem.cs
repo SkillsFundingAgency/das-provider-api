@@ -52,5 +52,7 @@
         public bool HasParentCompanyGuarantee { get; set; }
 
         public bool IsNew { get; set; }
+
+        public bool IsLevyPayerOnly { get; set; }
     }
 }
