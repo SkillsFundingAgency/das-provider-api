@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using SFA.DAS.Apprenticeships.Api.Client;
-using SFA.DAS.Apprenticeships.Api.Types;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
 namespace SFA.DAS.Providers.Api.Client
@@ -79,7 +78,7 @@ namespace SFA.DAS.Providers.Api.Client
 
         public IEnumerable<ProviderSummary> FindAll()
         {
-            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards"))
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/providers"))
             {
                 request.Headers.Add("Accept", "application/json");
 

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Sfa.Das.ApprenticeshipInfoService.Core.FeatureToggles;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
-using SFA.DAS.Apprenticeships.Api.Types;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.FeatureToggles;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
@@ -23,8 +22,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
         private readonly IConfigurationSettings _applicationSettings;
         private readonly IProviderLocationSearchProvider _providerLocationSearchProvider;
         private readonly IProviderMapping _providerMapping;
-
-        private string _providerDocumentType = string.Empty;
+        private readonly string _providerDocumentType;
 
         public ProviderRepository(
             IElasticsearchCustomClient elasticsearchCustomClient,
@@ -57,7 +55,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query all providers");
+                throw new ApplicationException("Failed query all providers");
             }
 
             return results.Documents.Select(provider => _providerMapping.MapToProviderDto(provider)).ToList();
@@ -80,7 +78,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Elasticsearch
 
             if (results.ApiCall.HttpStatusCode != 200)
             {
-                throw new ApplicationException($"Failed query provider by ukprn");
+                throw new ApplicationException("Failed query provider by ukprn");
             }
             if (results.Documents.Count() > 1)
             {

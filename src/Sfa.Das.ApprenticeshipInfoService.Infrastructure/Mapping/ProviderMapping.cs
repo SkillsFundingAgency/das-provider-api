@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
-using SFA.DAS.Apprenticeships.Api.Types;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
@@ -55,6 +54,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             return new StandardProviderSearchResultsItemResponse
             {
                 ProviderName = item.ProviderName,
+                LegalName = item.LegalName,
                 ApprenticeshipInfoUrl = item.ApprenticeshipInfoUrl,
                 ApprenticeshipMarketingInfo = item.ApprenticeshipMarketingInfo,
                 ContactUsUrl = item.ContactUsUrl,
@@ -147,6 +147,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Provider = new ProviderDetail
                 {
                     Name = item.ProviderName,
+                    LegalName = item.LegalName,
                     UkPrn = item.Ukprn,
                     IsHigherEducationInstitute = item.IsHigherEducationInstitute,
                     NationalProvider = item.NationalProvider,

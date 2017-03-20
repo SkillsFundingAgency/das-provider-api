@@ -25,7 +25,10 @@
             _logger = logger;
         }
 
-        // GET /assessment-organisations
+        /// <summary>
+        /// Get all the assessment organisations
+        /// </summary>
+        /// <returns>colllection of assessment organisation summaries</returns>
         [SwaggerOperation("GetAll")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<OrganisationSummary>))]
         [Route("assessment-organisations")]
@@ -50,21 +53,25 @@
             }
         }
 
-        // GET /assessment-organisations/{organisationId}
+        /// <summary>
+        /// Get an assessment organisation
+        /// </summary>
+        /// <param name="id">EPA00001</param>
+        /// <returns>an organisation</returns>
         [SwaggerOperation("GetOrganisation")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Organisation))]
-        [Route("assessment-organisations/{organisationId}")]
+        [Route("assessment-organisations/{id}")]
         [ExceptionHandling]
-        public Organisation Get(string organisationId)
+        public Organisation Get(string id)
         {
             try
             {
-                var response = _getAssessmentOrgs.GetOrganisationById(organisationId);
+                var response = _getAssessmentOrgs.GetOrganisationById(id);
 
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No organisation with EpaOrganisationIdentifier {organisationId} found");
+                        $"No organisation with EpaOrganisationIdentifier {id} found");
                 }
 
                 response.Uri = Resolve(response.Id);
@@ -73,42 +80,49 @@
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"/assessment-organisations/{organisationId}");
+                _logger.Error(e, $"/assessment-organisations/{id}");
                 throw;
             }
         }
 
-        // HEAD /assessment-organisations/10005318
+        /// <summary>
+        /// Assessment organisation exists?
+        /// </summary>
+        /// <param name="id">EPA00001</param>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        [Route("assessment-organisations/{organisationId}")]
+        [Route("assessment-organisations/{id}")]
         [ExceptionHandling]
-        public void Head(string organisationId)
+        public void Head(string id)
         {
-            if (_getAssessmentOrgs.GetOrganisationById(organisationId) != null)
+            if (_getAssessmentOrgs.GetOrganisationById(id) != null)
             {
                 return;
             }
 
             throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No organisation with EpaOrganisationIdentifier {organisationId} found");
+                $"No organisation with EpaOrganisationIdentifier {id} found");
         }
 
-        // GET /assessment-organisations/standards/{organisationId}
+        /// <summary>
+        /// Get assessment organisations by a standard
+        /// </summary>
+        /// <param name="id">standard code</param>
+        /// <returns>a collection of organisations</returns>
         [SwaggerOperation("GetByStandard")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(IEnumerable<Organisation>))]
-        [Route("assessment-organisations/standards/{standardId}")]
+        [Route("assessment-organisations/standards/{id}")]
         [ExceptionHandling]
-        public IEnumerable<Organisation> GetByStandardId(string standardId)
+        public IEnumerable<Organisation> GetByStandardId(string id)
         {
             try
             {
-                var response = _getAssessmentOrgs.GetOrganisationsByStandardId(standardId);
+                var response = _getAssessmentOrgs.GetOrganisationsByStandardId(id);
 
                 if (response == null)
                 {
                     throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                        $"No organisation with EpaOrganisationIdentifier {standardId} found");
+                        $"No organisation with EpaOrganisationIdentifier {id} found");
                 }
 
                 response = response.ToList();
@@ -121,7 +135,7 @@
             }
             catch (Exception e)
             {
-                _logger.Error(e, $"/assessment-organisations/standards/{standardId}");
+                _logger.Error(e, $"/assessment-organisations/standards/{id}");
                 throw;
             }
         }

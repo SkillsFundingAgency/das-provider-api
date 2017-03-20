@@ -7,7 +7,6 @@ using FluentAssertions;
 using NUnit.Framework.Constraints;
 using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
-using SFA.DAS.Apprenticeships.Api.Types;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
 namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
@@ -90,7 +89,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             var element = new StandardProviderSearchResultsItemResponse
             {
                 ProviderName = "Test provider name",
-                ApprenticeshipInfoUrl = "http://www.abba.co.uk"
+                ApprenticeshipInfoUrl = "http://www.abba.co.uk",
+                LegalName = "Test Legal Name"
+
             };
             var expected = new List<StandardProviderSearchResultsItemResponse> { element };
             
@@ -109,6 +110,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             response.First().Should().NotBe(null);
             response.First().Should().Be(element);
             response.First().ProviderName.Should().Be(element.ProviderName);
+            response.First().LegalName.Should().Be(element.LegalName);
             response.First().ApprenticeshipInfoUrl.Should().Be(element.ApprenticeshipInfoUrl);
         }
 
@@ -118,7 +120,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             var element = new FrameworkProviderSearchResultsItemResponse
             {
                 ProviderName = "Test provider name",
-                ApprenticeshipInfoUrl = "http://www.abba.co.uk"
+                ApprenticeshipInfoUrl = "http://www.abba.co.uk",
+                LegalName = "Test Legal Name"
             };
             var expected = new List<FrameworkProviderSearchResultsItemResponse> { element };
             
@@ -139,6 +142,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             response.First().Should().NotBe(null);
             response.First().Should().Be(element);
             response.First().ProviderName.Should().Be(element.ProviderName);
+            response.First().LegalName.Should().Be(element.LegalName);
             response.First().ApprenticeshipInfoUrl.Should().Be(element.ApprenticeshipInfoUrl);
         }
 

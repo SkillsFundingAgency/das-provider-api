@@ -11,6 +11,8 @@
 
         public string ProviderName { get; set; }
 
+        public string LegalName { get; set; }
+
         public string FrameworkId { get; set; }
 
         public int FrameworkCode { get; set; }

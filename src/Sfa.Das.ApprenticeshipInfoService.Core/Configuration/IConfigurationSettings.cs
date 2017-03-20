@@ -17,6 +17,8 @@
 
         string ApplicationName { get; }
 
+        string GaTrackingCode { get; }
+
         int ApprenticeshipProviderElements { get; }
     }
 }
