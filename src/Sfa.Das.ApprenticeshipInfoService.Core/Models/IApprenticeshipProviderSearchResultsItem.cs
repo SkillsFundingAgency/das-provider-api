@@ -51,5 +51,7 @@
         bool HasParentCompanyGuarantee { get; set; }
 
         bool IsNew { get; set; }
+
+        bool IsLevyPayerOnly { get; set; }
     }
 }

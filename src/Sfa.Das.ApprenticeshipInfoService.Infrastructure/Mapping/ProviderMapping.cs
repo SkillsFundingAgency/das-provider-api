@@ -76,7 +76,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 Website = item.Website,
                 HasNonLevyContract = item.HasNonLevyContract,
                 HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
-                IsNew = item.IsNew
+                IsNew = item.IsNew,
+                IsLevyPayerOnly = item.IsLevyPayerOnly
             };
         }
 
@@ -110,7 +111,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 PathwayCode = item.PathwayCode,
                 HasNonLevyContract = item.HasNonLevyContract,
                 HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
-                IsNew = item.IsNew
+                IsNew = item.IsNew,
+                IsLevyPayerOnly = item.IsLevyPayerOnly
             };
         }
 
@@ -158,7 +160,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                     },
                     HasNonLevyContract = item.HasNonLevyContract,
                     HasParentCompanyGuarantee = item.HasParentCompanyGuarantee,
-                    IsNew = item.IsNew
+                    IsNew = item.IsNew,
+                    IsLevyPayerOnly = item.IsLevyPayerOnly
                 }
             };
         }
