@@ -1,8 +1,10 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.DependencyResolution
+﻿using SFA.DAS.NLog.Logger;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.DependencyResolution
 {
     using System.Web;
     using Sfa.Das.ApprenticeshipInfoService.Api.Logging;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+    
     using StructureMap;
 
     public sealed class WebRegistry : Registry

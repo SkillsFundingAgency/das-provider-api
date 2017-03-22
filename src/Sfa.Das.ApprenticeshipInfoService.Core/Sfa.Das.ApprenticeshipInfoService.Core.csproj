@@ -74,9 +74,6 @@
     <Compile Include="Models\IApprenticeshipProviderSearchResultsItem.cs" />
     <Compile Include="Models\Page.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logging\IRequestContext.cs" />
-    <Compile Include="Logging\ILogEntry.cs" />
-    <Compile Include="Logging\ILog.cs" />
     <Compile Include="Models\StandardSearchResultsItem.cs" />
     <Compile Include="Models\FrameworkSearchResultsItem.cs" />
     <Compile Include="Models\IApprenticeshipProduct.cs" />

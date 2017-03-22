@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
+﻿using SFA.DAS.NLog.Logger;
+
+namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {
     using System.Collections.Generic;
     using Moq;
@@ -12,7 +14,7 @@
     using System.Web.Http.Routing;
     using FluentAssertions;
     using NUnit.Framework.Constraints;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+    
     using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
     public class AssessmentOrgsControllerTests

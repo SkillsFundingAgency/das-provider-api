@@ -1,7 +1,9 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Logging
+﻿using SFA.DAS.NLog.Logger;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Logging
 {
     using Newtonsoft.Json;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+    
     using SFA.DAS.NLog.Targets.AzureEventHub;
 
     public class ElasticSearchLogEntry : ILogEntry

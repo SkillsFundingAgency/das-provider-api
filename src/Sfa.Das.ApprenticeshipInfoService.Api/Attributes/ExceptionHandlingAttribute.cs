@@ -2,8 +2,7 @@
 {
     using System.Web.Http.Filters;
     using System.Web.Mvc;
-
-    using Sfa.Das.ApprenticeshipInfoService.Core.Logging;
+    using SFA.DAS.NLog.Logger;
 
     public class ExceptionHandlingAttribute : ExceptionFilterAttribute
     {
