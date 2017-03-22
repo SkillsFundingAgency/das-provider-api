@@ -318,9 +318,7 @@
     <Content Include="Content\src\styles\_fonts.scss" />
     <Content Include="Content\src\styles\_govuk-elements.scss" />
     <Content Include="Content\src\styles\_govuk-templates.scss" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -369,9 +367,7 @@
   <ItemGroup>
     <Content Include="Sfa.Das.ApprenticeshipInfoService.Api.ruleset" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Transform.NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Transform.NLog.config" />
     <None Include="Transform.ServiceConfiguration.Cloud.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
