@@ -369,6 +369,9 @@
   <ItemGroup>
     <Content Include="Sfa.Das.ApprenticeshipInfoService.Api.ruleset" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Transform.NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Transform.ServiceConfiguration.Cloud.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
