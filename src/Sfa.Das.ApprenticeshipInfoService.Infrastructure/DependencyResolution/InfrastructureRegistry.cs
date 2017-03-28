@@ -1,4 +1,7 @@
-﻿using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using Sfa.Das.ApprenticeshipInfoService.Infrastructure.Services;
 using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.DependencyResolution
@@ -16,7 +19,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.DependencyResolution
     {
         public InfrastructureRegistry()
         {
-            For<ILog>().Use(x => new NLogLogger(x.ParentType, x.GetInstance<IRequestContext>())).AlwaysUnique();
+            For<ILog>().Use(x => new NLogLogger(x.ParentType, x.GetInstance<IRequestContext>(), GetProperties())).AlwaysUnique();
             For<IConfigurationSettings>().Use<ApplicationSettings>();
             For<IElasticsearchClientFactory>().Use<ElasticsearchClientFactory>();
             For<IGetStandards>().Use<StandardRepository>();
@@ -32,6 +35,20 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.DependencyResolution
             For<IElasticsearchCustomClient>().Use<ElasticsearchCustomClient>();
             For<IControllerHelper>().Use<ControllerHelper>();
             For<IAnalyticsService>().Use<AnalyticsService>();
+        }
+
+        private IDictionary<string, object> GetProperties()
+        {
+            var properties = new Dictionary<string, object>();
+            properties.Add("Version", GetVersion());
+            return properties;
+        }
+
+        private string GetVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.ProductVersion;
         }
     }
 }
