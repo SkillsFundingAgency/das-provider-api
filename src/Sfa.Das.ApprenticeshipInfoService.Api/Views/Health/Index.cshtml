@@ -111,7 +111,7 @@
                 Health
             </h2>
             <div>
-                <span>Last updated: @DateTime.Now.ToString("g")</span>
+                <span>Last updated: @DateTime.UtcNow.ToLocalTime().ToString("g")</span>
             </div>
             <div>
                 <span class="status-lbl @Model.Status.ToString().ToLower()">
