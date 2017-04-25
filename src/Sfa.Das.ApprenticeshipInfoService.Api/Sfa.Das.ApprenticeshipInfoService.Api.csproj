@@ -366,7 +366,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sfa.Das.ApprenticeshipInfoService.Api.ruleset" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Transform.NLog.config" />
     <None Include="Transform.ServiceConfiguration.Cloud.config">
