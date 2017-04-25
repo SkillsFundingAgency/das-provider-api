@@ -32,7 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Sfa.Das.ApprenticeshipInfoService.Api.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\SharedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Sfa.Das.ApprenticeshipInfoService.Api.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,7 +42,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Sfa.Das.ApprenticeshipInfoService.Api.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\SharedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>bin\Sfa.Das.ApprenticeshipInfoService.Api.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
