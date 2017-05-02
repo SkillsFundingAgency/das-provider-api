@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AssessmentOrgsControllerTests.cs" />
+    <Compile Include="Controllers\ProvidersControllerApiClientTests.cs" />
     <Compile Include="Controllers\ProviderControllerTests.cs" />
     <Compile Include="Controllers\FrameworkControllerTests.cs" />
     <Compile Include="Controllers\StandardControllerTests.cs" />
@@ -125,6 +126,10 @@
     <ProjectReference Include="..\SFA.DAS.Apprenticeships.Api.Types\SFA.DAS.Apprenticeships.Api.Types.csproj">
       <Project>{35CDF98E-A38F-42B7-ACCE-62B5BB4BA3F3}</Project>
       <Name>SFA.DAS.Apprenticeships.Api.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.DAS.Providers.Api.Client\SFA.DAS.Providers.Api.Client.csproj">
+      <Project>{b1b24c66-cc8f-4fa2-a6e2-a4643b5a6d57}</Project>
+      <Name>SFA.DAS.Providers.Api.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
