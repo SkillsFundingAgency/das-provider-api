@@ -13,7 +13,8 @@
         [OneTimeSetUp]
         public void TestSetup()
         {
-            _sut = new ProviderApiClient("http://das-prd-apprenticeshipinfoservice.cloudapp.net");
+            // provider indexer api client defaults to production uri.
+            _sut = new ProviderApiClient();
         }
 
         [Test]
@@ -45,6 +46,24 @@
 
             var emptyContactInfo = result.Where(x => (string.IsNullOrWhiteSpace(x.Email) || string.IsNullOrEmpty(x.Website) || string.IsNullOrEmpty(x.Phone)));
             Assert.IsTrue(emptyContactInfo == null, $"There are {emptyContactInfo.Count()} providers without contact info :  {string.Join(",", emptyContactInfo.Select(x => x.Ukprn))}");
+        }
+
+        [Test]
+        [Ignore("Adhoc tests to verify live provider information")]
+        public void ShouldAllProvidersHasProviderName()
+        {
+            var result = _sut.FindAll().ToList();
+
+            var emptyProviderName = result.Where(x => (string.IsNullOrWhiteSpace(x.ProviderName) || string.IsNullOrEmpty(x.ProviderName))).ToList();
+
+            Assert.IsTrue(emptyProviderName.Count == 0, $"There are {emptyProviderName.Count} providers without provider Name :  {string.Join(",", emptyProviderName.Select(x => x.Ukprn))}");
+
+            // Assert.IsTrue(result.TrueForAll(x => (!string.IsNullOrWhiteSpace(_sut.Get(x.Ukprn).ProviderName)) && !string.IsNullOrEmpty(_sut.Get(x.Ukprn).ProviderName)));
+            foreach (var providersummary in result)
+            {
+                var provider = _sut.Get(providersummary.Ukprn);
+                Assert.IsTrue(!string.IsNullOrEmpty(provider.ProviderName) && !string.IsNullOrWhiteSpace(provider.ProviderName), $"{provider.Ukprn}'s provider name is empty");
+            }
         }
     }
 }
