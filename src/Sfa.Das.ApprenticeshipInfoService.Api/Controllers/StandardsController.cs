@@ -1,4 +1,5 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types;
+﻿using System.Web.Http.Description;
+using SFA.DAS.Apprenticeships.Api.Types;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -58,6 +59,25 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
             standard.Uri = Resolve(standard.StandardId);
             return standard;
+        }
+
+        /// <summary>
+        /// Do we have standards?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("standards")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            var standards = _getStandards.GetAllStandards();
+            if (standards != null && standards.Any())
+            {
+                return;
+            }
+
+            throw new HttpResponseException(HttpStatusCode.NotFound);
         }
 
         /// <summary>
