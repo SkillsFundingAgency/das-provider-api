@@ -1,4 +1,5 @@
-﻿using SFA.DAS.NLog.Logger;
+﻿using System.Linq;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -8,8 +9,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using System.Web.Http;
     using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
-    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
-    
+    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;    
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
@@ -87,6 +87,25 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
             response.Uri = Resolve(response.Ukprn);
 
             return response;
+        }
+
+        /// <summary>
+        /// Do we have providers?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("providers")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            var providers = _getProviders.GetAllProviders();
+            if (providers != null && providers.Any())
+            {
+                return;
+            }
+
+            throw new HttpResponseException(HttpStatusCode.NotFound);
         }
 
         /// <summary>
