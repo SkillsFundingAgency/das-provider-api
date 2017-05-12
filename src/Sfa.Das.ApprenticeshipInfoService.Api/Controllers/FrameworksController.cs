@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿using System.Web.Http.Description;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -59,6 +61,25 @@
 
             response.Uri = Resolve(response.FrameworkId);
             return response;
+        }
+
+        /// <summary>
+        /// Do we have frameworks?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("frameworks")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            var frameworks = _getFrameworks.GetAllFrameworks();
+            if (frameworks != null && frameworks.Any())
+            {
+                return;
+            }
+
+            throw new HttpResponseException(HttpStatusCode.NotFound);
         }
 
         /// <summary>

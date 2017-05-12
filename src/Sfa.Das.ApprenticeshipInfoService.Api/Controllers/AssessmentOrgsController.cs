@@ -92,7 +92,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// </summary>
         [SwaggerResponse(HttpStatusCode.NoContent)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
-        [Route("assessment-organisations/")]
+        [Route("assessment-organisations")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
 
