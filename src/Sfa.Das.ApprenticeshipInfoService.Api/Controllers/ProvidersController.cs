@@ -118,7 +118,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(long ukprn)
         {
-            if (_getProviders.GetProviderByUkprn(ukprn) != null)
+            if (Get(ukprn) != null)
             {
                 return;
             }

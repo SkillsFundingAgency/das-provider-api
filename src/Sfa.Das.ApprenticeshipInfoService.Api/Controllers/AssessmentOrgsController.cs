@@ -95,7 +95,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [Route("assessment-organisations")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
-
         public void Head()
         {
             var assessmentOrganisations = Get();
@@ -118,7 +117,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (_getAssessmentOrgs.GetOrganisationById(id) != null)
+            if (Get(id) != null)
             {
                 return;
             }

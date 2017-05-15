@@ -89,7 +89,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (_getStandards.GetStandardById(id) != null)
+            if (Get(id) != null)
             {
                 return;
             }
