@@ -98,7 +98,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
         public void Head()
         {
-            var assessmentOrganisations = _getAssessmentOrgs.GetAllOrganisations();
+            var assessmentOrganisations = Get();
             if (assessmentOrganisations != null && assessmentOrganisations.Any())
             {
                 return;

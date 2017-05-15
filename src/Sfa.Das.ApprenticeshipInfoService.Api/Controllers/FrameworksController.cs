@@ -73,7 +73,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var frameworks = _getFrameworks.GetAllFrameworks();
+            var frameworks = Get();
             if (frameworks != null && frameworks.Any())
             {
                 return;

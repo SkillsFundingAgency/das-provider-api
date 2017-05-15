@@ -71,7 +71,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var standards = _getStandards.GetAllStandards();
+            var standards = Get();
             if (standards != null && standards.Any())
             {
                 return;
