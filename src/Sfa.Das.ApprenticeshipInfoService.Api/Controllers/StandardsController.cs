@@ -1,4 +1,7 @@
-﻿using SFA.DAS.Apprenticeships.Api.Types;
+﻿using System;
+using System.Web.Http.Description;
+using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -14,10 +17,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     public class StandardsController : ApiController
     {
         private readonly IGetStandards _getStandards;
+        private readonly ILog _logger;
 
-        public StandardsController(IGetStandards getStandards)
+        public StandardsController(IGetStandards getStandards, ILog logger)
         {
             _getStandards = getStandards;
+            _logger = logger;
         }
 
         /// <summary>
@@ -29,14 +34,22 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<StandardSummary> Get()
         {
-            var response = _getStandards.GetAllStandards().ToList();
-
-            foreach (var item in response)
+            try
             {
-                item.Uri = Resolve(item.Id);
-            }
+                var response = _getStandards.GetAllStandards().ToList();
 
-            return response;
+                foreach (var item in response)
+                {
+                    item.Uri = Resolve(item.Id);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "/assessment-organisations");
+                throw;
+            }
         }
 
         /// <summary>
@@ -61,6 +74,19 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
+        /// Do we have standards?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("standards")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            Get();
+        }
+
+        /// <summary>
         /// Standard exists?
         /// </summary>
         [SwaggerResponse(HttpStatusCode.NoContent)]
@@ -69,12 +95,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (_getStandards.GetStandardById(id) != null)
-            {
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            Get(id);
         }
 
         private string Resolve(string id)

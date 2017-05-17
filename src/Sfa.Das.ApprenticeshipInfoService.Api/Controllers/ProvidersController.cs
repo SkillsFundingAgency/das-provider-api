@@ -1,4 +1,5 @@
-﻿using SFA.DAS.NLog.Logger;
+﻿using System.Linq;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -8,8 +9,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using System.Web.Http;
     using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
-    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
-    
+    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;    
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
@@ -90,6 +90,19 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
+        /// Do we have providers?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("providers")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            Get();
+        }
+
+        /// <summary>
         /// Provider exists?
         /// </summary>
         /// <param name="ukprn">UKPRN</param>
@@ -99,13 +112,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(long ukprn)
         {
-            if (_getProviders.GetProviderByUkprn(ukprn) != null)
-            {
-                return;
-            }
-
-            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No provider with Ukprn {ukprn} found");
+            Get(ukprn);
         }
 
         // GET standards/5/providers?lat=<latitude>&long=<longitude>&page=#

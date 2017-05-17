@@ -1,4 +1,5 @@
-﻿using SFA.DAS.NLog.Logger;
+﻿using System.Web.Http.Description;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -9,7 +10,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using System.Web.Http;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
-    
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
     using Swashbuckle.Swagger.Annotations;
@@ -88,6 +88,19 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         }
 
         /// <summary>
+        /// Do we have assessment organisations?
+        /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
+        [Route("assessment-organisations")]
+        [ExceptionHandling]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void Head()
+        {
+            Get();
+        }
+
+        /// <summary>
         /// Assessment organisation exists?
         /// </summary>
         /// <param name="id">EPA00001</param>
@@ -97,13 +110,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (_getAssessmentOrgs.GetOrganisationById(id) != null)
-            {
-                return;
-            }
-
-            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No organisation with EpaOrganisationIdentifier {id} found");
+            Get(id);
         }
 
         /// <summary>
