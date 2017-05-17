@@ -71,13 +71,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var standards = Get();
-            if (standards != null && standards.Any())
-            {
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            Get();
         }
 
         /// <summary>

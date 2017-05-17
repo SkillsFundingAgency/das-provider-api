@@ -99,13 +99,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var providers = Get();
-            if (providers != null && providers.Any())
-            {
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            Get();
         }
 
         /// <summary>

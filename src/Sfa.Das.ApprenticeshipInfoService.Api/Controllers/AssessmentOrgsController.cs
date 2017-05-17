@@ -97,14 +97,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var assessmentOrganisations = Get();
-            if (assessmentOrganisations != null && assessmentOrganisations.Any())
-            {
-                return;
-            }
-
-            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No organisations found");
+            Get();
         }
 
         /// <summary>

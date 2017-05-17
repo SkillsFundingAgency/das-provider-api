@@ -1,4 +1,6 @@
-﻿using System.Web.Http.Description;
+﻿using System;
+using System.Web.Http.Description;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
@@ -14,10 +16,13 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     public class FrameworksController : ApiController
     {
         private readonly IGetFrameworks _getFrameworks;
+        private readonly ILog _logger;
 
-        public FrameworksController(IGetFrameworks getFrameworks)
+        public FrameworksController(IGetFrameworks getFrameworks,
+            ILog logger)
         {
             _getFrameworks = getFrameworks;
+            _logger = logger;
         }
 
         /// <summary>
@@ -30,14 +35,22 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<FrameworkSummary> Get()
         {
-            var response = _getFrameworks.GetAllFrameworks().ToList();
-
-            foreach (var item in response)
+            try
             {
-                item.Uri = Resolve(item.Id);
-            }
+                var response = _getFrameworks.GetAllFrameworks().ToList();
 
-            return response;
+                foreach (var item in response)
+                {
+                    item.Uri = Resolve(item.Id);
+                }
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, "/assessment-organisations");
+                throw;
+            }
         }
 
         /// <summary>
@@ -73,13 +86,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            var frameworks = Get();
-            if (frameworks != null && frameworks.Any())
-            {
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            Get();
         }
 
         /// <summary>
