@@ -2,6 +2,7 @@
 using System.Web.Http.Routing;
 using NUnit.Framework.Constraints;
 using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {
@@ -28,8 +29,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         public void Init()
         {
             var iGetFrameworks = new Mock<IGetFrameworks>();
+            var logggerMock = new Mock<ILog>();
             iGetFrameworks.Setup(m => m.GetFrameworkById("1234")).Returns(new Framework { FrameworkId = "1234", Title = "test title" });
-            _sut = new FrameworksController(iGetFrameworks.Object);
+            _sut = new FrameworksController(iGetFrameworks.Object, logggerMock.Object);
             _sut.Request = new HttpRequestMessage
             {
                 RequestUri = new Uri("http://localhost/frameworks")

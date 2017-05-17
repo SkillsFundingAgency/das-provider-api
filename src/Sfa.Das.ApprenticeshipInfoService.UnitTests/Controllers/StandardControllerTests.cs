@@ -2,6 +2,7 @@
 using System.Web.Http.Routing;
 using NUnit.Framework.Constraints;
 using SFA.DAS.Apprenticeships.Api.Types;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {
@@ -24,8 +25,9 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         public void Init()
         {
             var iGetstandards = new Mock<IGetStandards>();
+            var logggerMock = new Mock<ILog>();
             iGetstandards.Setup(m => m.GetStandardById("42")).Returns(new Standard { StandardId = "42", Title = "test title" });
-            _sut = new StandardsController(iGetstandards.Object);
+            _sut = new StandardsController(iGetstandards.Object, logggerMock.Object);
             _sut.Request = new HttpRequestMessage
             {
                 RequestUri = new Uri("http://localhost/standards")
