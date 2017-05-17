@@ -112,13 +112,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(long ukprn)
         {
-            if (Get(ukprn) != null)
-            {
-                return;
-            }
-
-            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No provider with Ukprn {ukprn} found");
+            Get(ukprn);
         }
 
         // GET standards/5/providers?lat=<latitude>&long=<longitude>&page=#

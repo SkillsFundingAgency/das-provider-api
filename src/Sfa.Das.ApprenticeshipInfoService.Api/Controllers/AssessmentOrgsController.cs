@@ -110,13 +110,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (Get(id) != null)
-            {
-                return;
-            }
-
-            throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
-                $"No organisation with EpaOrganisationIdentifier {id} found");
+            Get(id);
         }
 
         /// <summary>

@@ -99,12 +99,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            if (Get(id) != null)
-            {
-                return;
-            }
-
-            throw new HttpResponseException(HttpStatusCode.NotFound);
+            Get(id);
         }
 
         private string Resolve(string id)
