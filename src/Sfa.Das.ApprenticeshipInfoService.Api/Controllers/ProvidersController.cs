@@ -9,7 +9,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using System.Web.Http;
     using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
-    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;    
+    using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models;
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
@@ -68,7 +68,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// Get a provider
         /// </summary>
         /// <param name="ukprn">UKPRN</param>
-        /// <returns></returns>
+        /// <returns>A Provider</returns>
         [SwaggerOperation("GetByUkprn")]
         [SwaggerResponse(HttpStatusCode.OK, "OK", typeof(Provider))]
         [SwaggerResponse(HttpStatusCode.NotFound)]
@@ -80,7 +80,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
             if (response == null)
             {
-                throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                throw HttpResponseFactory.RaiseException(
+                    HttpStatusCode.NotFound,
                     $"No provider with Ukprn {ukprn} found");
             }
 
@@ -92,8 +93,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have providers?
         /// </summary>
-        [SwaggerResponse(HttpStatusCode.NoContent)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("providers")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
@@ -133,7 +132,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                     return _getProviders.GetByStandardIdAndLocation(id, lat.Value, lon.Value, actualPage);
                 }
 
-                throw HttpResponseFactory.RaiseException(HttpStatusCode.BadRequest,
+                throw HttpResponseFactory.RaiseException(
+                    HttpStatusCode.BadRequest,
                     "A valid Latitude and Longitude is required");
             }
             catch (Exception e)
@@ -162,7 +162,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
                     return _getProviders.GetByFrameworkIdAndLocation(id, lat.Value, lon.Value, actualPage);
                 }
 
-                throw HttpResponseFactory.RaiseException(HttpStatusCode.BadRequest,
+                throw HttpResponseFactory.RaiseException(
+                    HttpStatusCode.BadRequest,
                     "A valid Latitude and Longitude is required");
             }
             catch (Exception e)

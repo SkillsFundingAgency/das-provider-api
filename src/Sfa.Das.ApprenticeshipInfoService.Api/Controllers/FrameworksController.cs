@@ -18,7 +18,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         private readonly IGetFrameworks _getFrameworks;
         private readonly ILog _logger;
 
-        public FrameworksController(IGetFrameworks getFrameworks,
+        public FrameworksController(
+            IGetFrameworks getFrameworks,
             ILog logger)
         {
             _getFrameworks = getFrameworks;
@@ -79,8 +80,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have frameworks?
         /// </summary>
-        [SwaggerResponse(HttpStatusCode.NoContent)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("frameworks")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]

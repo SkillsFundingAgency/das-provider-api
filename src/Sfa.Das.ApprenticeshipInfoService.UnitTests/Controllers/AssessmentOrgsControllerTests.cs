@@ -1,22 +1,22 @@
-﻿using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
 {
-    using System.Collections.Generic;
-    using Moq;
-    using NUnit.Framework;
-    using Sfa.Das.ApprenticeshipInfoService.Api.Controllers;
-    using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
     using System.Web.Http;
     using System.Web.Http.Routing;
     using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
     using NUnit.Framework.Constraints;
-    
+    using Sfa.Das.ApprenticeshipInfoService.Api.Controllers;
+    using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+    using SFA.DAS.NLog.Logger;
+    using Assert = NUnit.Framework.Assert;
 
+    [TestFixture]
     public class AssessmentOrgsControllerTests
     {
         private AssessmentOrgsController _sut;
@@ -32,12 +32,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             _sut = new AssessmentOrgsController(
                 _mockGetAssessmentOrgs.Object,
                 _mockLogger.Object);
-        }
-
-        [Test]
-        public void ShouldReturnAssessmentOrganisation()
-        {
-            var expected = new Organisation { Id = "EPA0001" };
 
             _sut.Request = new HttpRequestMessage
             {
@@ -51,6 +45,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             _sut.RequestContext.RouteData = new HttpRouteData(
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "providers" } });
+        }
+
+        [Test]
+        public void ShouldReturnAssessmentOrganisation()
+        {
+            var expected = new Organisation { Id = "EPA0001" };
 
             _mockGetAssessmentOrgs.Setup(
                 x =>
@@ -82,20 +82,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             var element = new OrganisationSummary { Id = "EPA0001" };
             var expected = new List<OrganisationSummary> { element };
 
-            _sut.Request = new HttpRequestMessage
-            {
-                RequestUri = new Uri("http://localhost/assessment-organisations")
-            };
-            _sut.Configuration = new HttpConfiguration();
-            _sut.Configuration.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
-            _sut.RequestContext.RouteData = new HttpRouteData(
-                route: new HttpRoute(),
-                values: new HttpRouteValueDictionary { { "controller", "providers" } });
-
-
             _mockGetAssessmentOrgs.Setup(
                 x =>
                     x.GetAllOrganisations()).Returns(expected);
@@ -110,6 +96,26 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
             response.First().Should().Be(element);
             response.First().Id.Should().Be(element.Id);
             response.First().Uri.Should().Be("http://localhost/assessment-organisations/EPA0001");
+        }
+
+        [Test]
+        public void ShouldthrowExceptionWhenServiceisDown()
+        {
+            _mockGetAssessmentOrgs.Setup(
+               x =>
+                   x.GetAllOrganisations()).Throws<ApplicationException>();
+
+            Assert.Throws<ApplicationException>(() => _sut.Head());
+        }
+
+        [Test]
+        public void ShouldNotthrowExceptionWhenServiceisUp()
+        {
+            _mockGetAssessmentOrgs.Setup(
+               x =>
+                   x.GetAllOrganisations()).Returns(new List<OrganisationSummary> { new OrganisationSummary { Id = "EPA0001" }, new OrganisationSummary { Id = "EPA0002" } });
+
+            Assert.DoesNotThrow(() => _sut.Head());
         }
     }
 }

@@ -19,6 +19,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
     using Sfa.Das.ApprenticeshipInfoService.Core.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
 
+    [TestFixture]
     public class ProviderControllerTests
     {
         private ProvidersController _sut;
@@ -40,13 +41,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 _mockControllerHelper.Object,
                 _mockApprenticeshipProviderRepository.Object,
                 _mockLogger.Object);
-        }
-        
-        [Test]
-        public void ShouldReturnProvider()
-        {
-            var expected = new Provider() {Ukprn = 1};
-
             _sut.Request = new HttpRequestMessage
             {
                 RequestUri = new Uri("http://localhost/providers")
@@ -60,10 +54,17 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "providers" } });
 
+        }
+
+        [Test]
+        public void ShouldReturnProvider()
+        {
+            var expected = new Provider() { Ukprn = 1 };
+
             _mockGetProviders.Setup(
                 x =>
                     x.GetProviderByUkprn(1)).Returns(expected);
-            
+
             var actual = _sut.Get(1);
 
             actual.ShouldBeEquivalentTo(expected);
@@ -73,12 +74,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         [Test]
         public void ShouldReturnProvidersNotFound()
         {
-            var expected = new Provider();
+            var expected = new Provider() { Ukprn = 1 };
 
             _mockGetProviders.Setup(
                 x =>
                     x.GetProviderByUkprn(1)).Returns(expected);
-            
+
             ActualValueDelegate<object> test = () => _sut.Get(-2);
 
             Assert.That(test, Throws.TypeOf<HttpResponseException>());
@@ -92,15 +93,13 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 ProviderName = "Test provider name",
                 ApprenticeshipInfoUrl = "http://www.abba.co.uk",
                 LegalName = "Test Legal Name"
-
             };
             var expected = new List<StandardProviderSearchResultsItemResponse> { element };
-            
+
             _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
             _mockGetProviders.Setup(
                 x =>
-                    x.GetByStandardIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(),
-                        It.IsAny<int>())).Returns(expected);
+                    x.GetByStandardIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<int>())).Returns(expected);
 
             var response = _sut.GetByStandardIdAndLocation(1, 2, 3, 1);
 
@@ -125,14 +124,11 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
                 LegalName = "Test Legal Name"
             };
             var expected = new List<FrameworkProviderSearchResultsItemResponse> { element };
-            
+
             _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
             _mockGetProviders.Setup(
                 x =>
-                    x.GetByFrameworkIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(),
-                        It.IsAny<int>())).Returns(expected);
-
-            
+                    x.GetByFrameworkIdAndLocation(It.IsAny<int>(), It.IsAny<double>(), It.IsAny<double>(), It.IsAny<int>())).Returns(expected);
 
             var response = _sut.GetByFrameworkIdAndLocation(1, 2, 3, 1);
 
@@ -161,10 +157,30 @@ namespace Sfa.Das.ApprenticeshipInfoService.UnitTests.Controllers
         public void ShouldThrowExceptionIfLatLonIsNullSearchingByFrameworkId()
         {
             _mockControllerHelper.Setup(x => x.GetActualPage(It.IsAny<int>())).Returns(1);
-            
+
             ActualValueDelegate<object> test = () => _sut.GetByFrameworkIdAndLocation(1, null, null, 1);
 
             Assert.That(test, Throws.TypeOf<HttpResponseException>());
+        }
+
+        [Test]
+        public void ShouldthrowExceptionWhenServiceisDown()
+        {
+            _mockGetProviders.Setup(
+               x =>
+                   x.GetAllProviders()).Throws<ApplicationException>();
+
+            Assert.Throws<ApplicationException>(() => _sut.Head());
+        }
+
+        [Test]
+        public void ShouldNotthrowExceptionWhenServiceisUp()
+        {
+            _mockGetProviders.Setup(
+               x =>
+                   x.GetAllProviders()).Returns(new List<ProviderSummary> { new ProviderSummary { Ukprn = 40120001 }, new ProviderSummary { Ukprn = 52140002 } });
+
+            Assert.DoesNotThrow(() => _sut.Head());
         }
     }
 }

@@ -90,8 +90,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have assessment organisations?
         /// </summary>
-        [SwaggerResponse(HttpStatusCode.NoContent)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("assessment-organisations")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
@@ -130,7 +128,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 
                 if (response == null)
                 {
-                    throw HttpResponseFactory.RaiseException(HttpStatusCode.NotFound,
+                    throw HttpResponseFactory.RaiseException(
+                        HttpStatusCode.NotFound,
                         $"No organisation with EpaOrganisationIdentifier {id} found");
                 }
 
