@@ -17,27 +17,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}"))
             {
-                request.Headers.Add("Accept", "application/json");
-
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response;
-                    if (result.Result.StatusCode == HttpStatusCode.OK)
-                    {
-                        await Task.Factory.StartNew(
-                            () =>
-                                JsonConvert.DeserializeObject<Framework>(result.Result.Content.ReadAsStringAsync().Result,
-                                    _jsonSettings));
-                    }
-                    if (result.Result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        RaiseResponseError($"Could not find the framework {frameworkId}", request, result.Result);
-                    }
-
-                    RaiseResponseError(request, result.Result);
-                }
-
-                return null;
+                return await RequestAndDeserialiseAsync<Framework>(request, $"Could not find the framework {frameworkId}");
             }
         }
 
@@ -45,50 +25,33 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks/{frameworkId}"))
             {
-                request.Headers.Add("Accept", "application/json");
-
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<Framework>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        RaiseResponseError($"Could not find the framework {frameworkId}", request, result);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+                return RequestAndDeserialise<Framework>(request, $"Could not find the framework {frameworkId}");
             }
+        }
+
+        public Task<Framework> GetAsync(int frameworkCode, int pathwayCode, int programmeType)
+        {
+            return GetAsync(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType));
         }
 
         public Framework Get(int frameworkCode, int pathwayCode, int programmeType)
         {
-            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType)) ?? Get(ConvertToCompositeId2(frameworkCode, pathwayCode, programmeType));
+            return Get(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType));
         }
 
         public IEnumerable<FrameworkSummary> FindAll()
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<IEnumerable<FrameworkSummary>>(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<IEnumerable<FrameworkSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        public Task<IEnumerable<FrameworkSummary>> FindAllAsync()
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks"))
+            {
+                return RequestAndDeserialiseAsync<IEnumerable<FrameworkSummary>>(request);
             }
         }
 
@@ -96,8 +59,6 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/frameworks/{frameworkId}"))
             {
-                request.Headers.Add("Accept", "application/json");
-
                 using (var response = _httpClient.SendAsync(request))
                 {
                     var result = response.Result;
@@ -117,17 +78,40 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
+        public async Task<bool> ExistsAsync(string frameworkId)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/frameworks/{frameworkId}"))
+            {
+                using (var response = await _httpClient.SendAsync(request))
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return true;
+                    }
+                    if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return false;
+                    }
+
+                    RaiseResponseError(request, response);
+                }
+
+                return false;
+            }
+        }
+
 
         public bool Exists(int frameworkCode, int pathwayCode, int progamType)
         {
             return Exists(ConvertToCompositeId(frameworkCode, pathwayCode, progamType));
         }
 
-        private static string ConvertToCompositeId(int frameworkCode, int pathwayCode, int progamType)
+        public Task<bool> ExistsAsync(int frameworkCode, int pathwayCode, int progamType)
         {
-            return $"{frameworkCode}{progamType}{pathwayCode}";
+            return ExistsAsync(ConvertToCompositeId(frameworkCode, pathwayCode, progamType));
         }
-        private static string ConvertToCompositeId2(int frameworkCode, int pathwayCode, int progamType)
+
+        private static string ConvertToCompositeId(int frameworkCode, int pathwayCode, int progamType)
         {
             return $"{frameworkCode}-{progamType}-{pathwayCode}";
         }

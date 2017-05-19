@@ -1,7 +1,7 @@
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using SFA.DAS.Apprenticeships.Api.Types.Exceptions;
@@ -46,6 +46,57 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     failedRequest.RequestUri,
                     (int)failedResponse.StatusCode,
                     failedResponse.Content.ReadAsStringAsync().Result));
+        }
+
+        public async Task<T> RequestAndDeserialiseAsync<T>(HttpRequestMessage request, string message = null) where T : class
+        {
+                request.Headers.Add("Accept", "application/json");
+
+                using (var response =  _httpClient.SendAsync(request))
+                {
+                    var result = await response;
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        var json = await result.Content.ReadAsStringAsync();
+                        return await Task.Factory.StartNew(() => JsonConvert.DeserializeObject<T>(json, _jsonSettings));
+                    }
+                    if (result.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        if (message == null)
+                        {
+                            message = "Could not find " + request.RequestUri.PathAndQuery;
+                        }
+
+                        RaiseResponseError(message, request, result);
+                    }
+
+                    RaiseResponseError(request, result);
+                }
+
+                return null;
+        }
+
+        public T RequestAndDeserialise<T>(HttpRequestMessage request, string missing = null) where T : class
+
+        {
+            request.Headers.Add("Accept", "application/json");
+
+            using (var response = _httpClient.SendAsync(request))
+            {
+                var result = response.Result;
+                if (result.StatusCode == HttpStatusCode.OK)
+                {
+                    return JsonConvert.DeserializeObject<T>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
+                }
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    RaiseResponseError(missing, request, result);
+                }
+
+                RaiseResponseError(request, result);
+            }
+
+            return null;
         }
 
         public void Dispose()
