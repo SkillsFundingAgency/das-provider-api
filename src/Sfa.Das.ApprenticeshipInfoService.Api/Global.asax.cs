@@ -8,25 +8,23 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api
     using System.Web.Mvc;
     using System.Web.Routing;
 
-    
-
     public class WebApiApplication : System.Web.HttpApplication
     {
-        private readonly ILog logger;
+        private ILog _logger;
 
         public WebApiApplication()
         {
-            logger = DependencyResolver.Current.GetService<ILog>();
+            _logger = DependencyResolver.Current.GetService<ILog>();
         }
 
         protected void Application_Start()
         {
-            logger.Info("Starting Web Role");
+            _logger.Info("Starting Web Role");
 
             RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
-            logger.Info("Web Role started");
+            _logger.Info("Web Role started");
         }
 
         protected void Application_Error(object sender, EventArgs e)
@@ -58,6 +56,19 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api
                 name: "DefaultRoute",
                 url: string.Empty,
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+        }
+
+        protected internal void Application_BeginRequest(object sender, EventArgs e)
+        {
+            _logger = DependencyResolver.Current.GetService<ILog>();
+
+            HttpContext context = base.Context;
+            if (!context.Request.Path.Equals("/")
+                && !context.Request.Path.Contains("swagger")
+                && !context.Request.Path.StartsWith("/__browserlink"))
+            {
+                _logger.Info($"{context.Request.HttpMethod} {context.Request.Path}");
+            }
         }
     }
 }

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Web.Http.Description;
-using SFA.DAS.Apprenticeships.Api.Types;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Http;
-
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
+    using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
 
     public class StandardsController : ApiController
@@ -35,8 +33,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<StandardSummary> Get()
         {
-            _logger.Info("GET /standards");
-
             try
             {
                 var response = _getStandards.GetAllStandards().ToList();
@@ -67,8 +63,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Standard Get(string id)
         {
-            _logger.Info($"GET /standards/{id}");
-
             var standard = _getStandards.GetStandardById(id);
 
             if (standard == null)
@@ -90,8 +84,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            _logger.Info("HEAD /standards");
-
             Get();
         }
 
@@ -105,8 +97,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            _logger.Info($"HEAD /standards/{id}");
-
             Get(id);
         }
 

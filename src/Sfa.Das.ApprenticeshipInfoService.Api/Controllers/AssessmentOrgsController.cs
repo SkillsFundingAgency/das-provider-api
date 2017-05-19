@@ -1,17 +1,16 @@
-﻿using System.Web.Http.Description;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Api.Helpers;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
 
     public class AssessmentOrgsController : ApiController
@@ -37,7 +36,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<OrganisationSummary> Get()
         {
-            _logger.Info("GET /assessment-organisations");
             try
             {
                 var response = _getAssessmentOrgs.GetAllOrganisations().ToList();
@@ -67,8 +65,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Organisation Get(string id)
         {
-            _logger.Info($"GET /assessment-organisations/{id}");
-
             try
             {
                 var response = _getAssessmentOrgs.GetOrganisationById(id);
@@ -100,8 +96,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            _logger.Info("HEAD /assessment-organisations");
-
             Get();
         }
 
@@ -115,8 +109,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            _logger.Info($"HEAD /assessment-organisations/{id}");
-
             Get(id);
         }
 
@@ -131,8 +123,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<Organisation> GetByStandardId(string id)
         {
-            _logger.Info($"GET /assessment-organisations/standards/{id}");
-
             try
             {
                 var response = _getAssessmentOrgs.GetOrganisationsByStandardId(id);

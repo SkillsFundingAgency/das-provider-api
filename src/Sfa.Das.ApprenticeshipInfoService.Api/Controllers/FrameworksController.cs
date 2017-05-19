@@ -1,16 +1,15 @@
-﻿using System;
-using System.Web.Http.Description;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
 
     public class FrameworksController : ApiController
@@ -36,8 +35,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<FrameworkSummary> Get()
         {
-            _logger.Info("GET /frameworks");
-
             try
             {
                 var response = _getFrameworks.GetAllFrameworks().ToList();
@@ -68,8 +65,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Framework Get(string id)
         {
-            _logger.Info($"GET /frameworks/{id}");
-
             var response = _getFrameworks.GetFrameworkById(id);
 
             if (response == null)
@@ -91,8 +86,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            _logger.Info("HEAD /frameworks");
-
             Get();
         }
 
@@ -106,8 +99,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
-            _logger.Info($"HEAD /frameworks/{id}");
-
             Get(id);
         }
 

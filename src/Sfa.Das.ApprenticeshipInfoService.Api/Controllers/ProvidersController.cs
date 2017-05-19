@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +11,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
     using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types.Providers;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
     using IControllerHelper = Sfa.Das.ApprenticeshipInfoService.Core.Helpers.IControllerHelper;
 
@@ -46,8 +44,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<ProviderSummary> Get()
         {
-            _logger.Info("GET /providers");
-
             try
             {
                 var response = _getProviders.GetAllProviders();
@@ -78,8 +74,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Provider Get(long ukprn)
         {
-            _logger.Info($"GET /providers/{ukprn}");
-
             var response = _getProviders.GetProviderByUkprn(ukprn);
 
             if (response == null)
@@ -104,8 +98,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
-            _logger.Info("HEAD /providers");
-
             Get();
         }
 
@@ -119,7 +111,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(long ukprn)
         {
-            _logger.Info($"HEAD /providers/{ukprn}");
 
             Get(ukprn);
         }
@@ -133,8 +124,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         public List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
         {
             // TODO 404 if standard doesn't exists
-            _logger.Info($"GET /standards/{id}/providers?lat={lat}&long={lon}&page={page}");
-
             try
             {
                 var actualPage = _controllerHelper.GetActualPage(page);
@@ -165,8 +154,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         public List<FrameworkProviderSearchResultsItemResponse> GetByFrameworkIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
         {
             // TODO 404 if framework doesn't exists
-            _logger.Info($"GET /frameworks/{id}/providers?lat={lat}&long={lon}&page={page}");
-
             try
             {
                 var actualPage = _controllerHelper.GetActualPage(page);
@@ -196,8 +183,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public ApprenticeshipDetails GetStandardProviderDetails(string standardCode, int ukprn, int location)
         {
-            _logger.Info($"GET standards/{standardCode}/providers?ukprn={ukprn}&location={location}");
-
             var model = _apprenticeshipProviderRepository.GetCourseByStandardCode(
                 ukprn,
                 location,
@@ -220,8 +205,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public ApprenticeshipDetails GetFrameworkProviderDetails(string frameworkId, int ukprn, int location)
         {
-            _logger.Info($"GET frameworks/{frameworkId}/providers?ukprn={ukprn}&location={location}");
-
             var model = _apprenticeshipProviderRepository.GetCourseByFrameworkId(
                 ukprn,
                 location,
