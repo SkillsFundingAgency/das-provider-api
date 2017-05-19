@@ -48,7 +48,7 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                     failedResponse.Content.ReadAsStringAsync().Result));
         }
 
-        public async Task<T> RequestAndDeserialiseAsync<T>(HttpRequestMessage request, string message = null) where T : class
+        protected async Task<T> RequestAndDeserialiseAsync<T>(HttpRequestMessage request, string message = null) where T : class
         {
                 request.Headers.Add("Accept", "application/json");
 
@@ -76,7 +76,47 @@ namespace SFA.DAS.Apprenticeships.Api.Client
                 return null;
         }
 
-        public T RequestAndDeserialise<T>(HttpRequestMessage request, string missing = null) where T : class
+        protected bool Exists(HttpRequestMessage request)
+        {
+            using (var response = _httpClient.SendAsync(request))
+            {
+                var result = response.Result;
+                if (result.StatusCode == HttpStatusCode.NoContent)
+                {
+                    return true;
+                }
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return false;
+                }
+
+                RaiseResponseError(request, result);
+            }
+
+            return false;
+        }
+
+        protected async Task<bool> ExistsAsync(HttpRequestMessage request)
+        {
+            using (var response = _httpClient.SendAsync(request))
+            {
+                var result = await response;
+                if (result.StatusCode == HttpStatusCode.NoContent)
+                {
+                    return true;
+                }
+                if (result.StatusCode == HttpStatusCode.NotFound)
+                {
+                    return false;
+                }
+
+                RaiseResponseError(request, result);
+            }
+
+            return false;
+        }
+
+        internal T RequestAndDeserialise<T>(HttpRequestMessage request, string missing = null) where T : class
 
         {
             request.Headers.Add("Accept", "application/json");

@@ -86,45 +86,15 @@ namespace SFA.DAS.Providers.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError("Unexpected exception", request, result);
-                }
-
-                return false;
+                return Exists(request);
             }
         }
 
-        public async Task<bool> ExistsAsync(string providerUkprn)
+        public Task<bool> ExistsAsync(string providerUkprn)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = await response;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError("Unexpected exception", request, result);
-                }
-
-                return false;
+                return ExistsAsync(request);
             }
         }
 

@@ -123,22 +123,7 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return false;
+                return Exists(request);
             }
         }
 
@@ -148,26 +133,11 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// </summary>
         /// <param name="organisationId">an integer for the organisation id</param>
         /// <returns>bool</returns>
-        public async Task<bool> ExistsAsync(string organisationId)
+        public Task<bool> ExistsAsync(string organisationId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = await response;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return false;
+                return ExistsAsync(request);
             }
         }
     }

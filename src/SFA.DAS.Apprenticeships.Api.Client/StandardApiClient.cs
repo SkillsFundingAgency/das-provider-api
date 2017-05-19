@@ -53,47 +53,15 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-
-                }
-
-                return false;
+                return Exists(request);
             }
         }
 
-        public async Task<bool> ExistsAsync(string standardCode)
+        public Task<bool> ExistsAsync(string standardCode)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
             {
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = await response;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-
-                }
-
-                return false;
+                return ExistsAsync(request);
             }
         }
 
