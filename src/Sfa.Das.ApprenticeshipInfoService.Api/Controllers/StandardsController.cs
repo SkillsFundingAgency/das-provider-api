@@ -35,6 +35,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<StandardSummary> Get()
         {
+            _logger.Info("GET /standards");
+
             try
             {
                 var response = _getStandards.GetAllStandards().ToList();
@@ -65,6 +67,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Standard Get(string id)
         {
+            _logger.Info($"GET /standards/{id}");
+
             var standard = _getStandards.GetStandardById(id);
 
             if (standard == null)
@@ -79,11 +83,15 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have standards?
         /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("standards")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
+            _logger.Info("HEAD /standards");
+
             Get();
         }
 
@@ -97,6 +105,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
+            _logger.Info($"HEAD /standards/{id}");
+
             Get(id);
         }
 

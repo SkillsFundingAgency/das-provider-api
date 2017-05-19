@@ -36,6 +36,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<FrameworkSummary> Get()
         {
+            _logger.Info("GET /frameworks");
+
             try
             {
                 var response = _getFrameworks.GetAllFrameworks().ToList();
@@ -66,6 +68,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Framework Get(string id)
         {
+            _logger.Info($"GET /frameworks/{id}");
+
             var response = _getFrameworks.GetFrameworkById(id);
 
             if (response == null)
@@ -80,11 +84,15 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have frameworks?
         /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("frameworks")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
+            _logger.Info("HEAD /frameworks");
+
             Get();
         }
 
@@ -98,6 +106,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
+            _logger.Info($"HEAD /frameworks/{id}");
+
             Get(id);
         }
 

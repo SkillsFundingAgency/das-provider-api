@@ -37,6 +37,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<OrganisationSummary> Get()
         {
+            _logger.Info("GET /assessment-organisations");
             try
             {
                 var response = _getAssessmentOrgs.GetAllOrganisations().ToList();
@@ -66,6 +67,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public Organisation Get(string id)
         {
+            _logger.Info($"GET /assessment-organisations/{id}");
+
             try
             {
                 var response = _getAssessmentOrgs.GetOrganisationById(id);
@@ -90,11 +93,15 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have assessment organisations?
         /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("assessment-organisations")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
         public void Head()
         {
+            _logger.Info("HEAD /assessment-organisations");
+
             Get();
         }
 
@@ -108,6 +115,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public void Head(string id)
         {
+            _logger.Info($"HEAD /assessment-organisations/{id}");
+
             Get(id);
         }
 
@@ -122,6 +131,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         [ExceptionHandling]
         public IEnumerable<Organisation> GetByStandardId(string id)
         {
+            _logger.Info($"GET /assessment-organisations/standards/{id}");
+
             try
             {
                 var response = _getAssessmentOrgs.GetOrganisationsByStandardId(id);
