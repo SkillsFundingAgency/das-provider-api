@@ -25,9 +25,9 @@ namespace SFA.DAS.Providers.Api.Client
             return Get(providerUkprn.ToString());
         }
 
-        public Task<Provider> GetAsync(long providerUkprn)
+        public async Task<Provider> GetAsync(long providerUkprn)
         {
-            return GetAsync(providerUkprn.ToString());
+            return await GetAsync(providerUkprn.ToString());
         }
 
         public Provider Get(int providerUkprn)
@@ -35,9 +35,9 @@ namespace SFA.DAS.Providers.Api.Client
             return Get(providerUkprn.ToString());
         }
 
-        public Task<Provider> GetAsync(int providerUkprn)
+        public async Task<Provider> GetAsync(int providerUkprn)
         {
-            return GetAsync(providerUkprn.ToString());
+            return await GetAsync(providerUkprn.ToString());
         }
 
         public Provider Get(string providerUkprn)
@@ -48,11 +48,11 @@ namespace SFA.DAS.Providers.Api.Client
             }
         }
 
-        public Task<Provider> GetAsync(string providerUkprn)
+        public async Task<Provider> GetAsync(string providerUkprn)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}"))
             {
-                return RequestAndDeserialiseAsync<Provider>(request, $"The provider {providerUkprn} could not be found");
+                return await RequestAndDeserialiseAsync<Provider>(request, $"The provider {providerUkprn} could not be found");
             }
         }
 
@@ -67,9 +67,9 @@ namespace SFA.DAS.Providers.Api.Client
             return Exists(providerUkprn.ToString());
         }
 
-        public Task<bool> ExistsAsync(long providerUkprn)
+        public async Task<bool> ExistsAsync(long providerUkprn)
         {
-            return ExistsAsync(providerUkprn.ToString());
+            return await ExistsAsync(providerUkprn.ToString());
         }
 
         public bool Exists(int providerUkprn)
@@ -77,9 +77,9 @@ namespace SFA.DAS.Providers.Api.Client
             return Exists(providerUkprn.ToString());
         }
 
-        public Task<bool> ExistsAsync(int providerUkprn)
+        public async Task<bool> ExistsAsync(int providerUkprn)
         {
-            return ExistsAsync(providerUkprn.ToString());
+            return await ExistsAsync(providerUkprn.ToString());
         }
 
         public bool Exists(string providerUkprn)
@@ -90,11 +90,11 @@ namespace SFA.DAS.Providers.Api.Client
             }
         }
 
-        public Task<bool> ExistsAsync(string providerUkprn)
+        public async Task<bool> ExistsAsync(string providerUkprn)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
             {
-                return ExistsAsync(request);
+                return await ExistsAsync(request);
             }
         }
 
@@ -106,11 +106,11 @@ namespace SFA.DAS.Providers.Api.Client
             }
         }
 
-        public Task<IEnumerable<ProviderSummary>> FindAllAsync()
+        public async Task<IEnumerable<ProviderSummary>> FindAllAsync()
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, "/providers"))
             {
-                return RequestAndDeserialiseAsync<IEnumerable<ProviderSummary>>(request);
+                return await RequestAndDeserialiseAsync<IEnumerable<ProviderSummary>>(request);
             }
         }
     }

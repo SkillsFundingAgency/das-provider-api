@@ -33,11 +33,11 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// </summary>
         /// <param name="organisationId">an integer for the organisation id</param>
         /// <returns>a organisation details based on id</returns>
-        public Task<Organisation> GetAsync(string organisationId)
+        public async Task<Organisation> GetAsync(string organisationId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/{organisationId}"))
             {
-                return RequestAndDeserialiseAsync<Organisation>(request, $"Could not find the organisation {organisationId}");
+                return await RequestAndDeserialiseAsync<Organisation>(request, $"Could not find the organisation {organisationId}");
             }
         }
 
@@ -59,11 +59,11 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// GET /frameworks
         /// </summary>
         /// <returns>a collection of organisation summaries</returns>
-        public Task<IEnumerable<OrganisationSummary>> FindAllAsync()
+        public async Task<IEnumerable<OrganisationSummary>> FindAllAsync()
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations"))
             {
-                return RequestAndDeserialiseAsync<IEnumerable<OrganisationSummary>>(request);
+                return await RequestAndDeserialiseAsync<IEnumerable<OrganisationSummary>>(request);
             }
         }
 
@@ -82,9 +82,9 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// GET /assessment-organisations/standards/{standardId}
         /// </summary>
         /// <returns>a collection of organisation</returns>
-        public Task<IEnumerable<Organisation>> ByStandardAsync(int standardId)
+        public async Task<IEnumerable<Organisation>> ByStandardAsync(int standardId)
         {
-            return ByStandardAsync(standardId.ToString());
+            return await ByStandardAsync(standardId.ToString());
         }
 
         /// <summary>
@@ -105,11 +105,11 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// GET /assessment-organisations/standards/{standardId}
         /// </summary>
         /// <returns>a collection of organisation</returns>
-        public Task<IEnumerable<Organisation>> ByStandardAsync(string standardId)
+        public async Task<IEnumerable<Organisation>> ByStandardAsync(string standardId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/standards/{standardId}"))
             {
-                return RequestAndDeserialiseAsync<IEnumerable<Organisation>>(request);
+                return await RequestAndDeserialiseAsync<IEnumerable<Organisation>>(request);
             }
         }
 
@@ -133,11 +133,11 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// </summary>
         /// <param name="organisationId">an integer for the organisation id</param>
         /// <returns>bool</returns>
-        public Task<bool> ExistsAsync(string organisationId)
+        public async Task<bool> ExistsAsync(string organisationId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}"))
             {
-                return ExistsAsync(request);
+                return await ExistsAsync(request);
             }
         }
     }

@@ -29,9 +29,9 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<Framework> GetAsync(int frameworkCode, int pathwayCode, int programmeType)
+        public async Task<Framework> GetAsync(int frameworkCode, int pathwayCode, int programmeType)
         {
-            return GetAsync(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType));
+            return await GetAsync(ConvertToCompositeId(frameworkCode, pathwayCode, programmeType));
         }
 
         public Framework Get(int frameworkCode, int pathwayCode, int programmeType)
@@ -47,11 +47,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<IEnumerable<FrameworkSummary>> FindAllAsync()
+        public async Task<IEnumerable<FrameworkSummary>> FindAllAsync()
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/frameworks"))
             {
-                return RequestAndDeserialiseAsync<IEnumerable<FrameworkSummary>>(request);
+                return await RequestAndDeserialiseAsync<IEnumerable<FrameworkSummary>>(request);
             }
         }
 
@@ -63,11 +63,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<bool> ExistsAsync(string frameworkId)
+        public async Task<bool> ExistsAsync(string frameworkId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/frameworks/{frameworkId}"))
             {
-                return ExistsAsync(request);
+                return await ExistsAsync(request);
             }
         }
 

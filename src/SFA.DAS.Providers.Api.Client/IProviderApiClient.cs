@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
 
-namespace SFA.DAS.Apprenticeships.Api.Client
+namespace SFA.DAS.Providers.Api.Client
 {
     public interface IProviderApiClient : IDisposable
     {

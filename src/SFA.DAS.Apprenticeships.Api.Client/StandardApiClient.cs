@@ -18,9 +18,9 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return Get(standardCode.ToString());
         }
 
-        public Task<Standard> GetAsync(int standardCode)
+        public async Task<Standard> GetAsync(int standardCode)
         {
-            return GetAsync(standardCode.ToString());
+            return await GetAsync(standardCode.ToString());
         }
 
         public Standard Get(string standardCode)
@@ -31,11 +31,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<Standard> GetAsync(string standardCode)
+        public async Task<Standard> GetAsync(string standardCode)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards/{standardCode}"))
             {
-                return RequestAndDeserialiseAsync<Standard>(request, $"Could not find the standard {standardCode}");
+                return await RequestAndDeserialiseAsync<Standard>(request, $"Could not find the standard {standardCode}");
             }
         }
 
@@ -44,9 +44,9 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return Exists(standardCode.ToString());
         }
 
-        public Task<bool> ExistsAsync(int standardCode)
+        public async Task<bool> ExistsAsync(int standardCode)
         {
-            return ExistsAsync(standardCode.ToString());
+            return await ExistsAsync(standardCode.ToString());
         }
 
         public bool Exists(string standardCode)
@@ -57,11 +57,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<bool> ExistsAsync(string standardCode)
+        public async Task<bool> ExistsAsync(string standardCode)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
             {
-                return ExistsAsync(request);
+                return await ExistsAsync(request);
             }
         }
 
@@ -78,11 +78,11 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             }
         }
 
-        public Task<IEnumerable<StandardSummary>> FindAllAsync()
+        public async Task<IEnumerable<StandardSummary>> FindAllAsync()
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, "/standards"))
             {
-                return RequestAndDeserialiseAsync<IEnumerable<StandardSummary>>(request);
+                return await RequestAndDeserialiseAsync<IEnumerable<StandardSummary>>(request);
             }
         }
     }

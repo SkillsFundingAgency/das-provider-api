@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SFA.DAS.Apprenticeships.Api.Types;
 using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
-namespace SFA.DAS.Apprenticeships.Api.Client
+namespace SFA.DAS.AssessmentOrgs.Api.Client
 {
     public interface IAssessmentOrgsApiClient : IDisposable
     {
