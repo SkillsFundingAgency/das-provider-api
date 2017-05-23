@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SFA.DAS.Apprenticeships.Api.Client;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
@@ -21,27 +22,37 @@ namespace SFA.DAS.Providers.Api.Client
         /// <returns>a provider details based on ukprn</returns>
         public Provider Get(long providerUkprn)
         {
+            return Get(providerUkprn.ToString());
+        }
+
+        public async Task<Provider> GetAsync(long providerUkprn)
+        {
+            return await GetAsync(providerUkprn.ToString());
+        }
+
+        public Provider Get(int providerUkprn)
+        {
+            return Get(providerUkprn.ToString());
+        }
+
+        public async Task<Provider> GetAsync(int providerUkprn)
+        {
+            return await GetAsync(providerUkprn.ToString());
+        }
+
+        public Provider Get(string providerUkprn)
+        {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<Provider>(request, $"The provider {providerUkprn} could not be found");
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<Provider>(result.Content.ReadAsStringAsync().Result,
-                            _jsonSettings);
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        RaiseResponseError($"The provider {providerUkprn} could not be found", request, result);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        public async Task<Provider> GetAsync(string providerUkprn)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/providers/{providerUkprn}"))
+            {
+                return await RequestAndDeserialiseAsync<Provider>(request, $"The provider {providerUkprn} could not be found");
             }
         }
 
@@ -53,26 +64,37 @@ namespace SFA.DAS.Providers.Api.Client
         /// <returns>bool</returns>
         public bool Exists(long providerUkprn)
         {
+            return Exists(providerUkprn.ToString());
+        }
+
+        public async Task<bool> ExistsAsync(long providerUkprn)
+        {
+            return await ExistsAsync(providerUkprn.ToString());
+        }
+
+        public bool Exists(int providerUkprn)
+        {
+            return Exists(providerUkprn.ToString());
+        }
+
+        public async Task<bool> ExistsAsync(int providerUkprn)
+        {
+            return await ExistsAsync(providerUkprn.ToString());
+        }
+
+        public bool Exists(string providerUkprn)
+        {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return Exists(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError("Unexpected exception", request, result);
-                }
-
-                return false;
+        public async Task<bool> ExistsAsync(string providerUkprn)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/providers/{providerUkprn}"))
+            {
+                return await ExistsAsync(request);
             }
         }
 
@@ -80,20 +102,15 @@ namespace SFA.DAS.Providers.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, "/providers"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<IEnumerable<ProviderSummary>>(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<IEnumerable<ProviderSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        public async Task<IEnumerable<ProviderSummary>> FindAllAsync()
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/providers"))
+            {
+                return await RequestAndDeserialiseAsync<IEnumerable<ProviderSummary>>(request);
             }
         }
     }

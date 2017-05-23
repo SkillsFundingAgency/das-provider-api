@@ -48,8 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiClientBase.cs" />
-    <Compile Include="ProviderApiClient.cs" />
-    <Compile Include="IProviderApiClient.cs" />
     <Compile Include="FrameworkApiClient.cs" />
     <Compile Include="IFrameworkApiClient.cs" />
     <Compile Include="IStandardApiClient.cs" />

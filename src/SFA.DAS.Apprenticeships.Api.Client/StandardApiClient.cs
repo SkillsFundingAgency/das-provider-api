@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SFA.DAS.Apprenticeships.Api.Types;
 
@@ -17,28 +18,24 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return Get(standardCode.ToString());
         }
 
+        public async Task<Standard> GetAsync(int standardCode)
+        {
+            return await GetAsync(standardCode.ToString());
+        }
+
         public Standard Get(string standardCode)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards/{standardCode}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<Standard>(request, $"Could not find the standard {standardCode}");
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<Standard>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        RaiseResponseError($"Could not find the standard {standardCode}", request, result);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        public async Task<Standard> GetAsync(string standardCode)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/standards/{standardCode}"))
+            {
+                return await RequestAndDeserialiseAsync<Standard>(request, $"Could not find the standard {standardCode}");
             }
         }
 
@@ -47,29 +44,24 @@ namespace SFA.DAS.Apprenticeships.Api.Client
             return Exists(standardCode.ToString());
         }
 
+        public async Task<bool> ExistsAsync(int standardCode)
+        {
+            return await ExistsAsync(standardCode.ToString());
+        }
+
         public bool Exists(string standardCode)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return Exists(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-
-                }
-
-                return false;
+        public async Task<bool> ExistsAsync(string standardCode)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/standards/{standardCode}"))
+            {
+                return await ExistsAsync(request);
             }
         }
 
@@ -82,20 +74,15 @@ namespace SFA.DAS.Apprenticeships.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, "/standards"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<IEnumerable<StandardSummary>>(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<IEnumerable<StandardSummary>>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        public async Task<IEnumerable<StandardSummary>> FindAllAsync()
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, "/standards"))
+            {
+                return await RequestAndDeserialiseAsync<IEnumerable<StandardSummary>>(request);
             }
         }
     }
