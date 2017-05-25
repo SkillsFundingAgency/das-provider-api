@@ -21,7 +21,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api
         {
             _logger.Info("Starting Web Role");
 
-            RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
             _logger.Info("Web Role started");
@@ -38,29 +38,12 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api
             }
         }
 
-        private static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            routes.MapRoute(
-                name: "HealthRoute",
-                url: "health/{action}/{id}",
-                defaults: new { controller = "Health", action = "Index", id = UrlParameter.Optional });
-
-            routes.MapRoute(
-                name: "HomeRoute",
-                url: "home/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
-
-            routes.MapRoute(
-                name: "DefaultRoute",
-                url: string.Empty,
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
-        }
-
         protected internal void Application_BeginRequest(object sender, EventArgs e)
         {
             _logger = DependencyResolver.Current.GetService<ILog>();
+
+            var application = sender as HttpApplication;
+            application?.Context?.Response.Headers.Remove("Server");
 
             HttpContext context = base.Context;
             if (!context.Request.Path.Equals("/")

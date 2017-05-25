@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 using SFA.DAS.Apprenticeships.Api.Client;
 using SFA.DAS.Apprenticeships.Api.Types.AssessmentOrgs;
 
@@ -24,25 +23,21 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/{organisationId}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<Organisation>(request, $"Could not find the organisation {organisationId}");
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return JsonConvert.DeserializeObject<Organisation>(result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        RaiseResponseError($"Could not find the organisation {organisationId}", request, result);
-                    }
-
-                    RaiseResponseError(request, result);
-
-                }
-
-                return null;
+        /// <summary>
+        /// Get a single organisation details
+        /// GET /assessmentorgs/{organisationId}
+        /// </summary>
+        /// <param name="organisationId">an integer for the organisation id</param>
+        /// <returns>a organisation details based on id</returns>
+        public async Task<Organisation> GetAsync(string organisationId)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/{organisationId}"))
+            {
+                return await RequestAndDeserialiseAsync<Organisation>(request, $"Could not find the organisation {organisationId}");
             }
         }
 
@@ -55,22 +50,20 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<IEnumerable<OrganisationSummary>>(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return
-                            JsonConvert.DeserializeObject<IEnumerable<OrganisationSummary>>(
-                                result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        /// <summary>
+        /// Get a collection of organisations
+        /// GET /frameworks
+        /// </summary>
+        /// <returns>a collection of organisation summaries</returns>
+        public async Task<IEnumerable<OrganisationSummary>> FindAllAsync()
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations"))
+            {
+                return await RequestAndDeserialiseAsync<IEnumerable<OrganisationSummary>>(request);
             }
         }
 
@@ -89,26 +82,34 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         /// GET /assessment-organisations/standards/{standardId}
         /// </summary>
         /// <returns>a collection of organisation</returns>
+        public async Task<IEnumerable<Organisation>> ByStandardAsync(int standardId)
+        {
+            return await ByStandardAsync(standardId.ToString());
+        }
+
+        /// <summary>
+        /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
         public IEnumerable<Organisation> ByStandard(string standardId)
         {
             using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/standards/{standardId}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return RequestAndDeserialise<IEnumerable<Organisation>>(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        return
-                            JsonConvert.DeserializeObject<IEnumerable<Organisation>>(
-                                result.Content.ReadAsStringAsync().Result, _jsonSettings);
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return null;
+        /// <summary>
+        /// Get a collection of organisations
+        /// GET /assessment-organisations/standards/{standardId}
+        /// </summary>
+        /// <returns>a collection of organisation</returns>
+        public async Task<IEnumerable<Organisation>> ByStandardAsync(string standardId)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Get, $"/assessment-organisations/standards/{standardId}"))
+            {
+                return await RequestAndDeserialiseAsync<IEnumerable<Organisation>>(request);
             }
         }
 
@@ -122,24 +123,21 @@ namespace SFA.DAS.AssessmentOrgs.Api.Client
         {
             using (var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}"))
             {
-                request.Headers.Add("Accept", "application/json");
+                return Exists(request);
+            }
+        }
 
-                using (var response = _httpClient.SendAsync(request))
-                {
-                    var result = response.Result;
-                    if (result.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return true;
-                    }
-                    if (result.StatusCode == HttpStatusCode.NotFound)
-                    {
-                        return false;
-                    }
-
-                    RaiseResponseError(request, result);
-                }
-
-                return false;
+        /// <summary>
+        /// Check if a assessment organisation exists
+        /// HEAD /assessmentorgs/{organisationId}
+        /// </summary>
+        /// <param name="organisationId">an integer for the organisation id</param>
+        /// <returns>bool</returns>
+        public async Task<bool> ExistsAsync(string organisationId)
+        {
+            using (var request = new HttpRequestMessage(HttpMethod.Head, $"/assessment-organisations/{organisationId}"))
+            {
+                return await ExistsAsync(request);
             }
         }
     }
