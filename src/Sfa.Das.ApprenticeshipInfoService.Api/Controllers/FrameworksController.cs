@@ -1,16 +1,15 @@
-﻿using System;
-using System.Web.Http.Description;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Http;
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
     using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
 
     public class FrameworksController : ApiController
@@ -80,6 +79,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have frameworks?
         /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("frameworks")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]

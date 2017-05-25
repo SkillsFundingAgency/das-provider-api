@@ -1,17 +1,15 @@
-﻿using System;
-using System.Web.Http.Description;
-using SFA.DAS.Apprenticeships.Api.Types;
-using SFA.DAS.NLog.Logger;
-
-namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
+﻿namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Web.Http;
-
+    using System.Web.Http.Description;
     using Sfa.Das.ApprenticeshipInfoService.Api.Attributes;
     using Sfa.Das.ApprenticeshipInfoService.Core.Services;
+    using SFA.DAS.Apprenticeships.Api.Types;
+    using SFA.DAS.NLog.Logger;
     using Swashbuckle.Swagger.Annotations;
 
     public class StandardsController : ApiController
@@ -79,6 +77,8 @@ namespace Sfa.Das.ApprenticeshipInfoService.Api.Controllers
         /// <summary>
         /// Do we have standards?
         /// </summary>
+        [SwaggerResponse(HttpStatusCode.NoContent)]
+        [SwaggerResponse(HttpStatusCode.NotFound)]
         [Route("standards")]
         [ExceptionHandling]
         [ApiExplorerSettings(IgnoreApi = true)]
