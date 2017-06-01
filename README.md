@@ -64,6 +64,6 @@ using(var client = new AssessmentOrgsApiClient())
 For<IStandardApiClient>().Use<StandardApiClient>();
 For<IFrameworkApiClient>().Use<FrameworkApiClient>();
 For<IProviderApiClient>().Use<ProviderApiClient>();
-For<IAssessmentOrgsApiClient>().Use<ProviderApiClient>();
+For<IAssessmentOrgsApiClient>().Use<AssessmentOrgsApiClient>();
 ```
 
