@@ -44,22 +44,14 @@
         [ExceptionHandling]
         public IEnumerable<ProviderSummary> Get()
         {
-            try
-            {
-                var response = _getProviders.GetAllProviders();
+            var response = _getProviders.GetAllProviders();
 
-                foreach (var provider in response)
-                {
-                    provider.Uri = Resolve(provider.Ukprn);
-                }
-
-                return response;
-            }
-            catch (Exception e)
+            foreach (var provider in response)
             {
-                _logger.Error(e, "/providers");
-                throw;
+                provider.Uri = Resolve(provider.Ukprn);
             }
+
+            return response;
         }
 
         /// <summary>
@@ -111,7 +103,6 @@
         [ExceptionHandling]
         public void Head(long ukprn)
         {
-
             Get(ukprn);
         }
 
@@ -121,27 +112,20 @@
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [ApiExplorerSettings(IgnoreApi = true)]
         [Route("standards/{id}/providers")]
-        public List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
+        public List<StandardProviderSearchResultsItemResponse> GetByStandardIdAndLocation(int id, double? lat = null,
+            double? lon = null, int page = 1)
         {
             // TODO 404 if standard doesn't exists
-            try
-            {
-                var actualPage = _controllerHelper.GetActualPage(page);
+            var actualPage = _controllerHelper.GetActualPage(page);
 
-                if (lat.HasValue && lon.HasValue)
-                {
-                    return _getProviders.GetByStandardIdAndLocation(id, lat.Value, lon.Value, actualPage);
-                }
-
-                throw HttpResponseFactory.RaiseException(
-                    HttpStatusCode.BadRequest,
-                    "A valid Latitude and Longitude is required");
-            }
-            catch (Exception e)
+            if (lat.HasValue && lon.HasValue)
             {
-                _logger.Error(e, $"standards/{id}/providers");
-                throw;
+                return _getProviders.GetByStandardIdAndLocation(id, lat.Value, lon.Value, actualPage);
             }
+
+            throw HttpResponseFactory.RaiseException(
+                HttpStatusCode.BadRequest,
+                "A valid Latitude and Longitude is required");
         }
 
         // GET frameworks/5/providers?lat=<latitude>&long=<longitude>&page=#
@@ -151,27 +135,20 @@
         [Route("frameworks/{id}/providers")]
         [ApiExplorerSettings(IgnoreApi = true)]
         [ExceptionHandling]
-        public List<FrameworkProviderSearchResultsItemResponse> GetByFrameworkIdAndLocation(int id, double? lat = null, double? lon = null, int page = 1)
+        public List<FrameworkProviderSearchResultsItemResponse> GetByFrameworkIdAndLocation(int id, double? lat = null,
+            double? lon = null, int page = 1)
         {
             // TODO 404 if framework doesn't exists
-            try
-            {
-                var actualPage = _controllerHelper.GetActualPage(page);
+            var actualPage = _controllerHelper.GetActualPage(page);
 
-                if (lat.HasValue && lon.HasValue)
-                {
-                    return _getProviders.GetByFrameworkIdAndLocation(id, lat.Value, lon.Value, actualPage);
-                }
-
-                throw HttpResponseFactory.RaiseException(
-                    HttpStatusCode.BadRequest,
-                    "A valid Latitude and Longitude is required");
-            }
-            catch (Exception e)
+            if (lat.HasValue && lon.HasValue)
             {
-                _logger.Error(e, $"frameworks/{id}/providers");
-                throw;
+                return _getProviders.GetByFrameworkIdAndLocation(id, lat.Value, lon.Value, actualPage);
             }
+
+            throw HttpResponseFactory.RaiseException(
+                HttpStatusCode.BadRequest,
+                "A valid Latitude and Longitude is required");
         }
 
         // GET standards/<standardId>/providers?ukprn=<ukprn>&location=<locationId>
