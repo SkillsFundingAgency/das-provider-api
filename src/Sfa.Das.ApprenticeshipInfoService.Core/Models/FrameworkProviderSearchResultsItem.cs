@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
+﻿using SFA.DAS.Apprenticeships.Api.Types.enums;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
 {
     using System.Collections.Generic;
 
@@ -40,7 +42,7 @@
         public string ApprenticeshipInfoUrl { get; set; }
 
         public List<string> DeliveryModes { get; set; }
-
+        public List<DeliveryMode> EnumeratedDeliveryModes { get; set; }
         public string Website { get; set; }
 
         public IEnumerable<TrainingLocation> TrainingLocations { get; set; }
