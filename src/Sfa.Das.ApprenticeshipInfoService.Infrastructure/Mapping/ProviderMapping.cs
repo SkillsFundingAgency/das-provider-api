@@ -1,12 +1,23 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models;
 using Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses;
+using SFA.DAS.Apprenticeships.Api.Types.enums;
+using SFA.DAS.Apprenticeships.Api.Types.Exceptions;
 using SFA.DAS.Apprenticeships.Api.Types.Providers;
+using SFA.DAS.NLog.Logger;
 
 namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
 {
     public class ProviderMapping : IProviderMapping
     {
+        private readonly ILog _applicationLogger;
+
+        public ProviderMapping(ILog applicationLogger)
+        {
+            _applicationLogger = applicationLogger;
+        }
+
         public ProviderSummary MapToProviderDto(Provider provider)
         {
             return new ProviderSummary
@@ -59,6 +70,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ApprenticeshipMarketingInfo = item.ApprenticeshipMarketingInfo,
                 ContactUsUrl = item.ContactUsUrl,
                 DeliveryModes = item.DeliveryModes,
+                EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                 Distance = item.Distance,
                 Email = item.Email,
                 EmployerSatisfaction = item.EmployerSatisfaction,
@@ -91,6 +103,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ApprenticeshipMarketingInfo = item.ApprenticeshipMarketingInfo,
                 ContactUsUrl = item.ContactUsUrl,
                 DeliveryModes = item.DeliveryModes,
+                EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                 Distance = item.Distance,
                 Email = item.Email,
                 EmployerSatisfaction = item.EmployerSatisfaction,
@@ -116,7 +129,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             };
         }
 
-        private static ApprenticeshipDetails MapFromInterface(IApprenticeshipProviderSearchResultsItem item, int locationId)
+        private ApprenticeshipDetails MapFromInterface(IApprenticeshipProviderSearchResultsItem item, int locationId)
         {
             var matchingLocation = item.TrainingLocations.Single(x => x.LocationId == locationId);
 
@@ -131,6 +144,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                                            item.ApprenticeshipMarketingInfo
                     },
                     DeliveryModes = item.DeliveryModes,
+                    EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                     ProviderMarketingInfo = item.ProviderMarketingInfo,
                     EmployerSatisfaction = item.EmployerSatisfaction,
                     LearnerSatisfaction = item.LearnerSatisfaction,
@@ -164,6 +178,33 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                     IsLevyPayerOnly = item.IsLevyPayerOnly
                 }
             };
+        }
+
+        private List<DeliveryMode> ConvertToEnumeratedDeliveryModes(List<string> itemDeliveryModes)
+        {
+            var enumeratedDeliveryModes = new List<DeliveryMode>();
+            foreach (var mode in itemDeliveryModes)
+            {
+                switch (mode.ToLower())
+                {
+                    case "dayrelease":
+                        enumeratedDeliveryModes.Add(DeliveryMode.DayRelease);
+                        break;
+                    case "blockrelease":
+                        enumeratedDeliveryModes.Add(DeliveryMode.BlockRelease);
+                        break;
+                    case "100percentemployer":
+                        enumeratedDeliveryModes.Add(DeliveryMode.HundredPercentEmployer);
+                        break;
+                   default:
+                        var errorMessage = $"Unknown DeliveryMode [{mode}] could not be mapped.";
+                        _applicationLogger.Error(new UnknownDeliveryModeException(errorMessage), errorMessage);
+                        break;
+                }
+
+            }
+
+            return enumeratedDeliveryModes;
         }
     }
 }
