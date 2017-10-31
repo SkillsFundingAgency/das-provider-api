@@ -37,8 +37,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
 
         public List<string> DeliveryModes { get; set; }
 
-        public List<DeliveryMode> EnumeratedDeliveryModes { get; set; }
-
         public string Website { get; set; }
 
         public IEnumerable<TrainingLocation> TrainingLocations { get; set; }

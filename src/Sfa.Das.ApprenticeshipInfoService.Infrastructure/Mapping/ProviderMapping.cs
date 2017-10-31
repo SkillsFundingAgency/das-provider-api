@@ -70,7 +70,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ApprenticeshipMarketingInfo = item.ApprenticeshipMarketingInfo,
                 ContactUsUrl = item.ContactUsUrl,
                 DeliveryModes = item.DeliveryModes,
-                EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                 Distance = item.Distance,
                 Email = item.Email,
                 EmployerSatisfaction = item.EmployerSatisfaction,
@@ -103,7 +102,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                 ApprenticeshipMarketingInfo = item.ApprenticeshipMarketingInfo,
                 ContactUsUrl = item.ContactUsUrl,
                 DeliveryModes = item.DeliveryModes,
-                EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                 Distance = item.Distance,
                 Email = item.Email,
                 EmployerSatisfaction = item.EmployerSatisfaction,
@@ -143,8 +141,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                         ApprenticeshipMarketingInfo =
                                            item.ApprenticeshipMarketingInfo
                     },
-                    DeliveryModes = item.DeliveryModes,
-                    EnumeratedDeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
+                    DeliveryModes = ConvertToEnumeratedDeliveryModes(item.DeliveryModes),
                     ProviderMarketingInfo = item.ProviderMarketingInfo,
                     EmployerSatisfaction = item.EmployerSatisfaction,
                     LearnerSatisfaction = item.LearnerSatisfaction,
@@ -180,7 +177,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
             };
         }
 
-        private List<DeliveryMode> ConvertToEnumeratedDeliveryModes(List<string> itemDeliveryModes)
+        private List<DeliveryMode> ConvertToEnumeratedDeliveryModes(IEnumerable<string> itemDeliveryModes)
         {
             var enumeratedDeliveryModes = new List<DeliveryMode>();
             foreach (var mode in itemDeliveryModes)

@@ -10,8 +10,6 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
 
         List<string> DeliveryModes { get; set; }
 
-        List<DeliveryMode> EnumeratedDeliveryModes { get; set; }
-
         double Distance { get; set; }
 
         string Email { get; set; }
@@ -33,7 +31,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
         string ProviderName { get; set; }
 
         string LegalName { get; set; }
-        
+
         string Phone { get; set; }
 
         string ApprenticeshipInfoUrl { get; set; }

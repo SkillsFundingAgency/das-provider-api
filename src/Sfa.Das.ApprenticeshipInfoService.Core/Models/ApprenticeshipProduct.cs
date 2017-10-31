@@ -16,9 +16,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Core.Models
 
         public string ProviderMarketingInfo { get; set; }
 
-        public List<string> DeliveryModes { get; set; }
-
-        public List<DeliveryMode> EnumeratedDeliveryModes { get; set; }
+        public List<DeliveryMode> DeliveryModes { get; set; }
 
         public double? NationalAchievementRate { get; set; }
 
