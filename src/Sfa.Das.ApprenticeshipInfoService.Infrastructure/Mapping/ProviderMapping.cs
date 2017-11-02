@@ -198,9 +198,7 @@ namespace Sfa.Das.ApprenticeshipInfoService.Infrastructure.Mapping
                         _applicationLogger.Error(new UnknownDeliveryModeException(errorMessage), errorMessage);
                         break;
                 }
-
             }
-
             return enumeratedDeliveryModes;
         }
     }
