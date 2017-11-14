@@ -1,4 +1,6 @@
-﻿namespace Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses
+﻿using SFA.DAS.Apprenticeships.Api.Types.enums;
+
+namespace Sfa.Das.ApprenticeshipInfoService.Core.Models.Responses
 {
     using System.Collections.Generic;
 
